@@ -269,6 +269,11 @@
     :evalue :Django ;
     :nom "Examen final Django" .
 
+:FediMbarek a :Etudiant,
+        owl:NamedIndividual ;
+    rdfs:label "FediMbarek" ;
+    :nom "FediMbarek" .
+
 :GroupeRockUniversitaire a :GroupeMusiqueModerne,
         owl:NamedIndividual ;
     rdfs:label "Groupe rock universitaire"@fr ;
@@ -1997,10 +2002,6 @@
     rdfs:label "Esprit sportif"@fr ;
     :nom "Esprit sportif" .
 
-:Etudiant a owl:Class ;
-    rdfs:label "Étudiant"@fr ;
-    rdfs:subClassOf :Apprenant .
-
 :Examen a owl:Class ;
     rdfs:label "Examen"@fr ;
     rdfs:subClassOf :Evaluation .
@@ -2369,6 +2370,10 @@ xsd:time a rdfs:Datatype .
 :Entreprise a owl:Class ;
     rdfs:label "Entreprise"@fr ;
     rdfs:subClassOf :Organisme .
+
+:Etudiant a owl:Class ;
+    rdfs:label "Étudiant"@fr ;
+    rdfs:subClassOf :Apprenant .
 
 :InscriptionClub a owl:Class ;
     rdfs:label "Inscription à un club"@fr ;
@@ -3045,16 +3050,94 @@ xsd:date a rdfs:Datatype .
     rdfs:subClassOf :Diplome .
 
 [] a owl:AllDisjointClasses ;
-    owl:members ( :LangueDesSignes :LangueEtrangere :LangueNationale ) .
+    owl:members ( :BourseMerite :BourseMobilite :BourseSociale ) .
+
+[] a owl:AllDisjointClasses ;
+    owl:members ( :Cafeteria :PanierSolidaire :RestaurantUniversitaire ) .
+
+[] a owl:AllDisjointClasses ;
+    owl:members ( :CampagneDepistage :EducationSante :Vaccination ) .
 
 [] a owl:AllDisjointClasses ;
     owl:members ( :Livre :Podcast :Webinaire ) .
 
 [] a owl:AllDisjointClasses ;
+    owl:members ( :CertificatAbsence :CertificatAptitudeSport :CertificatAptitudeStage ) .
+
+[] a owl:AllDisjointClasses ;
+    owl:members ( :AccompagnementEmploi :ForumEmploi :OrientationAcademique ) .
+
+[] a owl:AllDisjointClasses ;
+    owl:members ( :Certification :Club :Competence :Evaluation :Evenement :Formation :Niveau :Organisme :ParcoursApprentissage :Personne :RessourcePedagogique :Stage ) .
+
+[] a owl:AllDisjointClasses ;
+    owl:members ( :ClubIntelligenceArtificielle :ClubProgrammation :ClubRobotique ) .
+
+[] a owl:AllDisjointClasses ;
+    owl:members ( :Certification :Competence :Evaluation :Formation :Niveau :ParcoursApprentissage :Personne :RessourcePedagogique ) .
+
+[] a owl:AllDisjointClasses ;
+    owl:members ( :Amphitheatre :SalleDeCours :SalleInformatique ) .
+
+[] a owl:AllDisjointClasses ;
     owl:members ( :MatiereLitteraire :MatiereScientifique :MatiereTechnique ) .
 
 [] a owl:AllDisjointClasses ;
+    owl:members ( :ClubMusique :ClubSport :ClubTheatre ) .
+
+[] a owl:AllDisjointClasses ;
+    owl:members ( :Concert :Spectacle :Tournoi ) .
+
+[] a owl:AllDisjointClasses ;
+    owl:members ( :ConsultationDentaire :ConsultationGenerale :ConsultationOphtalmologique ) .
+
+[] a owl:AllDisjointClasses ;
+    owl:members ( :ConsultationMedicale :PremiersSecoursMedicaux :PreventionSante :SanteSportive :SoutienPsychologique ) .
+
+[] a owl:AllDisjointClasses ;
+    owl:members ( :ConventionBilaterale :ConventionCadre :ConventionTripartite ) .
+
+[] a owl:AllDisjointClasses ;
+    owl:members ( :Cours :Module :Programme ) .
+
+[] a owl:AllDisjointClasses ;
+    owl:members ( :DepartementGestion :DepartementInformatique :DepartementLangues ) .
+
+[] a owl:AllDisjointClasses ;
+    owl:members ( :DiplomeIngenieur :Licence :Master ) .
+
+[] a owl:AllDisjointClasses ;
+    owl:members ( :Document :Exercice :Video ) .
+
+[] a owl:AllDisjointClasses ;
+    owl:members ( :DomaineArtsCulture :DomaineSport :DomaineTechnologie ) .
+
+[] a owl:AllDisjointClasses ;
     owl:members ( :NiveauAcademique :NiveauCompetence :NiveauLangue ) .
+
+[] a owl:AllDisjointClasses ;
+    owl:members ( :AnneeUniversitaire :Semestre :SessionExamens ) .
+
+[] a owl:AllDisjointClasses ;
+    owl:members ( :Entreprise :Laboratoire :Universite ) .
+
+[] a owl:AllDisjointClasses ;
+    owl:members ( :Examen :Projet :Quiz ) .
+
+[] a owl:AllDisjointClasses ;
+    owl:members ( :HebergementUrgence :LogementPartage :ResidenceUniversitaire ) .
+
+[] a owl:AllDisjointClasses ;
+    owl:members ( :Infirmier :Medecin :Psychologue ) .
+
+[] a owl:AllDisjointClasses ;
+    owl:members ( :Chorale :GroupeMusiqueModerne :Orchestre ) .
+
+[] a owl:AllDisjointClasses ;
+    owl:members ( :InscriptionAdministrative :InscriptionClub :InscriptionPedagogique ) .
+
+[] a owl:AllDisjointClasses ;
+    owl:members ( :Kinesitherapie :SuiviSportif :VisiteAptitudeSport ) .
 
 [] a owl:AllDisjointClasses ;
     owl:members ( :ApplicationMobile :LogicielDeveloppement :PlateformeELearning ) .
@@ -3105,89 +3188,11 @@ xsd:date a rdfs:Datatype .
     owl:members ( :Basketball :Football :Natation ) .
 
 [] a owl:AllDisjointClasses ;
+    owl:members ( :LangueDesSignes :LangueEtrangere :LangueNationale ) .
+
+[] a owl:AllDisjointClasses ;
     owl:members ( :AbonnementTransport :CovoiturageEtudiant :NavetteUniversitaire ) .
 
 [] a owl:AllDisjointClasses ;
     owl:members ( :Bourse :Certification :Club :Competence :Departement :Diplome :Domaine :Espace :Evaluation :Evenement :Formation :Inscription :Langue :Matiere :Niveau :Organisme :OutilNumerique :ParcoursApprentissage :PeriodeAcademique :Personne :RessourcePedagogique :Seance :Stage ) .
-
-[] a owl:AllDisjointClasses ;
-    owl:members ( :BourseMerite :BourseMobilite :BourseSociale ) .
-
-[] a owl:AllDisjointClasses ;
-    owl:members ( :Cafeteria :PanierSolidaire :RestaurantUniversitaire ) .
-
-[] a owl:AllDisjointClasses ;
-    owl:members ( :CampagneDepistage :EducationSante :Vaccination ) .
-
-[] a owl:AllDisjointClasses ;
-    owl:members ( :CertificatAbsence :CertificatAptitudeSport :CertificatAptitudeStage ) .
-
-[] a owl:AllDisjointClasses ;
-    owl:members ( :AccompagnementEmploi :ForumEmploi :OrientationAcademique ) .
-
-[] a owl:AllDisjointClasses ;
-    owl:members ( :Certification :Club :Competence :Evaluation :Evenement :Formation :Niveau :Organisme :ParcoursApprentissage :Personne :RessourcePedagogique :Stage ) .
-
-[] a owl:AllDisjointClasses ;
-    owl:members ( :ClubIntelligenceArtificielle :ClubProgrammation :ClubRobotique ) .
-
-[] a owl:AllDisjointClasses ;
-    owl:members ( :Certification :Competence :Evaluation :Formation :Niveau :ParcoursApprentissage :Personne :RessourcePedagogique ) .
-
-[] a owl:AllDisjointClasses ;
-    owl:members ( :Amphitheatre :SalleDeCours :SalleInformatique ) .
-
-[] a owl:AllDisjointClasses ;
-    owl:members ( :ClubMusique :ClubSport :ClubTheatre ) .
-
-[] a owl:AllDisjointClasses ;
-    owl:members ( :Concert :Spectacle :Tournoi ) .
-
-[] a owl:AllDisjointClasses ;
-    owl:members ( :ConsultationDentaire :ConsultationGenerale :ConsultationOphtalmologique ) .
-
-[] a owl:AllDisjointClasses ;
-    owl:members ( :ConsultationMedicale :PremiersSecoursMedicaux :PreventionSante :SanteSportive :SoutienPsychologique ) .
-
-[] a owl:AllDisjointClasses ;
-    owl:members ( :ConventionBilaterale :ConventionCadre :ConventionTripartite ) .
-
-[] a owl:AllDisjointClasses ;
-    owl:members ( :Cours :Module :Programme ) .
-
-[] a owl:AllDisjointClasses ;
-    owl:members ( :DepartementGestion :DepartementInformatique :DepartementLangues ) .
-
-[] a owl:AllDisjointClasses ;
-    owl:members ( :DiplomeIngenieur :Licence :Master ) .
-
-[] a owl:AllDisjointClasses ;
-    owl:members ( :Document :Exercice :Video ) .
-
-[] a owl:AllDisjointClasses ;
-    owl:members ( :DomaineArtsCulture :DomaineSport :DomaineTechnologie ) .
-
-[] a owl:AllDisjointClasses ;
-    owl:members ( :AnneeUniversitaire :Semestre :SessionExamens ) .
-
-[] a owl:AllDisjointClasses ;
-    owl:members ( :Entreprise :Laboratoire :Universite ) .
-
-[] a owl:AllDisjointClasses ;
-    owl:members ( :Examen :Projet :Quiz ) .
-
-[] a owl:AllDisjointClasses ;
-    owl:members ( :HebergementUrgence :LogementPartage :ResidenceUniversitaire ) .
-
-[] a owl:AllDisjointClasses ;
-    owl:members ( :Infirmier :Medecin :Psychologue ) .
-
-[] a owl:AllDisjointClasses ;
-    owl:members ( :Chorale :GroupeMusiqueModerne :Orchestre ) .
-
-[] a owl:AllDisjointClasses ;
-    owl:members ( :InscriptionAdministrative :InscriptionClub :InscriptionPedagogique ) .
-
-[] a owl:AllDisjointClasses ;
-    owl:members ( :Kinesitherapie :SuiviSportif :VisiteAptitudeSport ) .
 

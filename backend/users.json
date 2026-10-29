@@ -52,5 +52,10 @@
     "hash": "scrypt:32768:8:1$UBWBprdnRR27xKTH$b331e0d3aec49adde1be217b49c423bf6d0e031d43c6daaff7d19dcd19286914d2a148145a5c400d0abdc677591379f8ac35f3ade0df7e76eed86139e69e9bd9",
     "role": "enseignant",
     "person": "Ahmed2"
+  },
+  "fediMbarek": {
+    "hash": "scrypt:32768:8:1$GeaVahgtPU5on1xz$0108eb6fa0a26f558787738e33309c0b79ce59a20fede7877773172da9d540628469896fea8940edc89872a0c99e316c4600a33f025c61a29a245f6c9fbad20b",
+    "role": "apprenant",
+    "person": "FediMbarek"
   }
 }
