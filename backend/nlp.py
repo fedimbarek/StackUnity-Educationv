@@ -531,3 +531,77 @@ class NL2SPARQL:
         limit = order[1] if order else 200
         q = f"SELECT DISTINCT {' '.join(cols)} WHERE {{\n  {body}\n}} {order_clause} LIMIT {limit}"
         return dict(sparql=q, kind="select", main=main, trace=trace)
+
+# ============================================================================
+# Assistant NLP : Personnes & Organismes (ajout, sans modifier le traducteur existant)
+# ============================================================================
+
+CLASSES_DHIA = {
+    "Apprenant": ["apprenant", "etudiant", "eleve"],
+    "Enseignant": ["enseignant", "professeur"],
+    "Tuteur": ["tuteur"],
+    "PersonnelMedical": ["personnel medical"],
+    "Personne": ["personne", "individu"],
+    "Universite": ["universite"],
+    "Entreprise": ["entreprise", "societe"],
+    "Laboratoire": ["laboratoire"],
+    "Organisme": ["organisme", "organisation"],
+}
+
+
+def generer_sparql(question):
+    """Traduire une demande simple de liste ou de comptage en SPARQL.
+
+    Réutilise analyse() et stem() du NLP existant (spaCy/NLTK si disponibles).
+    Le résultat est compatible avec la route Flask /api/nlp.
+    """
+    if not isinstance(question, str) or not question.strip():
+        raise ValueError("Veuillez saisir une question.")
+
+    tokens = analyse(question)
+    racines = {t["key"] for t in tokens} | {t["skey"] for t in tokens}
+    classe = None
+    for nom, synonymes in CLASSES_DHIA.items():
+        for synonyme in synonymes:
+            synonym_tokens = analyse(synonyme)
+            syn_racines = {t["key"] for t in synonym_tokens}
+            syn_surface = {t["skey"] for t in synonym_tokens}
+            if syn_racines.issubset(racines) or syn_surface.issubset(racines):
+                classe = nom
+                break
+        if classe:
+            break
+
+    if classe is None:
+        raise ValueError(
+            "Classe non reconnue. Essayez : étudiants, enseignants, "
+            "personnes, universités, entreprises ou organismes."
+        )
+
+    mots = {t["norm"] for t in tokens}
+    compteur = bool(mots & {"combien", "nombre", "total"})
+
+    # La hiérarchie rdfs:subClassOf* inclut les individus des sous-classes.
+    condition = f"?item a/rdfs:subClassOf* :{classe} ."
+    if compteur:
+        intention = "Compter"
+        requete = f"""SELECT (COUNT(DISTINCT ?item) AS ?total)
+WHERE {{
+    {condition}
+}}"""
+    else:
+        intention = "Lister"
+        requete = f"""SELECT DISTINCT ?item ?nom
+WHERE {{
+    {condition}
+    OPTIONAL {{ ?item rdfs:label ?nom }}
+}}
+ORDER BY ?nom
+LIMIT 100"""
+
+    return {
+        "classe": classe,
+        "intention": intention,
+        "sparql": requete,
+    }
+
