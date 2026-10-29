@@ -1,11 +1,22 @@
+<<<<<<< HEAD
 import { Routes } from '@angular/router';
 import { authGuard, accessGuard } from './core/auth';
+=======
+
+import { Routes } from '@angular/router';
+import { authGuard, accessGuard } from './core/auth';
+
+>>>>>>> 3d5aa3acacaab95058bb469d316a5a2236e830ce
 import { LoginComponent } from './pages/login.component';
 import { HomeComponent } from './pages/home.component';
 import { SchemaComponent } from './pages/schema.component';
 import { SparqlComponent } from './pages/sparql.component';
 import { AiComponent } from './pages/ai.component';
 import { ScenarioComponent } from './pages/scenario.component';
+<<<<<<< HEAD
+=======
+
+>>>>>>> 3d5aa3acacaab95058bb469d316a5a2236e830ce
 import { PersonnesComponent } from './features/personnes/personnes.component';
 import { FormationsComponent } from './features/formations/formations.component';
 import { MatieresComponent } from './features/matieres/matieres.component';
@@ -16,11 +27,30 @@ import { InscriptionsComponent } from './features/inscriptions/inscriptions.comp
 import { BoursesComponent } from './features/bourses/bourses.component';
 import { SanteComponent } from './features/sante/sante.component';
 import { VieComponent } from './features/vie/vie.component';
+<<<<<<< HEAD
 import { NefziNlQueryComponent } from './pages/nefzi-nl-query.component';
 export const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: '', component: HomeComponent, canActivate: [authGuard] },      // dashboard général (admin) ou personnel (selon le rôle)
   // un composant par module métier (chacun a ses onglets / colonnes / formulaires)
+=======
+
+// Assistant IA NLP - Personnes & Organismes
+import { AssistantComponent } from './features/assistant/assistant.component';
+
+export const routes: Routes = [
+
+  { path: 'login', component: LoginComponent },
+
+  // Dashboard général (admin) ou personnel (selon le rôle)
+  {
+    path: '',
+    component: HomeComponent,
+    canActivate: [authGuard]
+  },
+
+  // Modules métier
+>>>>>>> 3d5aa3acacaab95058bb469d316a5a2236e830ce
   { path: 'personnes', component: PersonnesComponent, canActivate: [authGuard, accessGuard] },
   { path: 'formations', component: FormationsComponent, canActivate: [authGuard, accessGuard] },
   { path: 'matieres', component: MatieresComponent, canActivate: [authGuard, accessGuard] },
@@ -31,10 +61,34 @@ export const routes: Routes = [
   { path: 'bourses', component: BoursesComponent, canActivate: [authGuard, accessGuard] },
   { path: 'sante', component: SanteComponent, canActivate: [authGuard, accessGuard] },
   { path: 'vie', component: VieComponent, canActivate: [authGuard, accessGuard] },
+<<<<<<< HEAD
   { path: 'proprietes', component: SchemaComponent, canActivate: [authGuard, accessGuard] },
   { path: 'sparql', component: SparqlComponent, canActivate: [authGuard, accessGuard] },
   { path: 'ia', component: AiComponent, canActivate: [authGuard, accessGuard] },
   { path: 'scenario', component: ScenarioComponent, canActivate: [authGuard, accessGuard] },
   { path: '**', redirectTo: '' },
     { path: 'nl-query', component: NefziNlQueryComponent, canActivate: [authGuard] },
+=======
+
+  // Schéma et requêtes SPARQL
+  { path: 'proprietes', component: SchemaComponent, canActivate: [authGuard, accessGuard] },
+  { path: 'sparql', component: SparqlComponent, canActivate: [authGuard, accessGuard] },
+
+  // IA avancée de l'équipe
+  { path: 'ia', component: AiComponent, canActivate: [authGuard, accessGuard] },
+
+  // Scénario Amira
+  { path: 'scenario', component: ScenarioComponent, canActivate: [authGuard, accessGuard] },
+
+  // Assistant IA Dhia - NLP + SPARQL
+  {
+    path: 'assistant',
+    component: AssistantComponent,
+    canActivate: [authGuard]
+  },
+
+  // Route inconnue
+  { path: '**', redirectTo: '' }
+
+>>>>>>> 3d5aa3acacaab95058bb469d316a5a2236e830ce
 ];
