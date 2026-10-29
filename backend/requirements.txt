@@ -1,3 +1,11 @@
+<<<<<<< HEAD
+flask==3.1.*
+rdflib==7.*
+pyjwt==2.*
+# --- NLP / TALN (traducteur question -> SPARQL) ---
+spacy>=3.7        # puis :  python -m spacy download fr_core_news_sm
+nltk>=3.8         # SnowballStemmer('french') : aucune ressource à télécharger
+=======
 
 flask==3.1.*
 rdflib==7.*
@@ -6,3 +14,4 @@ pyjwt==2.*
 # --- NLP / TALN (traducteur question -> SPARQL) ---
 spacy>=3.7
 nltk>=3.8
+>>>>>>> 3d5aa3acacaab95058bb469d316a5a2236e830ce
