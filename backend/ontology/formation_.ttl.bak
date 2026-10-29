@@ -1,0 +1,4512 @@
+@prefix : <http://stackunity.org/education#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xml: <http://www.w3.org/XML/1998/namespace> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@base <http://stackunity.org/education#> .
+
+<http://stackunity.org/education> rdf:type owl:Ontology ;
+                                   rdfs:comment "Ontologie permettant de modéliser les personnes, formations, compétences, prérequis, ressources pédagogiques, évaluations, parcours d'apprentissage, clubs et stages."@fr ;
+                                   rdfs:label "StackUnity - Éducation et Formation"@fr .
+
+#################################################################
+#    Datatypes
+#################################################################
+
+###  http://www.w3.org/2001/XMLSchema#date
+xsd:date rdf:type rdfs:Datatype .
+
+
+###  http://www.w3.org/2001/XMLSchema#gYear
+xsd:gYear rdf:type rdfs:Datatype .
+
+
+###  http://www.w3.org/2001/XMLSchema#time
+xsd:time rdf:type rdfs:Datatype .
+
+
+#################################################################
+#    Object Properties
+#################################################################
+
+###  http://stackunity.org/education#aMembre
+:aMembre rdf:type owl:ObjectProperty ;
+         owl:inverseOf :estMembreDe ;
+         rdfs:domain :Club ;
+         rdfs:range :Apprenant ;
+         rdfs:label "a pour membre"@fr .
+
+
+###  http://stackunity.org/education#aPourMatiere
+:aPourMatiere rdf:type owl:ObjectProperty ;
+              rdfs:domain :Formation ;
+              rdfs:range :Matiere ;
+              rdfs:label "comporte la matière"@fr .
+
+
+###  http://stackunity.org/education#accueilliPar
+:accueilliPar rdf:type owl:ObjectProperty ;
+              rdfs:domain :Stage ;
+              rdfs:range :Organisme ;
+              rdfs:label "est accueilli par"@fr .
+
+
+###  http://stackunity.org/education#animePar
+:animePar rdf:type owl:ObjectProperty ;
+          rdfs:domain :Seance ;
+          rdfs:range :Enseignant ;
+          rdfs:label "est animée par"@fr .
+
+
+###  http://stackunity.org/education#appartientADepartement
+:appartientADepartement rdf:type owl:ObjectProperty ;
+                        rdfs:domain :Enseignant ;
+                        rdfs:range :Departement ;
+                        rdfs:label "appartient au département"@fr .
+
+
+###  http://stackunity.org/education#appartientAuDomaine
+:appartientAuDomaine rdf:type owl:ObjectProperty ;
+                     rdfs:domain :Formation ;
+                     rdfs:range :Domaine ;
+                     rdfs:label "appartient au domaine"@fr .
+
+
+###  http://stackunity.org/education#associeRessource
+:associeRessource rdf:type owl:ObjectProperty ;
+                  rdfs:domain :Evaluation ;
+                  rdfs:range :RessourcePedagogique ;
+                  rdfs:label "associe une ressource"@fr .
+
+
+###  http://stackunity.org/education#assureParPersonnel
+:assureParPersonnel rdf:type owl:ObjectProperty ;
+                    rdfs:domain :ServiceMedical ;
+                    rdfs:range :PersonnelMedical ;
+                    rdfs:label "est assuré par"@fr .
+
+
+###  http://stackunity.org/education#attribueNiveau
+:attribueNiveau rdf:type owl:ObjectProperty ;
+                rdfs:domain :Evaluation ;
+                rdfs:range :Niveau ;
+                rdfs:label "attribue un niveau"@fr .
+
+
+###  http://stackunity.org/education#beneficieDeBourse
+:beneficieDeBourse rdf:type owl:ObjectProperty ;
+                   rdfs:domain :Apprenant ;
+                   rdfs:range :Bourse ;
+                   rdfs:label "bénéficie de la bourse"@fr .
+
+
+###  http://stackunity.org/education#beneficieDuService
+:beneficieDuService rdf:type owl:ObjectProperty ;
+                    rdfs:domain :Apprenant ;
+                    rdfs:range :ServiceMedical ;
+                    rdfs:label "bénéficie du service médical"@fr .
+
+
+###  http://stackunity.org/education#campagneAssureePar
+:campagneAssureePar rdf:type owl:ObjectProperty ;
+                    rdfs:domain :CampagneSante ;
+                    rdfs:range :ServiceMedical ;
+                    rdfs:label "est organisée par le service"@fr .
+
+
+###  http://stackunity.org/education#certificatPour
+:certificatPour rdf:type owl:ObjectProperty ;
+                rdfs:domain :CertificatMedical ;
+                rdfs:range :Apprenant ;
+                rdfs:label "est délivré à"@fr .
+
+
+###  http://stackunity.org/education#certifieCompetence
+:certifieCompetence rdf:type owl:ObjectProperty ;
+                    rdfs:domain :Certification ;
+                    rdfs:range :Competence ;
+                    rdfs:label "certifie la compétence"@fr .
+
+
+###  http://stackunity.org/education#clubDuDomaine
+:clubDuDomaine rdf:type owl:ObjectProperty ;
+               rdfs:domain :Club ;
+               rdfs:range :Domaine ;
+               rdfs:label "relève du domaine"@fr .
+
+
+###  http://stackunity.org/education#clubUtiliseOutil
+:clubUtiliseOutil rdf:type owl:ObjectProperty ;
+                  rdfs:domain :Club ;
+                  rdfs:range :OutilNumerique ;
+                  rdfs:label "utilise l'outil"@fr .
+
+
+###  http://stackunity.org/education#concerneFormation
+:concerneFormation rdf:type owl:ObjectProperty ;
+                   rdfs:domain :Evaluation ;
+                   rdfs:range :Formation ;
+                   rdfs:label "concerne la formation"@fr .
+
+
+###  http://stackunity.org/education#consultePar
+:consultePar rdf:type owl:ObjectProperty ;
+             rdfs:domain :SoutienPsychologique ;
+             rdfs:range :Psychologue ;
+             rdfs:label "est animé par le psychologue"@fr .
+
+
+###  http://stackunity.org/education#contient
+:contient rdf:type owl:ObjectProperty ;
+          owl:inverseOf :faitPartieDe ;
+          rdfs:domain :Formation ;
+          rdfs:range :Formation ;
+          rdfs:label "contient"@fr .
+
+
+###  http://stackunity.org/education#contientPeriode
+:contientPeriode rdf:type owl:ObjectProperty ;
+                 rdfs:domain :AnneeUniversitaire ;
+                 rdfs:range :Semestre ;
+                 rdfs:label "contient la période"@fr .
+
+
+###  http://stackunity.org/education#delivreCertificat
+:delivreCertificat rdf:type owl:ObjectProperty ;
+                   rdfs:domain :PersonnelMedical ;
+                   rdfs:range :CertificatMedical ;
+                   rdfs:label "délivre le certificat"@fr .
+
+
+###  http://stackunity.org/education#delivreCertification
+:delivreCertification rdf:type owl:ObjectProperty ;
+                      rdfs:domain :Formation ;
+                      rdfs:range :Certification ;
+                      rdfs:label "délivre la certification"@fr .
+
+
+###  http://stackunity.org/education#delivreCertificationStage
+:delivreCertificationStage rdf:type owl:ObjectProperty ;
+                           rdfs:domain :Stage ;
+                           rdfs:range :Certification ;
+                           rdfs:label "délivre la certification"@fr .
+
+
+###  http://stackunity.org/education#delivrePar
+:delivrePar rdf:type owl:ObjectProperty ;
+            rdfs:domain :Diplome ;
+            rdfs:range :Organisme ;
+            rdfs:label "est délivré par"@fr .
+
+
+###  http://stackunity.org/education#developpe
+:developpe rdf:type owl:ObjectProperty ;
+           rdfs:domain :Formation ;
+           rdfs:range :Competence ;
+           rdfs:label "développe"@fr .
+
+
+###  http://stackunity.org/education#developpeCompetenceClub
+:developpeCompetenceClub rdf:type owl:ObjectProperty ;
+                         rdfs:domain :Club ;
+                         rdfs:range :Competence ;
+                         rdfs:label "développe la compétence"@fr .
+
+
+###  http://stackunity.org/education#developpeCompetenceStage
+:developpeCompetenceStage rdf:type owl:ObjectProperty ;
+                          rdfs:domain :Stage ;
+                          rdfs:range :Competence ;
+                          rdfs:label "développe la compétence"@fr .
+
+
+###  http://stackunity.org/education#dirigeDepartement
+:dirigeDepartement rdf:type owl:ObjectProperty ;
+                   rdfs:domain :Enseignant ;
+                   rdfs:range :Departement ;
+                   rdfs:label "dirige le département"@fr .
+
+
+###  http://stackunity.org/education#dirigePar
+:dirigePar rdf:type owl:ObjectProperty ;
+           rdfs:domain :Club ;
+           rdfs:range :ResponsableClub ;
+           rdfs:label "est dirigé par"@fr .
+
+
+###  http://stackunity.org/education#effectueStage
+:effectueStage rdf:type owl:ObjectProperty ;
+               owl:inverseOf :estEffectuePar ;
+               rdfs:domain :Apprenant ;
+               rdfs:range :Stage ;
+               rdfs:label "effectue le stage"@fr .
+
+
+###  http://stackunity.org/education#encadreAcademique
+:encadreAcademique rdf:type owl:ObjectProperty ;
+                   rdfs:domain :Stage ;
+                   rdfs:range :Enseignant ;
+                   rdfs:label "a pour encadrant académique"@fr .
+
+
+###  http://stackunity.org/education#encadrePar
+:encadrePar rdf:type owl:ObjectProperty ;
+            rdfs:domain :Club ;
+            rdfs:range :Enseignant ;
+            rdfs:label "est encadré par"@fr .
+
+
+###  http://stackunity.org/education#enseigne
+:enseigne rdf:type owl:ObjectProperty ;
+          rdfs:domain :Enseignant ;
+          rdfs:range :Formation ;
+          rdfs:label "enseigne"@fr .
+
+
+###  http://stackunity.org/education#enseigneEnLangue
+:enseigneEnLangue rdf:type owl:ObjectProperty ;
+                  rdfs:domain :Formation ;
+                  rdfs:range :Langue ;
+                  rdfs:label "est enseignée en"@fr .
+
+
+###  http://stackunity.org/education#enseigneMatiere
+:enseigneMatiere rdf:type owl:ObjectProperty ;
+                 rdfs:domain :Enseignant ;
+                 rdfs:range :Matiere ;
+                 rdfs:label "enseigne la matière"@fr .
+
+
+###  http://stackunity.org/education#estEffectuePar
+:estEffectuePar rdf:type owl:ObjectProperty ;
+                rdfs:domain :Stage ;
+                rdfs:range :Apprenant ;
+                rdfs:label "est effectué par"@fr .
+
+
+###  http://stackunity.org/education#estMembreDe
+:estMembreDe rdf:type owl:ObjectProperty ;
+             rdfs:domain :Apprenant ;
+             rdfs:range :Club ;
+             rdfs:label "est membre de"@fr .
+
+
+###  http://stackunity.org/education#estOuvertA
+:estOuvertA rdf:type owl:ObjectProperty ;
+            rdfs:domain :ServiceMedical ;
+            rdfs:range :Personne ;
+            rdfs:label "est ouvert à"@fr .
+
+
+###  http://stackunity.org/education#estProposeePar
+:estProposeePar rdf:type owl:ObjectProperty ;
+                owl:inverseOf :proposeFormation ;
+                rdfs:domain :Formation ;
+                rdfs:range :Departement ;
+                rdfs:label "est proposée par le département"@fr .
+
+
+###  http://stackunity.org/education#estSitueDans
+:estSitueDans rdf:type owl:ObjectProperty ;
+              rdfs:domain :Espace ;
+              rdfs:range :Organisme ;
+              rdfs:label "est situé dans"@fr .
+
+
+###  http://stackunity.org/education#evalue
+:evalue rdf:type owl:ObjectProperty ;
+        rdfs:domain :Evaluation ;
+        rdfs:range :Competence ;
+        rdfs:label "évalue"@fr .
+
+
+###  http://stackunity.org/education#evalueParRapport
+:evalueParRapport rdf:type owl:ObjectProperty ;
+                  rdfs:domain :Stage ;
+                  rdfs:range :RapportDeStage ;
+                  rdfs:label "est évalué par le rapport"@fr .
+
+
+###  http://stackunity.org/education#faitPartieDe
+:faitPartieDe rdf:type owl:ObjectProperty ;
+              rdfs:domain :Formation ;
+              rdfs:range :Formation ;
+              rdfs:label "fait partie de"@fr .
+
+
+###  http://stackunity.org/education#financePar
+:financePar rdf:type owl:ObjectProperty ;
+            rdfs:domain :Bourse ;
+            rdfs:range :Organisme ;
+            rdfs:label "est financée par"@fr .
+
+
+###  http://stackunity.org/education#heberge
+:heberge rdf:type owl:ObjectProperty ;
+         rdfs:domain :Club ;
+         rdfs:range :Organisme ;
+         rdfs:label "est hébergé par"@fr .
+
+
+###  http://stackunity.org/education#inscriptionAuClub
+:inscriptionAuClub rdf:type owl:ObjectProperty ;
+                   rdfs:domain :InscriptionClub ;
+                   rdfs:range :Club ;
+                   rdfs:label "inscrit au club"@fr .
+
+
+###  http://stackunity.org/education#inscriptionDe
+:inscriptionDe rdf:type owl:ObjectProperty ;
+               rdfs:domain :Inscription ;
+               rdfs:range :Apprenant ;
+               rdfs:label "est l'inscription de"@fr .
+
+
+###  http://stackunity.org/education#inscriptionPourFormation
+:inscriptionPourFormation rdf:type owl:ObjectProperty ;
+                          rdfs:domain :InscriptionPedagogique ;
+                          rdfs:range :Formation ;
+                          rdfs:label "inscrit à la formation"@fr .
+
+
+###  http://stackunity.org/education#inscriptionPourPeriode
+:inscriptionPourPeriode rdf:type owl:ObjectProperty ;
+                        rdfs:domain :Inscription ;
+                        rdfs:range :PeriodeAcademique ;
+                        rdfs:label "valable pour la période"@fr .
+
+
+###  http://stackunity.org/education#inscritA
+:inscritA rdf:type owl:ObjectProperty ;
+          rdfs:domain :Apprenant ;
+          rdfs:range :Formation ;
+          rdfs:label "est inscrit à"@fr .
+
+
+###  http://stackunity.org/education#lieuSeance
+:lieuSeance rdf:type owl:ObjectProperty ;
+            rdfs:domain :Seance ;
+            rdfs:range :Espace ;
+            rdfs:label "a lieu dans"@fr .
+
+
+###  http://stackunity.org/education#matiereDeveloppe
+:matiereDeveloppe rdf:type owl:ObjectProperty ;
+                  rdfs:domain :Matiere ;
+                  rdfs:range :Competence ;
+                  rdfs:label "développe la compétence"@fr .
+
+
+###  http://stackunity.org/education#necessite
+:necessite rdf:type owl:ObjectProperty ;
+           owl:inverseOf :prerequisDe ;
+           rdfs:domain :Formation ;
+           rdfs:range :Competence ;
+           rdfs:label "nécessite comme prérequis"@fr .
+
+
+###  http://stackunity.org/education#necessiteCertificat
+:necessiteCertificat rdf:type owl:ObjectProperty ;
+                     rdfs:domain :Club ;
+                     rdfs:range :CertificatMedical ;
+                     rdfs:label "nécessite un certificat de type"@fr .
+
+
+###  http://stackunity.org/education#niveauDeLangue
+:niveauDeLangue rdf:type owl:ObjectProperty ;
+                rdfs:domain :Apprenant ;
+                rdfs:range :NiveauLangue ;
+                rdfs:label "a pour niveau de langue"@fr .
+
+
+###  http://stackunity.org/education#obtientCertification
+:obtientCertification rdf:type owl:ObjectProperty ;
+                      rdfs:domain :Apprenant ;
+                      rdfs:range :Certification ;
+                      rdfs:label "obtient la certification"@fr .
+
+
+###  http://stackunity.org/education#obtientDiplome
+:obtientDiplome rdf:type owl:ObjectProperty ;
+                rdfs:domain :Apprenant ;
+                rdfs:range :Diplome ;
+                rdfs:label "obtient le diplôme"@fr .
+
+
+###  http://stackunity.org/education#organiseEvenement
+:organiseEvenement rdf:type owl:ObjectProperty ;
+                   rdfs:domain :Club ;
+                   rdfs:range :Evenement ;
+                   rdfs:label "organise l'événement"@fr .
+
+
+###  http://stackunity.org/education#parleLangue
+:parleLangue rdf:type owl:ObjectProperty ;
+             rdfs:domain :Personne ;
+             rdfs:range :Langue ;
+             rdfs:label "parle la langue"@fr .
+
+
+###  http://stackunity.org/education#participeA
+:participeA rdf:type owl:ObjectProperty ;
+            rdfs:domain :Apprenant ;
+            rdfs:range :Seance ;
+            rdfs:label "participe à la séance"@fr .
+
+
+###  http://stackunity.org/education#partieDe
+:partieDe rdf:type owl:ObjectProperty ;
+          rdfs:domain :Departement ;
+          rdfs:range :Organisme ;
+          rdfs:label "fait partie de l'organisme"@fr .
+
+
+###  http://stackunity.org/education#passeEvaluation
+:passeEvaluation rdf:type owl:ObjectProperty ;
+                 rdfs:domain :Apprenant ;
+                 rdfs:range :Evaluation ;
+                 rdfs:label "passe une évaluation"@fr .
+
+
+###  http://stackunity.org/education#possedeCompetence
+:possedeCompetence rdf:type owl:ObjectProperty ;
+                   rdfs:domain :Personne ;
+                   rdfs:range :Competence ;
+                   rdfs:label "possède comme compétence"@fr .
+
+
+###  http://stackunity.org/education#possedeEtape
+:possedeEtape rdf:type owl:ObjectProperty ;
+              rdfs:domain :ParcoursApprentissage ;
+              rdfs:range :Formation ;
+              rdfs:label "possède comme étape"@fr .
+
+
+###  http://stackunity.org/education#prepareDiplome
+:prepareDiplome rdf:type owl:ObjectProperty ;
+                rdfs:domain :Formation ;
+                rdfs:range :Diplome ;
+                rdfs:label "prépare au diplôme"@fr .
+
+
+###  http://stackunity.org/education#prerequisDe
+:prerequisDe rdf:type owl:ObjectProperty ;
+             rdfs:domain :Competence ;
+             rdfs:range :Formation ;
+             rdfs:label "est prérequis de"@fr .
+
+
+###  http://stackunity.org/education#proposeFormation
+:proposeFormation rdf:type owl:ObjectProperty ;
+                  rdfs:domain :Departement ;
+                  rdfs:range :Formation ;
+                  rdfs:label "propose la formation"@fr .
+
+
+###  http://stackunity.org/education#recommandeParcours
+:recommandeParcours rdf:type owl:ObjectProperty ;
+                    rdfs:domain :ParcoursApprentissage ;
+                    rdfs:range :Apprenant ;
+                    rdfs:label "recommande le parcours"@fr .
+
+
+###  http://stackunity.org/education#requiertCompetence
+:requiertCompetence rdf:type owl:ObjectProperty ;
+                    rdfs:domain :Formation ;
+                    rdfs:range :Competence ;
+                    rdfs:label "requiert la compétence"@fr .
+
+
+###  http://stackunity.org/education#seDerouleEn
+:seDerouleEn rdf:type owl:ObjectProperty ;
+             rdfs:domain :Formation ;
+             rdfs:range :PeriodeAcademique ;
+             rdfs:label "se déroule pendant"@fr .
+
+
+###  http://stackunity.org/education#seanceDe
+:seanceDe rdf:type owl:ObjectProperty ;
+          rdfs:domain :Seance ;
+          rdfs:range :Formation ;
+          rdfs:label "est une séance de la formation"@fr .
+
+
+###  http://stackunity.org/education#serviceLocaliseDans
+:serviceLocaliseDans rdf:type owl:ObjectProperty ;
+                     rdfs:domain :ServiceMedical ;
+                     rdfs:range :Espace ;
+                     rdfs:label "est localisé dans"@fr .
+
+
+###  http://stackunity.org/education#serviceRattacheA
+:serviceRattacheA rdf:type owl:ObjectProperty ;
+                  rdfs:domain :ServiceMedical ;
+                  rdfs:range :Organisme ;
+                  rdfs:label "est rattaché à l'organisme"@fr .
+
+
+###  http://stackunity.org/education#stageDansDomaine
+:stageDansDomaine rdf:type owl:ObjectProperty ;
+                  rdfs:domain :Stage ;
+                  rdfs:range :Domaine ;
+                  rdfs:label "relève du domaine"@fr .
+
+
+###  http://stackunity.org/education#stageNecessiteCertificat
+:stageNecessiteCertificat rdf:type owl:ObjectProperty ;
+                          rdfs:domain :Stage ;
+                          rdfs:range :CertificatMedical ;
+                          rdfs:label "nécessite un certificat de type"@fr .
+
+
+###  http://stackunity.org/education#suitFormationAlternance
+:suitFormationAlternance rdf:type owl:ObjectProperty ;
+                         rdfs:domain :Apprenant ;
+                         rdfs:range :FormationEnAlternance ;
+                         rdfs:label "suit la formation en alternance"@fr .
+
+
+###  http://stackunity.org/education#suitParcours
+:suitParcours rdf:type owl:ObjectProperty ;
+              rdfs:domain :Apprenant ;
+              rdfs:range :ParcoursApprentissage ;
+              rdfs:label "suit le parcours"@fr .
+
+
+###  http://stackunity.org/education#superviseParTuteur
+:superviseParTuteur rdf:type owl:ObjectProperty ;
+                    rdfs:domain :Stage ;
+                    rdfs:range :TuteurEntreprise ;
+                    rdfs:label "est supervisé par le tuteur"@fr .
+
+
+###  http://stackunity.org/education#tutore
+:tutore rdf:type owl:ObjectProperty ;
+        rdfs:domain :Tuteur ;
+        rdfs:range :Apprenant ;
+        rdfs:label "tutore"@fr .
+
+
+###  http://stackunity.org/education#utiliseOutil
+:utiliseOutil rdf:type owl:ObjectProperty ;
+              rdfs:domain :Formation ;
+              rdfs:range :OutilNumerique ;
+              rdfs:label "utilise l'outil"@fr .
+
+
+###  http://stackunity.org/education#utiliseRessource
+:utiliseRessource rdf:type owl:ObjectProperty ;
+                  rdfs:domain :Formation ;
+                  rdfs:range :RessourcePedagogique ;
+                  rdfs:label "utilise la ressource"@fr .
+
+
+###  http://stackunity.org/education#valideFormation
+:valideFormation rdf:type owl:ObjectProperty ;
+                 rdfs:domain :Stage ;
+                 rdfs:range :Formation ;
+                 rdfs:label "valide la formation"@fr .
+
+
+#################################################################
+#    Data properties
+#################################################################
+
+###  http://stackunity.org/education#anneeCreation
+:anneeCreation rdf:type owl:DatatypeProperty ;
+               rdfs:domain :Club ;
+               rdfs:range xsd:gYear ;
+               rdfs:label "année de création"@fr .
+
+
+###  http://stackunity.org/education#anneeObtention
+:anneeObtention rdf:type owl:DatatypeProperty ;
+                rdfs:range xsd:gYear ;
+                rdfs:label "année d'obtention"@fr .
+
+
+###  http://stackunity.org/education#capaciteEspace
+:capaciteEspace rdf:type owl:DatatypeProperty ;
+                rdfs:domain :Espace ;
+                rdfs:range xsd:integer ;
+                rdfs:label "capacité de l'espace"@fr .
+
+
+###  http://stackunity.org/education#capaciteMax
+:capaciteMax rdf:type owl:DatatypeProperty ;
+             rdfs:domain :Club ;
+             rdfs:range xsd:integer ;
+             rdfs:label "capacité maximale"@fr .
+
+
+###  http://stackunity.org/education#codeMatiere
+:codeMatiere rdf:type owl:DatatypeProperty ;
+             rdfs:domain :Matiere ;
+             rdfs:range xsd:string ;
+             rdfs:label "code de la matière"@fr .
+
+
+###  http://stackunity.org/education#coefficient
+:coefficient rdf:type owl:DatatypeProperty ;
+             rdfs:domain :Matiere ;
+             rdfs:range xsd:decimal ;
+             rdfs:label "coefficient"@fr .
+
+
+###  http://stackunity.org/education#cotisation
+:cotisation rdf:type owl:DatatypeProperty ;
+            rdfs:domain :Club ;
+            rdfs:range xsd:decimal ;
+            rdfs:label "cotisation annuelle (DT)"@fr .
+
+
+###  http://stackunity.org/education#creditsECTS
+:creditsECTS rdf:type owl:DatatypeProperty ;
+             rdfs:range xsd:integer ;
+             rdfs:label "crédits ECTS"@fr .
+
+
+###  http://stackunity.org/education#dateCertificat
+:dateCertificat rdf:type owl:DatatypeProperty ;
+                rdfs:domain :CertificatMedical ;
+                rdfs:range xsd:date ;
+                rdfs:label "date du certificat"@fr .
+
+
+###  http://stackunity.org/education#dateDebut
+:dateDebut rdf:type owl:DatatypeProperty ;
+           rdfs:range xsd:date ;
+           rdfs:label "date de début"@fr .
+
+
+###  http://stackunity.org/education#dateEvaluation
+:dateEvaluation rdf:type owl:DatatypeProperty ;
+                rdfs:domain :Evaluation ;
+                rdfs:range xsd:date ;
+                rdfs:label "date d'évaluation"@fr .
+
+
+###  http://stackunity.org/education#dateEvenement
+:dateEvenement rdf:type owl:DatatypeProperty ;
+               rdfs:domain :Evenement ;
+               rdfs:range xsd:date ;
+               rdfs:label "date de l'événement"@fr .
+
+
+###  http://stackunity.org/education#dateFin
+:dateFin rdf:type owl:DatatypeProperty ;
+         rdfs:range xsd:date ;
+         rdfs:label "date de fin"@fr .
+
+
+###  http://stackunity.org/education#dateInscription
+:dateInscription rdf:type owl:DatatypeProperty ;
+                 rdfs:domain :Inscription ;
+                 rdfs:range xsd:date ;
+                 rdfs:label "date d'inscription"@fr .
+
+
+###  http://stackunity.org/education#dateNaissance
+:dateNaissance rdf:type owl:DatatypeProperty ;
+               rdfs:domain :Personne ;
+               rdfs:range xsd:date ;
+               rdfs:label "date de naissance"@fr .
+
+
+###  http://stackunity.org/education#dateSeance
+:dateSeance rdf:type owl:DatatypeProperty ;
+            rdfs:domain :Seance ;
+            rdfs:range xsd:date ;
+            rdfs:label "date de la séance"@fr .
+
+
+###  http://stackunity.org/education#description
+:description rdf:type owl:DatatypeProperty ;
+             rdfs:range xsd:string ;
+             rdfs:label "description"@fr .
+
+
+###  http://stackunity.org/education#duree
+:duree rdf:type owl:DatatypeProperty ;
+       rdfs:domain :Formation ;
+       rdfs:range xsd:integer ;
+       rdfs:label "durée"@fr .
+
+
+###  http://stackunity.org/education#dureeAbsenceJours
+:dureeAbsenceJours rdf:type owl:DatatypeProperty ;
+                   rdfs:domain :CertificatAbsence ;
+                   rdfs:range xsd:integer ;
+                   rdfs:label "durée d'absence (jours)"@fr .
+
+
+###  http://stackunity.org/education#dureeConsultationMinutes
+:dureeConsultationMinutes rdf:type owl:DatatypeProperty ;
+                          rdfs:domain :ServiceMedical ;
+                          rdfs:range xsd:integer ;
+                          rdfs:label "durée d'une consultation (minutes)"@fr .
+
+
+###  http://stackunity.org/education#dureeSemaines
+:dureeSemaines rdf:type owl:DatatypeProperty ;
+               rdfs:domain :Stage ;
+               rdfs:range xsd:integer ;
+               rdfs:label "durée en semaines"@fr .
+
+
+###  http://stackunity.org/education#email
+:email rdf:type owl:DatatypeProperty ;
+       rdfs:domain :Personne ;
+       rdfs:range xsd:string ;
+       rdfs:label "e-mail"@fr .
+
+
+###  http://stackunity.org/education#estActif
+:estActif rdf:type owl:DatatypeProperty ;
+          rdfs:range xsd:boolean ;
+          rdfs:label "est actif"@fr .
+
+
+###  http://stackunity.org/education#estGratuit
+:estGratuit rdf:type owl:DatatypeProperty ;
+            rdfs:domain :ServiceMedical ;
+            rdfs:range xsd:boolean ;
+            rdfs:label "est gratuit"@fr .
+
+
+###  http://stackunity.org/education#estRemunere
+:estRemunere rdf:type owl:DatatypeProperty ;
+             rdfs:domain :Stage ;
+             rdfs:range xsd:boolean ;
+             rdfs:label "est rémunéré"@fr .
+
+
+###  http://stackunity.org/education#gratification
+:gratification rdf:type owl:DatatypeProperty ;
+               rdfs:domain :Stage ;
+               rdfs:range xsd:decimal ;
+               rdfs:label "gratification mensuelle (DT)"@fr .
+
+
+###  http://stackunity.org/education#heureDebut
+:heureDebut rdf:type owl:DatatypeProperty ;
+            rdfs:domain :Seance ;
+            rdfs:range xsd:time ;
+            rdfs:label "heure de début"@fr .
+
+
+###  http://stackunity.org/education#heureFin
+:heureFin rdf:type owl:DatatypeProperty ;
+          rdfs:domain :Seance ;
+          rdfs:range xsd:time ;
+          rdfs:label "heure de fin"@fr .
+
+
+###  http://stackunity.org/education#horairesOuverture
+:horairesOuverture rdf:type owl:DatatypeProperty ;
+                   rdfs:domain :ServiceMedical ;
+                   rdfs:range xsd:string ;
+                   rdfs:label "horaires d'ouverture"@fr .
+
+
+###  http://stackunity.org/education#jourSeance
+:jourSeance rdf:type owl:DatatypeProperty ;
+            rdfs:domain :Club ;
+            rdfs:range xsd:string ;
+            rdfs:label "jour de séance"@fr .
+
+
+###  http://stackunity.org/education#lieu
+:lieu rdf:type owl:DatatypeProperty ;
+      rdfs:range xsd:string ;
+      rdfs:label "lieu"@fr .
+
+
+###  http://stackunity.org/education#mention
+:mention rdf:type owl:DatatypeProperty ;
+         rdfs:domain :Diplome ;
+         rdfs:range xsd:string ;
+         rdfs:label "mention"@fr .
+
+
+###  http://stackunity.org/education#montantBourse
+:montantBourse rdf:type owl:DatatypeProperty ;
+               rdfs:domain :Bourse ;
+               rdfs:range xsd:decimal ;
+               rdfs:label "montant de la bourse (DT)"@fr .
+
+
+###  http://stackunity.org/education#moyenneGenerale
+:moyenneGenerale rdf:type owl:DatatypeProperty ;
+                 rdfs:domain :Apprenant ;
+                 rdfs:range xsd:decimal ;
+                 rdfs:label "moyenne générale"@fr .
+
+
+###  http://stackunity.org/education#niveauMaitrise
+:niveauMaitrise rdf:type owl:DatatypeProperty ;
+                rdfs:domain :Personne ;
+                rdfs:range xsd:integer ;
+                rdfs:label "niveau de maîtrise"@fr .
+
+
+###  http://stackunity.org/education#nom
+:nom rdf:type owl:DatatypeProperty ;
+     rdfs:range xsd:string ;
+     rdfs:label "nom"@fr .
+
+
+###  http://stackunity.org/education#nombreHeures
+:nombreHeures rdf:type owl:DatatypeProperty ;
+              rdfs:domain :Matiere ;
+              rdfs:range xsd:integer ;
+              rdfs:label "nombre d'heures"@fr .
+
+
+###  http://stackunity.org/education#nombreMembres
+:nombreMembres rdf:type owl:DatatypeProperty ;
+               rdfs:domain :Club ;
+               rdfs:range xsd:integer ;
+               rdfs:label "nombre de membres"@fr .
+
+
+###  http://stackunity.org/education#numeroConvention
+:numeroConvention rdf:type owl:DatatypeProperty ;
+                  rdfs:domain :Stage ;
+                  rdfs:range xsd:string ;
+                  rdfs:label "numéro de convention"@fr .
+
+
+###  http://stackunity.org/education#score
+:score rdf:type owl:DatatypeProperty ;
+       rdfs:domain :Evaluation ;
+       rdfs:range xsd:decimal ;
+       rdfs:label "score"@fr .
+
+
+###  http://stackunity.org/education#secteurActivite
+:secteurActivite rdf:type owl:DatatypeProperty ;
+                 rdfs:domain :Organisme ;
+                 rdfs:range xsd:string ;
+                 rdfs:label "secteur d'activité"@fr .
+
+
+###  http://stackunity.org/education#specialiteMedicale
+:specialiteMedicale rdf:type owl:DatatypeProperty ;
+                    rdfs:domain :PersonnelMedical ;
+                    rdfs:range xsd:string ;
+                    rdfs:label "spécialité médicale"@fr .
+
+
+###  http://stackunity.org/education#statutInscription
+:statutInscription rdf:type owl:DatatypeProperty ;
+                   rdfs:domain :Inscription ;
+                   rdfs:range xsd:string ;
+                   rdfs:label "statut de l'inscription"@fr .
+
+
+###  http://stackunity.org/education#sujet
+:sujet rdf:type owl:DatatypeProperty ;
+       rdfs:domain :Stage ;
+       rdfs:range xsd:string ;
+       rdfs:label "sujet"@fr .
+
+
+###  http://stackunity.org/education#surRendezVous
+:surRendezVous rdf:type owl:DatatypeProperty ;
+               rdfs:domain :ServiceMedical ;
+               rdfs:range xsd:boolean ;
+               rdfs:label "sur rendez-vous"@fr .
+
+
+###  http://stackunity.org/education#tauxReussite
+:tauxReussite rdf:type owl:DatatypeProperty ;
+              rdfs:domain :Formation ;
+              rdfs:range xsd:decimal ;
+              rdfs:label "taux de réussite (%)"@fr .
+
+
+###  http://stackunity.org/education#telephone
+:telephone rdf:type owl:DatatypeProperty ;
+           rdfs:domain :Personne ;
+           rdfs:range xsd:string ;
+           rdfs:label "téléphone"@fr .
+
+
+###  http://stackunity.org/education#telephoneService
+:telephoneService rdf:type owl:DatatypeProperty ;
+                  rdfs:domain :ServiceMedical ;
+                  rdfs:range xsd:string ;
+                  rdfs:label "téléphone du service"@fr .
+
+
+###  http://stackunity.org/education#urlOutil
+:urlOutil rdf:type owl:DatatypeProperty ;
+          rdfs:domain :OutilNumerique ;
+          rdfs:range xsd:anyURI ;
+          rdfs:label "adresse web de l'outil"@fr .
+
+
+###  http://stackunity.org/education#validiteMois
+:validiteMois rdf:type owl:DatatypeProperty ;
+              rdfs:domain :CertificatMedical ;
+              rdfs:range xsd:integer ;
+              rdfs:label "durée de validité (mois)"@fr .
+
+
+###  http://stackunity.org/education#versionOutil
+:versionOutil rdf:type owl:DatatypeProperty ;
+              rdfs:domain :OutilNumerique ;
+              rdfs:range xsd:string ;
+              rdfs:label "version de l'outil"@fr .
+
+
+###  http://stackunity.org/education#ville
+:ville rdf:type owl:DatatypeProperty ;
+       rdfs:domain :Organisme ;
+       rdfs:range xsd:string ;
+       rdfs:label "ville"@fr .
+
+
+#################################################################
+#    Classes
+#################################################################
+
+###  http://stackunity.org/education#AbonnementTransport
+:AbonnementTransport rdf:type owl:Class ;
+                     rdfs:subClassOf :ServiceTransport ;
+                     rdfs:label "Abonnement de transport"@fr .
+
+
+###  http://stackunity.org/education#AccompagnementEmploi
+:AccompagnementEmploi rdf:type owl:Class ;
+                      rdfs:subClassOf :ServiceOrientationEmploi ;
+                      rdfs:label "Accompagnement à l'emploi"@fr .
+
+
+###  http://stackunity.org/education#Administrateur
+:Administrateur rdf:type owl:Class ;
+                rdfs:subClassOf :Personne ;
+                rdfs:label "Administrateur"@fr .
+
+
+###  http://stackunity.org/education#Amphitheatre
+:Amphitheatre rdf:type owl:Class ;
+              rdfs:subClassOf :Espace ;
+              rdfs:label "Amphithéâtre"@fr .
+
+
+###  http://stackunity.org/education#AncienApprenant
+:AncienApprenant rdf:type owl:Class ;
+                 rdfs:subClassOf :Apprenant ;
+                 rdfs:label "Ancien apprenant"@fr .
+
+
+###  http://stackunity.org/education#AnneeUniversitaire
+:AnneeUniversitaire rdf:type owl:Class ;
+                    rdfs:subClassOf :PeriodeAcademique ;
+                    rdfs:label "Année universitaire"@fr .
+
+
+###  http://stackunity.org/education#ApplicationMobile
+:ApplicationMobile rdf:type owl:Class ;
+                   rdfs:subClassOf :OutilNumerique ;
+                   rdfs:label "Application mobile"@fr .
+
+
+###  http://stackunity.org/education#Apprenant
+:Apprenant rdf:type owl:Class ;
+           rdfs:subClassOf :Personne ;
+           rdfs:label "Apprenant"@fr .
+
+
+###  http://stackunity.org/education#Atelier
+:Atelier rdf:type owl:Class ;
+         rdfs:subClassOf :Formation ;
+         rdfs:label "Atelier"@fr .
+
+
+###  http://stackunity.org/education#AtelierGestionStress
+:AtelierGestionStress rdf:type owl:Class ;
+                      rdfs:subClassOf :SoutienPsychologique ;
+                      rdfs:label "Atelier de gestion du stress"@fr .
+
+
+###  http://stackunity.org/education#AttestationParticipation
+:AttestationParticipation rdf:type owl:Class ;
+                          rdfs:subClassOf :Certification ;
+                          rdfs:label "Attestation de participation"@fr .
+
+
+###  http://stackunity.org/education#Basketball
+:Basketball rdf:type owl:Class ;
+            rdfs:subClassOf :ClubSport ;
+            rdfs:label "Basketball"@fr .
+
+
+###  http://stackunity.org/education#Bootcamp
+:Bootcamp rdf:type owl:Class ;
+          rdfs:subClassOf :Formation ;
+          rdfs:label "Bootcamp"@fr .
+
+
+###  http://stackunity.org/education#Bourse
+:Bourse rdf:type owl:Class ;
+        rdfs:comment "Aide financière attribuée à un apprenant."@fr ;
+        rdfs:label "Bourse"@fr .
+
+
+###  http://stackunity.org/education#BourseMerite
+:BourseMerite rdf:type owl:Class ;
+              rdfs:subClassOf :Bourse ;
+              rdfs:label "Bourse de mérite"@fr .
+
+
+###  http://stackunity.org/education#BourseMobilite
+:BourseMobilite rdf:type owl:Class ;
+                rdfs:subClassOf :Bourse ;
+                rdfs:label "Bourse de mobilité"@fr .
+
+
+###  http://stackunity.org/education#BourseSociale
+:BourseSociale rdf:type owl:Class ;
+               rdfs:subClassOf :Bourse ;
+               rdfs:label "Bourse sociale"@fr .
+
+
+###  http://stackunity.org/education#Cafeteria
+:Cafeteria rdf:type owl:Class ;
+           rdfs:subClassOf :ServiceRestauration ;
+           rdfs:label "Cafétéria"@fr .
+
+
+###  http://stackunity.org/education#CampagneDepistage
+:CampagneDepistage rdf:type owl:Class ;
+                   rdfs:subClassOf :PreventionSante ;
+                   rdfs:label "Campagne de dépistage"@fr .
+
+
+###  http://stackunity.org/education#CampagneSante
+:CampagneSante rdf:type owl:Class ;
+               rdfs:subClassOf :Evenement ;
+               rdfs:label "Campagne de santé"@fr .
+
+
+###  http://stackunity.org/education#CertificatAbsence
+:CertificatAbsence rdf:type owl:Class ;
+                   rdfs:subClassOf :CertificatMedical ;
+                   rdfs:label "Certificat d'absence"@fr .
+
+
+###  http://stackunity.org/education#CertificatAptitudeSport
+:CertificatAptitudeSport rdf:type owl:Class ;
+                         rdfs:subClassOf :CertificatMedical ;
+                         rdfs:label "Certificat d'aptitude sportive"@fr .
+
+
+###  http://stackunity.org/education#CertificatAptitudeStage
+:CertificatAptitudeStage rdf:type owl:Class ;
+                         rdfs:subClassOf :CertificatMedical ;
+                         rdfs:label "Certificat d'aptitude au stage"@fr .
+
+
+###  http://stackunity.org/education#CertificatMedical
+:CertificatMedical rdf:type owl:Class ;
+                   rdfs:subClassOf :ServiceMedical ;
+                   owl:disjointWith :ServiceMedical ;
+                   rdfs:comment "Document médical délivré à un apprenant."@fr ;
+                   rdfs:label "Certificat médical"@fr .
+
+
+###  http://stackunity.org/education#Certification
+:Certification rdf:type owl:Class ;
+               rdfs:subClassOf :Domaine ;
+               rdfs:comment "Certification obtenue après validation d'une formation ou de compétences."@fr ;
+               rdfs:label "Certification"@fr .
+
+
+###  http://stackunity.org/education#CertificationAcademique
+:CertificationAcademique rdf:type owl:Class ;
+                         rdfs:subClassOf :Certification ;
+                         rdfs:label "Certification académique"@fr .
+
+
+###  http://stackunity.org/education#CertificationProfessionnelle
+:CertificationProfessionnelle rdf:type owl:Class ;
+                              rdfs:subClassOf :Certification ;
+                              rdfs:label "Certification professionnelle"@fr .
+
+
+###  http://stackunity.org/education#ChargeDeCours
+:ChargeDeCours rdf:type owl:Class ;
+               rdfs:subClassOf :Enseignant ;
+               rdfs:label "Chargé de cours"@fr .
+
+
+###  http://stackunity.org/education#Chorale
+:Chorale rdf:type owl:Class ;
+         rdfs:subClassOf :ClubMusique ;
+         rdfs:label "Chorale"@fr .
+
+
+###  http://stackunity.org/education#Club
+:Club rdf:type owl:Class ;
+      rdfs:comment "Club ou association permettant aux apprenants de pratiquer une activité (sport, musique, théâtre...)."@fr ;
+      rdfs:label "Club"@fr .
+
+
+###  http://stackunity.org/education#ClubEnvironnement
+:ClubEnvironnement rdf:type owl:Class ;
+                   rdfs:subClassOf :ClubHumanitaire ;
+                   rdfs:label "Environnement"@fr .
+
+
+###  http://stackunity.org/education#ClubHumanitaire
+:ClubHumanitaire rdf:type owl:Class ;
+                 rdfs:subClassOf :Club ;
+                 rdfs:label "Club humanitaire"@fr .
+
+
+###  http://stackunity.org/education#ClubIntelligenceArtificielle
+:ClubIntelligenceArtificielle rdf:type owl:Class ;
+                              rdfs:subClassOf :ClubTechnologie ;
+                              rdfs:label "Intelligence artificielle"@fr .
+
+
+###  http://stackunity.org/education#ClubMusique
+:ClubMusique rdf:type owl:Class ;
+             rdfs:subClassOf :Club ;
+             rdfs:label "Club de musique"@fr .
+
+
+###  http://stackunity.org/education#ClubProgrammation
+:ClubProgrammation rdf:type owl:Class ;
+                   rdfs:subClassOf :ClubTechnologie ;
+                   rdfs:label "Programmation"@fr .
+
+
+###  http://stackunity.org/education#ClubRobotique
+:ClubRobotique rdf:type owl:Class ;
+               rdfs:subClassOf :ClubTechnologie ;
+               rdfs:label "Robotique"@fr .
+
+
+###  http://stackunity.org/education#ClubSecourisme
+:ClubSecourisme rdf:type owl:Class ;
+                rdfs:subClassOf :ClubHumanitaire ;
+                rdfs:label "Secourisme"@fr .
+
+
+###  http://stackunity.org/education#ClubSolidarite
+:ClubSolidarite rdf:type owl:Class ;
+                rdfs:subClassOf :ClubHumanitaire ;
+                rdfs:label "Solidarité"@fr .
+
+
+###  http://stackunity.org/education#ClubSport
+:ClubSport rdf:type owl:Class ;
+           rdfs:subClassOf :Club ,
+                           [ rdf:type owl:Restriction ;
+                             owl:onProperty :necessiteCertificat ;
+                             owl:someValuesFrom :CertificatAptitudeSport
+                           ] ;
+           rdfs:label "Club de sport"@fr .
+
+
+###  http://stackunity.org/education#ClubTechnologie
+:ClubTechnologie rdf:type owl:Class ;
+                 rdfs:subClassOf :Club ;
+                 rdfs:label "Club de technologie"@fr .
+
+
+###  http://stackunity.org/education#ClubTheatre
+:ClubTheatre rdf:type owl:Class ;
+             rdfs:subClassOf :Club ;
+             rdfs:label "Club de théâtre"@fr .
+
+
+###  http://stackunity.org/education#Competence
+:Competence rdf:type owl:Class ;
+            rdfs:subClassOf :Domaine ;
+            rdfs:comment "Compétence pouvant être acquise ou développée."@fr ;
+            rdfs:label "Compétence"@fr .
+
+
+###  http://stackunity.org/education#CompetenceArtistique
+:CompetenceArtistique rdf:type owl:Class ;
+                      rdfs:subClassOf :Competence ;
+                      rdfs:label "Compétence artistique"@fr .
+
+
+###  http://stackunity.org/education#CompetenceSportive
+:CompetenceSportive rdf:type owl:Class ;
+                    rdfs:subClassOf :Competence ;
+                    rdfs:label "Compétence sportive"@fr .
+
+
+###  http://stackunity.org/education#CompetenceTechnique
+:CompetenceTechnique rdf:type owl:Class ;
+                     rdfs:subClassOf :Competence ;
+                     owl:disjointWith :CompetenceTransversale ;
+                     rdfs:label "Compétence technique"@fr .
+
+
+###  http://stackunity.org/education#CompetenceTransversale
+:CompetenceTransversale rdf:type owl:Class ;
+                        rdfs:subClassOf :Competence ;
+                        rdfs:label "Compétence transversale"@fr .
+
+
+###  http://stackunity.org/education#Concert
+:Concert rdf:type owl:Class ;
+         rdfs:subClassOf :Evenement ;
+         rdfs:label "Concert"@fr .
+
+
+###  http://stackunity.org/education#ConsultationDentaire
+:ConsultationDentaire rdf:type owl:Class ;
+                      rdfs:subClassOf :ConsultationMedicale ;
+                      rdfs:label "Consultation dentaire"@fr .
+
+
+###  http://stackunity.org/education#ConsultationGenerale
+:ConsultationGenerale rdf:type owl:Class ;
+                      rdfs:subClassOf :ConsultationMedicale ;
+                      rdfs:label "Consultation générale"@fr .
+
+
+###  http://stackunity.org/education#ConsultationMedicale
+:ConsultationMedicale rdf:type owl:Class ;
+                      rdfs:subClassOf :ServiceMedical ;
+                      rdfs:label "Consultation médicale"@fr .
+
+
+###  http://stackunity.org/education#ConsultationOphtalmologique
+:ConsultationOphtalmologique rdf:type owl:Class ;
+                             rdfs:subClassOf :ConsultationMedicale ;
+                             rdfs:label "Consultation ophtalmologique"@fr .
+
+
+###  http://stackunity.org/education#ConventionBilaterale
+:ConventionBilaterale rdf:type owl:Class ;
+                      rdfs:subClassOf :StageConvention ;
+                      rdfs:label "Convention bilatérale"@fr .
+
+
+###  http://stackunity.org/education#ConventionCadre
+:ConventionCadre rdf:type owl:Class ;
+                 rdfs:subClassOf :StageConvention ;
+                 rdfs:label "Convention cadre"@fr .
+
+
+###  http://stackunity.org/education#ConventionTripartite
+:ConventionTripartite rdf:type owl:Class ;
+                      rdfs:subClassOf :StageConvention ;
+                      rdfs:label "Convention tripartite"@fr .
+
+
+###  http://stackunity.org/education#Cours
+:Cours rdf:type owl:Class ;
+       rdfs:subClassOf :Formation ;
+       rdfs:label "Cours"@fr .
+
+
+###  http://stackunity.org/education#CovoiturageEtudiant
+:CovoiturageEtudiant rdf:type owl:Class ;
+                     rdfs:subClassOf :ServiceTransport ;
+                     rdfs:label "Covoiturage étudiant"@fr .
+
+
+###  http://stackunity.org/education#Departement
+:Departement rdf:type owl:Class ;
+             rdfs:subClassOf :Espace ;
+             rdfs:comment "Département académique d'un établissement."@fr ;
+             rdfs:label "Département"@fr .
+
+
+###  http://stackunity.org/education#DepartementGestion
+:DepartementGestion rdf:type owl:Class ;
+                    rdfs:subClassOf :Departement ;
+                    rdfs:label "Département de gestion"@fr .
+
+
+###  http://stackunity.org/education#DepartementInformatique
+:DepartementInformatique rdf:type owl:Class ;
+                         rdfs:subClassOf :Departement ;
+                         rdfs:label "Département d'informatique"@fr .
+
+
+###  http://stackunity.org/education#DepartementLangues
+:DepartementLangues rdf:type owl:Class ;
+                    rdfs:subClassOf :Departement ;
+                    rdfs:label "Département de langues"@fr .
+
+
+###  http://stackunity.org/education#Diplome
+:Diplome rdf:type owl:Class ;
+         rdfs:subClassOf :Domaine ;
+         rdfs:comment "Diplôme délivré à l'issue d'un cycle d'études."@fr ;
+         rdfs:label "Diplôme"@fr .
+
+
+###  http://stackunity.org/education#DiplomeIngenieur
+:DiplomeIngenieur rdf:type owl:Class ;
+                  rdfs:subClassOf :Diplome ;
+                  rdfs:label "Diplôme d'ingénieur"@fr .
+
+
+###  http://stackunity.org/education#Document
+:Document rdf:type owl:Class ;
+          rdfs:subClassOf :RessourcePedagogique ;
+          rdfs:label "Document"@fr .
+
+
+###  http://stackunity.org/education#Domaine
+:Domaine rdf:type owl:Class ;
+         rdfs:comment "Domaine disciplinaire auquel se rattache une formation ou un club."@fr ;
+         rdfs:label "Domaine"@fr .
+
+
+###  http://stackunity.org/education#DomaineArtsCulture
+:DomaineArtsCulture rdf:type owl:Class ;
+                    rdfs:subClassOf :Domaine ;
+                    rdfs:label "Domaine arts et culture"@fr .
+
+
+###  http://stackunity.org/education#DomaineSport
+:DomaineSport rdf:type owl:Class ;
+              rdfs:subClassOf :Domaine ;
+              rdfs:label "Domaine sport"@fr .
+
+
+###  http://stackunity.org/education#DomaineTechnologie
+:DomaineTechnologie rdf:type owl:Class ;
+                    rdfs:subClassOf :Domaine ;
+                    rdfs:label "Domaine technologie"@fr .
+
+
+###  http://stackunity.org/education#EducationSante
+:EducationSante rdf:type owl:Class ;
+                rdfs:subClassOf :PreventionSante ;
+                rdfs:label "Éducation à la santé"@fr .
+
+
+###  http://stackunity.org/education#Enseignant
+:Enseignant rdf:type owl:Class ;
+            rdfs:subClassOf :Personne ;
+            rdfs:label "Enseignant"@fr .
+
+
+###  http://stackunity.org/education#Entreprise
+:Entreprise rdf:type owl:Class ;
+            rdfs:subClassOf :Organisme ;
+            rdfs:label "Entreprise"@fr .
+
+
+###  http://stackunity.org/education#EntretienPsychologique
+:EntretienPsychologique rdf:type owl:Class ;
+                        rdfs:subClassOf :SoutienPsychologique ;
+                        rdfs:label "Entretien psychologique individuel"@fr .
+
+
+###  http://stackunity.org/education#Espace
+:Espace rdf:type owl:Class ;
+        rdfs:comment "Lieu physique où se déroulent cours, séances et activités."@fr ;
+        rdfs:label "Espace"@fr .
+
+
+###  http://stackunity.org/education#Etudiant
+:Etudiant rdf:type owl:Class ;
+          rdfs:subClassOf :Apprenant ;
+          rdfs:label "Étudiant"@fr .
+
+
+###  http://stackunity.org/education#Evaluation
+:Evaluation rdf:type owl:Class ;
+            rdfs:subClassOf :Matiere ;
+            rdfs:comment "Évaluation permettant de mesurer les acquis."@fr ;
+            rdfs:label "Évaluation"@fr .
+
+
+###  http://stackunity.org/education#Evenement
+:Evenement rdf:type owl:Class ;
+           rdfs:subClassOf :Club ;
+           rdfs:comment "Événement organisé par un club (spectacle, tournoi, concert...)."@fr ;
+           rdfs:label "Événement"@fr .
+
+
+###  http://stackunity.org/education#Examen
+:Examen rdf:type owl:Class ;
+        rdfs:subClassOf :Evaluation ;
+        rdfs:label "Examen"@fr .
+
+
+###  http://stackunity.org/education#Exercice
+:Exercice rdf:type owl:Class ;
+          rdfs:subClassOf :RessourcePedagogique ;
+          rdfs:label "Exercice"@fr .
+
+
+###  http://stackunity.org/education#Football
+:Football rdf:type owl:Class ;
+          rdfs:subClassOf :ClubSport ;
+          rdfs:label "Football"@fr .
+
+
+###  http://stackunity.org/education#Formation
+:Formation rdf:type owl:Class ;
+           rdfs:subClassOf :Diplome ;
+           rdfs:comment "Élément de formation ou d'apprentissage."@fr ;
+           rdfs:label "Formation"@fr .
+
+
+###  http://stackunity.org/education#FormationEnAlternance
+:FormationEnAlternance rdf:type owl:Class ;
+                       rdfs:subClassOf :Formation ;
+                       rdfs:label "Formation en alternance"@fr .
+
+
+###  http://stackunity.org/education#ForumEmploi
+:ForumEmploi rdf:type owl:Class ;
+             rdfs:subClassOf :ServiceOrientationEmploi ;
+             rdfs:label "Forum de l'emploi"@fr .
+
+
+###  http://stackunity.org/education#GroupeDeParole
+:GroupeDeParole rdf:type owl:Class ;
+                rdfs:subClassOf :SoutienPsychologique ;
+                rdfs:label "Groupe de parole"@fr .
+
+
+###  http://stackunity.org/education#GroupeMusiqueModerne
+:GroupeMusiqueModerne rdf:type owl:Class ;
+                      rdfs:subClassOf :ClubMusique ;
+                      rdfs:label "Groupe de musique moderne"@fr .
+
+
+###  http://stackunity.org/education#HebergementUrgence
+:HebergementUrgence rdf:type owl:Class ;
+                    rdfs:subClassOf :ServiceHebergement ;
+                    rdfs:label "Hébergement d'urgence"@fr .
+
+
+###  http://stackunity.org/education#Infirmerie
+:Infirmerie rdf:type owl:Class ;
+            rdfs:subClassOf :Espace ;
+            rdfs:label "Infirmerie"@fr .
+
+
+###  http://stackunity.org/education#Infirmier
+:Infirmier rdf:type owl:Class ;
+           rdfs:subClassOf :PersonnelMedical ;
+           rdfs:label "Infirmier"@fr .
+
+
+###  http://stackunity.org/education#Inscription
+:Inscription rdf:type owl:Class ;
+             rdfs:comment "Démarche d'inscription d'un apprenant."@fr ;
+             rdfs:label "Inscription"@fr .
+
+
+###  http://stackunity.org/education#InscriptionAdministrative
+:InscriptionAdministrative rdf:type owl:Class ;
+                           rdfs:subClassOf :Inscription ;
+                           rdfs:label "Inscription administrative"@fr .
+
+
+###  http://stackunity.org/education#InscriptionClub
+:InscriptionClub rdf:type owl:Class ;
+                 rdfs:subClassOf :Inscription ;
+                 rdfs:label "Inscription à un club"@fr .
+
+
+###  http://stackunity.org/education#InscriptionPedagogique
+:InscriptionPedagogique rdf:type owl:Class ;
+                        rdfs:subClassOf :Inscription ;
+                        rdfs:label "Inscription pédagogique"@fr .
+
+
+###  http://stackunity.org/education#Kinesitherapie
+:Kinesitherapie rdf:type owl:Class ;
+                rdfs:subClassOf :SanteSportive ;
+                rdfs:label "Kinésithérapie"@fr .
+
+
+###  http://stackunity.org/education#Laboratoire
+:Laboratoire rdf:type owl:Class ;
+             rdfs:subClassOf :Organisme ;
+             rdfs:label "Laboratoire"@fr .
+
+
+###  http://stackunity.org/education#Langue
+:Langue rdf:type owl:Class ;
+        rdfs:subClassOf :Formation ;
+        rdfs:comment "Langue parlée ou enseignée."@fr ;
+        rdfs:label "Langue"@fr .
+
+
+###  http://stackunity.org/education#LangueDesSignes
+:LangueDesSignes rdf:type owl:Class ;
+                 rdfs:subClassOf :Langue ;
+                 rdfs:label "Langue des signes"@fr .
+
+
+###  http://stackunity.org/education#LangueEtrangere
+:LangueEtrangere rdf:type owl:Class ;
+                 rdfs:subClassOf :Langue ;
+                 rdfs:label "Langue étrangère"@fr .
+
+
+###  http://stackunity.org/education#LangueNationale
+:LangueNationale rdf:type owl:Class ;
+                 rdfs:subClassOf :Langue ;
+                 rdfs:label "Langue nationale"@fr .
+
+
+###  http://stackunity.org/education#Licence
+:Licence rdf:type owl:Class ;
+         rdfs:subClassOf :Diplome ;
+         rdfs:label "Licence"@fr .
+
+
+###  http://stackunity.org/education#Livre
+:Livre rdf:type owl:Class ;
+       rdfs:subClassOf :RessourcePedagogique ;
+       rdfs:label "Livre"@fr .
+
+
+###  http://stackunity.org/education#LogementPartage
+:LogementPartage rdf:type owl:Class ;
+                 rdfs:subClassOf :ServiceHebergement ;
+                 rdfs:label "Logement partagé"@fr .
+
+
+###  http://stackunity.org/education#LogicielDeveloppement
+:LogicielDeveloppement rdf:type owl:Class ;
+                       rdfs:subClassOf :OutilNumerique ;
+                       rdfs:label "Logiciel de développement"@fr .
+
+
+###  http://stackunity.org/education#Master
+:Master rdf:type owl:Class ;
+        rdfs:subClassOf :Diplome ;
+        rdfs:label "Master"@fr .
+
+
+###  http://stackunity.org/education#Masterclass
+:Masterclass rdf:type owl:Class ;
+             rdfs:subClassOf :Formation ;
+             rdfs:label "Masterclass"@fr .
+
+
+###  http://stackunity.org/education#Matiere
+:Matiere rdf:type owl:Class ;
+         rdfs:comment "Matière enseignée au sein d'une formation."@fr ;
+         rdfs:label "Matière"@fr .
+
+
+###  http://stackunity.org/education#MatiereLitteraire
+:MatiereLitteraire rdf:type owl:Class ;
+                   rdfs:subClassOf :Matiere ;
+                   rdfs:label "Matière littéraire"@fr .
+
+
+###  http://stackunity.org/education#MatiereScientifique
+:MatiereScientifique rdf:type owl:Class ;
+                     rdfs:subClassOf :Matiere ;
+                     rdfs:label "Matière scientifique"@fr .
+
+
+###  http://stackunity.org/education#MatiereTechnique
+:MatiereTechnique rdf:type owl:Class ;
+                  rdfs:subClassOf :Matiere ;
+                  rdfs:label "Matière technique"@fr .
+
+
+###  http://stackunity.org/education#Medecin
+:Medecin rdf:type owl:Class ;
+         rdfs:subClassOf :PersonnelMedical ;
+         rdfs:label "Médecin"@fr .
+
+
+###  http://stackunity.org/education#Module
+:Module rdf:type owl:Class ;
+        rdfs:subClassOf :Formation ;
+        rdfs:label "Module"@fr .
+
+
+###  http://stackunity.org/education#Natation
+:Natation rdf:type owl:Class ;
+          rdfs:subClassOf :ClubSport ;
+          rdfs:label "Natation"@fr .
+
+
+###  http://stackunity.org/education#NavetteUniversitaire
+:NavetteUniversitaire rdf:type owl:Class ;
+                      rdfs:subClassOf :ServiceTransport ;
+                      rdfs:label "Navette universitaire"@fr .
+
+
+###  http://stackunity.org/education#Niveau
+:Niveau rdf:type owl:Class ;
+        rdfs:subClassOf :Diplome ;
+        rdfs:comment "Niveau de maîtrise ou niveau pédagogique."@fr ;
+        rdfs:label "Niveau"@fr .
+
+
+###  http://stackunity.org/education#NiveauAcademique
+:NiveauAcademique rdf:type owl:Class ;
+                  rdfs:subClassOf :Niveau ;
+                  rdfs:label "Niveau académique"@fr .
+
+
+###  http://stackunity.org/education#NiveauCompetence
+:NiveauCompetence rdf:type owl:Class ;
+                  rdfs:subClassOf :Niveau ;
+                  rdfs:label "Niveau de compétence"@fr .
+
+
+###  http://stackunity.org/education#NiveauLangue
+:NiveauLangue rdf:type owl:Class ;
+              rdfs:subClassOf :Niveau ;
+              rdfs:label "Niveau de langue"@fr .
+
+
+###  http://stackunity.org/education#Orchestre
+:Orchestre rdf:type owl:Class ;
+           rdfs:subClassOf :ClubMusique ;
+           rdfs:label "Orchestre"@fr .
+
+
+###  http://stackunity.org/education#Organisme
+:Organisme rdf:type owl:Class ;
+           rdfs:comment "Entreprise, laboratoire ou institution qui accueille un stage ou héberge un club."@fr ;
+           rdfs:label "Organisme"@fr .
+
+
+###  http://stackunity.org/education#OrientationAcademique
+:OrientationAcademique rdf:type owl:Class ;
+                       rdfs:subClassOf :ServiceOrientationEmploi ;
+                       rdfs:label "Orientation académique"@fr .
+
+
+###  http://stackunity.org/education#OutilNumerique
+:OutilNumerique rdf:type owl:Class ;
+                rdfs:subClassOf :Matiere ;
+                rdfs:comment "Plateforme, logiciel ou application utilisé dans l'apprentissage."@fr ;
+                rdfs:label "Outil numérique"@fr .
+
+
+###  http://stackunity.org/education#PanierSolidaire
+:PanierSolidaire rdf:type owl:Class ;
+                 rdfs:subClassOf :ServiceRestauration ;
+                 rdfs:label "Panier solidaire"@fr .
+
+
+###  http://stackunity.org/education#ParcoursApprentissage
+:ParcoursApprentissage rdf:type owl:Class ;
+                       rdfs:subClassOf :Domaine ;
+                       rdfs:comment "Parcours composé de plusieurs étapes de formation."@fr ;
+                       rdfs:label "Parcours d'apprentissage"@fr .
+
+
+###  http://stackunity.org/education#ParcoursContinu
+:ParcoursContinu rdf:type owl:Class ;
+                 rdfs:subClassOf :ParcoursApprentissage ;
+                 rdfs:label "Parcours de formation continue"@fr .
+
+
+###  http://stackunity.org/education#ParcoursInitial
+:ParcoursInitial rdf:type owl:Class ;
+                 rdfs:subClassOf :ParcoursApprentissage ;
+                 rdfs:label "Parcours initial"@fr .
+
+
+###  http://stackunity.org/education#ParcoursPersonnalise
+:ParcoursPersonnalise rdf:type owl:Class ;
+                      rdfs:subClassOf :ParcoursApprentissage ;
+                      rdfs:label "Parcours personnalisé"@fr .
+
+
+###  http://stackunity.org/education#PeriodeAcademique
+:PeriodeAcademique rdf:type owl:Class ;
+                   rdfs:subClassOf :Diplome ;
+                   rdfs:comment "Période de temps structurant l'activité pédagogique."@fr ;
+                   rdfs:label "Période académique"@fr .
+
+
+###  http://stackunity.org/education#Personne
+:Personne rdf:type owl:Class ;
+          rdfs:comment "Personne impliquée dans le processus éducatif."@fr ;
+          rdfs:label "Personne"@fr .
+
+
+###  http://stackunity.org/education#PersonnelMedical
+:PersonnelMedical rdf:type owl:Class ;
+                  rdfs:subClassOf :Personne ;
+                  rdfs:label "Personnel médical"@fr .
+
+
+###  http://stackunity.org/education#PlateformeELearning
+:PlateformeELearning rdf:type owl:Class ;
+                     rdfs:subClassOf :OutilNumerique ;
+                     rdfs:label "Plateforme d'e-learning"@fr .
+
+
+###  http://stackunity.org/education#Podcast
+:Podcast rdf:type owl:Class ;
+         rdfs:subClassOf :RessourcePedagogique ;
+         rdfs:label "Podcast"@fr .
+
+
+###  http://stackunity.org/education#PosteDeSecours
+:PosteDeSecours rdf:type owl:Class ;
+                rdfs:subClassOf :PremiersSecoursMedicaux ;
+                rdfs:label "Poste de secours"@fr .
+
+
+###  http://stackunity.org/education#PremiersSecoursMedicaux
+:PremiersSecoursMedicaux rdf:type owl:Class ;
+                         rdfs:subClassOf :ServiceMedical ;
+                         rdfs:label "Urgences et premiers secours"@fr .
+
+
+###  http://stackunity.org/education#PremiersSoins
+:PremiersSoins rdf:type owl:Class ;
+               rdfs:subClassOf :PremiersSecoursMedicaux ;
+               rdfs:label "Premiers soins"@fr .
+
+
+###  http://stackunity.org/education#PreventionSante
+:PreventionSante rdf:type owl:Class ;
+                 rdfs:subClassOf :ServiceMedical ;
+                 rdfs:label "Prévention et santé publique"@fr .
+
+
+###  http://stackunity.org/education#Professeur
+:Professeur rdf:type owl:Class ;
+            rdfs:subClassOf :Enseignant ;
+            rdfs:label "Professeur"@fr .
+
+
+###  http://stackunity.org/education#Programme
+:Programme rdf:type owl:Class ;
+           rdfs:subClassOf :Formation ;
+           rdfs:label "Programme"@fr .
+
+
+###  http://stackunity.org/education#Projet
+:Projet rdf:type owl:Class ;
+        rdfs:subClassOf :Evaluation ;
+        rdfs:label "Projet"@fr .
+
+
+###  http://stackunity.org/education#Psychologue
+:Psychologue rdf:type owl:Class ;
+             rdfs:subClassOf :PersonnelMedical ;
+             rdfs:label "Psychologue"@fr .
+
+
+###  http://stackunity.org/education#Quiz
+:Quiz rdf:type owl:Class ;
+      rdfs:subClassOf :Evaluation ;
+      rdfs:label "Quiz"@fr .
+
+
+###  http://stackunity.org/education#RapportDeStage
+:RapportDeStage rdf:type owl:Class ;
+                rdfs:subClassOf :Evaluation ;
+                rdfs:label "Rapport de stage"@fr .
+
+
+###  http://stackunity.org/education#ResidenceUniversitaire
+:ResidenceUniversitaire rdf:type owl:Class ;
+                        rdfs:subClassOf :ServiceHebergement ;
+                        rdfs:label "Résidence universitaire"@fr .
+
+
+###  http://stackunity.org/education#ResponsableClub
+:ResponsableClub rdf:type owl:Class ;
+                 rdfs:subClassOf :Personne ;
+                 rdfs:label "Responsable de club"@fr .
+
+
+###  http://stackunity.org/education#RessourcePedagogique
+:RessourcePedagogique rdf:type owl:Class ;
+                      rdfs:subClassOf :Matiere ;
+                      rdfs:comment "Ressource utilisée pour faciliter l'apprentissage."@fr ;
+                      rdfs:label "Ressource pédagogique"@fr .
+
+
+###  http://stackunity.org/education#RestaurantUniversitaire
+:RestaurantUniversitaire rdf:type owl:Class ;
+                         rdfs:subClassOf :ServiceRestauration ;
+                         rdfs:label "Restaurant universitaire"@fr .
+
+
+###  http://stackunity.org/education#SalleDeCours
+:SalleDeCours rdf:type owl:Class ;
+              rdfs:subClassOf :Espace ;
+              rdfs:label "Salle de cours"@fr .
+
+
+###  http://stackunity.org/education#SalleInformatique
+:SalleInformatique rdf:type owl:Class ;
+                   rdfs:subClassOf :Espace ;
+                   rdfs:label "Salle informatique"@fr .
+
+
+###  http://stackunity.org/education#SanteSportive
+:SanteSportive rdf:type owl:Class ;
+               rdfs:subClassOf :ServiceMedical ;
+               rdfs:label "Santé sportive"@fr .
+
+
+###  http://stackunity.org/education#Seance
+:Seance rdf:type owl:Class ;
+        rdfs:subClassOf :Matiere ;
+        rdfs:comment "Séance planifiée dans l'emploi du temps."@fr ;
+        rdfs:label "Séance"@fr .
+
+
+###  http://stackunity.org/education#SeanceDeCours
+:SeanceDeCours rdf:type owl:Class ;
+               rdfs:subClassOf :Seance ;
+               rdfs:label "Séance de cours"@fr .
+
+
+###  http://stackunity.org/education#SeanceDeTD
+:SeanceDeTD rdf:type owl:Class ;
+            rdfs:subClassOf :Seance ;
+            rdfs:label "Séance de TD"@fr .
+
+
+###  http://stackunity.org/education#SeanceDeTP
+:SeanceDeTP rdf:type owl:Class ;
+            rdfs:subClassOf :Seance ;
+            rdfs:label "Séance de TP"@fr .
+
+
+###  http://stackunity.org/education#Semestre
+:Semestre rdf:type owl:Class ;
+          rdfs:subClassOf :PeriodeAcademique ;
+          rdfs:label "Semestre"@fr .
+
+
+###  http://stackunity.org/education#ServiceHebergement
+:ServiceHebergement rdf:type owl:Class ;
+                    rdfs:subClassOf :ServiceVieEtudiante ;
+                    rdfs:label "Hébergement"@fr .
+
+
+###  http://stackunity.org/education#ServiceMedical
+:ServiceMedical rdf:type owl:Class ;
+                owl:disjointWith :ServiceVieEtudiante ;
+                rdfs:comment "Service de santé offert aux apprenants et au personnel de l'établissement."@fr ;
+                rdfs:label "Service médical"@fr .
+
+
+###  http://stackunity.org/education#ServiceOrientationEmploi
+:ServiceOrientationEmploi rdf:type owl:Class ;
+                          rdfs:subClassOf :ServiceVieEtudiante ;
+                          rdfs:label "Orientation et insertion professionnelle"@fr .
+
+
+###  http://stackunity.org/education#ServiceRestauration
+:ServiceRestauration rdf:type owl:Class ;
+                     rdfs:subClassOf :ServiceVieEtudiante ;
+                     rdfs:label "Restauration"@fr .
+
+
+###  http://stackunity.org/education#ServiceTransport
+:ServiceTransport rdf:type owl:Class ;
+                  rdfs:subClassOf :ServiceVieEtudiante ;
+                  rdfs:label "Transport"@fr .
+
+
+###  http://stackunity.org/education#ServiceVieEtudiante
+:ServiceVieEtudiante rdf:type owl:Class ;
+                     rdfs:comment "Service d'accompagnement de la vie quotidienne et professionnelle des apprenants (hébergement, restauration, transport, orientation)."@fr ;
+                     rdfs:label "Service de vie étudiante"@fr .
+
+
+###  http://stackunity.org/education#SessionExamens
+:SessionExamens rdf:type owl:Class ;
+                rdfs:subClassOf :PeriodeAcademique ;
+                rdfs:label "Session d'examens"@fr .
+
+
+###  http://stackunity.org/education#Soutenance
+:Soutenance rdf:type owl:Class ;
+            rdfs:subClassOf :Evaluation ;
+            rdfs:label "Soutenance"@fr .
+
+
+###  http://stackunity.org/education#SoutienPsychologique
+:SoutienPsychologique rdf:type owl:Class ;
+                      rdfs:subClassOf :ServiceMedical ,
+                                      [ rdf:type owl:Restriction ;
+                                        owl:onProperty :consultePar ;
+                                        owl:someValuesFrom :Psychologue
+                                      ] ;
+                      rdfs:label "Soutien psychologique"@fr .
+
+
+###  http://stackunity.org/education#Spectacle
+:Spectacle rdf:type owl:Class ;
+           rdfs:subClassOf :Evenement ;
+           rdfs:label "Spectacle"@fr .
+
+
+###  http://stackunity.org/education#Stage
+:Stage rdf:type owl:Class ;
+       rdfs:subClassOf :Organisme ;
+       rdfs:comment "Période de formation pratique effectuée par un apprenant."@fr ;
+       rdfs:label "Stage"@fr .
+
+
+###  http://stackunity.org/education#StageConvention
+:StageConvention rdf:type owl:Class ;
+                 rdfs:subClassOf :Stage ;
+                 rdfs:label "Stage sous convention"@fr .
+
+
+###  http://stackunity.org/education#StageDoctorat
+:StageDoctorat rdf:type owl:Class ;
+               rdfs:subClassOf :StageRecherche ;
+               rdfs:label "Stage de doctorat"@fr .
+
+
+###  http://stackunity.org/education#StageEntreprise
+:StageEntreprise rdf:type owl:Class ;
+                 rdfs:subClassOf :Stage ;
+                 rdfs:label "Stage en entreprise"@fr .
+
+
+###  http://stackunity.org/education#StageInitiation
+:StageInitiation rdf:type owl:Class ;
+                 rdfs:subClassOf :StageEntreprise ;
+                 rdfs:label "Stage d'initiation"@fr .
+
+
+###  http://stackunity.org/education#StageLaboratoire
+:StageLaboratoire rdf:type owl:Class ;
+                  rdfs:subClassOf :StageRecherche ;
+                  rdfs:label "Stage en laboratoire"@fr .
+
+
+###  http://stackunity.org/education#StageMasterRecherche
+:StageMasterRecherche rdf:type owl:Class ;
+                      rdfs:subClassOf :StageRecherche ;
+                      rdfs:label "Stage de master recherche"@fr .
+
+
+###  http://stackunity.org/education#StageObservation
+:StageObservation rdf:type owl:Class ;
+                  rdfs:subClassOf :StageEntreprise ;
+                  rdfs:label "Stage d'observation"@fr .
+
+
+###  http://stackunity.org/education#StagePFE
+:StagePFE rdf:type owl:Class ;
+          rdfs:subClassOf :StageEntreprise ;
+          rdfs:label "Stage PFE (projet de fin d'études)"@fr .
+
+
+###  http://stackunity.org/education#StageRecherche
+:StageRecherche rdf:type owl:Class ;
+                rdfs:subClassOf :Stage ;
+                rdfs:label "Stage de recherche"@fr .
+
+
+###  http://stackunity.org/education#Stagiaire
+:Stagiaire rdf:type owl:Class ;
+           rdfs:subClassOf :Apprenant ;
+           rdfs:label "Stagiaire"@fr .
+
+
+###  http://stackunity.org/education#SuiviSportif
+:SuiviSportif rdf:type owl:Class ;
+              rdfs:subClassOf :SanteSportive ;
+              rdfs:label "Suivi médico-sportif"@fr .
+
+
+###  http://stackunity.org/education#TheatreComedie
+:TheatreComedie rdf:type owl:Class ;
+                rdfs:subClassOf :ClubTheatre ;
+                rdfs:label "Comédie"@fr .
+
+
+###  http://stackunity.org/education#TheatreDrame
+:TheatreDrame rdf:type owl:Class ;
+              rdfs:subClassOf :ClubTheatre ;
+              rdfs:label "Drame"@fr .
+
+
+###  http://stackunity.org/education#TheatreImprovisation
+:TheatreImprovisation rdf:type owl:Class ;
+                      rdfs:subClassOf :ClubTheatre ;
+                      rdfs:label "Théâtre d'improvisation"@fr .
+
+
+###  http://stackunity.org/education#Tournoi
+:Tournoi rdf:type owl:Class ;
+         rdfs:subClassOf :Evenement ;
+         rdfs:label "Tournoi"@fr .
+
+
+###  http://stackunity.org/education#TransportMedical
+:TransportMedical rdf:type owl:Class ;
+                  rdfs:subClassOf :PremiersSecoursMedicaux ;
+                  rdfs:label "Transport médical"@fr .
+
+
+###  http://stackunity.org/education#TravailPratique
+:TravailPratique rdf:type owl:Class ;
+                 rdfs:subClassOf :Evaluation ;
+                 rdfs:label "Travail pratique"@fr .
+
+
+###  http://stackunity.org/education#Tuteur
+:Tuteur rdf:type owl:Class ;
+        rdfs:subClassOf :Personne ;
+        rdfs:label "Tuteur"@fr .
+
+
+###  http://stackunity.org/education#TuteurEntreprise
+:TuteurEntreprise rdf:type owl:Class ;
+                  rdfs:subClassOf :Personne ;
+                  rdfs:label "Tuteur d'entreprise"@fr .
+
+
+###  http://stackunity.org/education#Universite
+:Universite rdf:type owl:Class ;
+            rdfs:subClassOf :Organisme ;
+            rdfs:label "Université"@fr .
+
+
+###  http://stackunity.org/education#Vacataire
+:Vacataire rdf:type owl:Class ;
+           rdfs:subClassOf :Enseignant ;
+           rdfs:label "Vacataire"@fr .
+
+
+###  http://stackunity.org/education#Vaccination
+:Vaccination rdf:type owl:Class ;
+             rdfs:subClassOf :PreventionSante ;
+             rdfs:label "Vaccination"@fr .
+
+
+###  http://stackunity.org/education#Video
+:Video rdf:type owl:Class ;
+       rdfs:subClassOf :RessourcePedagogique ;
+       rdfs:label "Vidéo"@fr .
+
+
+###  http://stackunity.org/education#VisiteAptitudeSport
+:VisiteAptitudeSport rdf:type owl:Class ;
+                     rdfs:subClassOf :SanteSportive ,
+                                     [ rdf:type owl:Restriction ;
+                                       owl:onProperty :assureParPersonnel ;
+                                       owl:someValuesFrom :Medecin
+                                     ] ;
+                     rdfs:label "Visite d'aptitude sportive"@fr .
+
+
+###  http://stackunity.org/education#Webformation
+:Webformation rdf:type owl:Class ;
+              rdfs:subClassOf :Formation ;
+              rdfs:label "Formation en ligne"@fr .
+
+
+###  http://stackunity.org/education#Webinaire
+:Webinaire rdf:type owl:Class ;
+           rdfs:subClassOf :RessourcePedagogique ;
+           rdfs:label "Webinaire"@fr .
+
+
+#################################################################
+#    Individuals
+#################################################################
+
+###  http://stackunity.org/education#Ahmed
+:Ahmed rdf:type owl:NamedIndividual ,
+                :Enseignant ;
+       :appartientADepartement :DepInformatiqueUT ;
+       :enseigneMatiere :ProgrammationWeb ;
+       :parleLangue :Arabe ,
+                    :Francais ;
+       :nom "Ahmed" ;
+       rdfs:label "Ahmed"@fr .
+
+
+###  http://stackunity.org/education#Algorithmique
+:Algorithmique rdf:type owl:NamedIndividual ,
+                        :MatiereTechnique ;
+               :matiereDeveloppe :Python ;
+               :codeMatiere "INF101" ;
+               :coefficient 3.0 ;
+               :nom "Algorithmique" ;
+               :nombreHeures 45 ;
+               rdfs:label "Algorithmique"@fr .
+
+
+###  http://stackunity.org/education#AlternanceDeveloppeur
+:AlternanceDeveloppeur rdf:type owl:NamedIndividual ,
+                                :FormationEnAlternance ;
+                       :aPourMatiere :BasesDeDonnees ,
+                                     :ProgrammationWeb ;
+                       :prepareDiplome :IngenieurLogiciel ;
+                       :utiliseOutil :VSCode ;
+                       :duree 600 ;
+                       :nom "Alternance développeur web" ;
+                       :tauxReussite 92.0 ;
+                       rdfs:label "Alternance développeur"@fr .
+
+
+###  http://stackunity.org/education#Amira
+:Amira rdf:type owl:NamedIndividual ,
+                :Apprenant ;
+       :beneficieDeBourse :BourseMeriteAmira ;
+       :beneficieDuService :ConsultationGeneraleUT ,
+                           :EntretienPsyUT ;
+       :effectueStage :StagePFEWeb ;
+       :estMembreDe :ClubTheatreComedie ;
+       :niveauDeLangue :NiveauC1 ;
+       :obtientCertification :AttestationHackathon ,
+                             :CertificationAnglaisB2 ;
+       :parleLangue :Anglais ,
+                    :Arabe ,
+                    :Francais ;
+       :participeA :SeanceJSTD ;
+       :possedeCompetence :JavaScript ,
+                          :TravailEquipe ;
+       :email "amira@stackunity.org" ;
+       :nom "Amira Ben Salah" ;
+       rdfs:label "Amira"@fr .
+
+
+###  http://stackunity.org/education#AmphiA
+:AmphiA rdf:type owl:NamedIndividual ,
+                 :Amphitheatre ;
+        :estSitueDans :UniversiteDeTunis ;
+        :capaciteEspace 250 ;
+        :nom "Amphithéâtre A" ;
+        rdfs:label "Amphithéâtre A"@fr .
+
+
+###  http://stackunity.org/education#Anglais
+:Anglais rdf:type owl:NamedIndividual ,
+                  :LangueEtrangere ;
+         :nom "Anglais" ;
+         rdfs:label "Anglais"@fr .
+
+
+###  http://stackunity.org/education#AnglaisTechnique
+:AnglaisTechnique rdf:type owl:NamedIndividual ,
+                           :MatiereLitteraire ;
+                  :codeMatiere "LAN110" ;
+                  :coefficient 1.5 ;
+                  :nom "Anglais technique" ;
+                  :nombreHeures 24 ;
+                  rdfs:label "Anglais technique"@fr .
+
+
+###  http://stackunity.org/education#Anis
+:Anis rdf:type owl:NamedIndividual ,
+               :Vacataire ;
+      :enseigneMatiere :Statistiques ;
+      :nom "Anis Sassi" ;
+      rdfs:label "Anis"@fr .
+
+
+###  http://stackunity.org/education#AnneeUniv2025_2026
+:AnneeUniv2025_2026 rdf:type owl:NamedIndividual ,
+                             :AnneeUniversitaire ;
+                    :contientPeriode :Semestre1_2025 ,
+                                     :Semestre2_2026 ;
+                    :dateDebut "2025-09-15"^^xsd:date ;
+                    :dateFin "2026-06-30"^^xsd:date ;
+                    :nom "Année universitaire 2025-2026" ;
+                    rdfs:label "Année universitaire 2025-2026"@fr .
+
+
+###  http://stackunity.org/education#Arabe
+:Arabe rdf:type owl:NamedIndividual ,
+                :LangueNationale ;
+       :nom "Arabe" ;
+       rdfs:label "Arabe"@fr .
+
+
+###  http://stackunity.org/education#AtelierCreativite
+:AtelierCreativite rdf:type owl:NamedIndividual ,
+                            :Atelier ;
+                   :developpe :Leadership ;
+                   :duree 8 ;
+                   :nom "Atelier créativité" ;
+                   rdfs:label "Atelier créativité"@fr .
+
+
+###  http://stackunity.org/education#AtelierStressUT
+:AtelierStressUT rdf:type owl:NamedIndividual ,
+                          :AtelierGestionStress ;
+                 :consultePar :PsychologueMariem ;
+                 :serviceLocaliseDans :CabinetPsychologie ;
+                 :serviceRattacheA :UniversiteDeTunis ;
+                 :estGratuit "true"^^xsd:boolean ;
+                 :nom "Atelier de gestion du stress avant les examens" ;
+                 :surRendezVous "true"^^xsd:boolean ;
+                 rdfs:label "Atelier de gestion du stress"@fr .
+
+
+###  http://stackunity.org/education#AttestationDeStage
+:AttestationDeStage rdf:type owl:NamedIndividual ,
+                             :Certification ;
+                    :certifieCompetence :GestionTemps ;
+                    :nom "Attestation de stage" ;
+                    rdfs:label "Attestation de stage"@fr .
+
+
+###  http://stackunity.org/education#AttestationHackathon
+:AttestationHackathon rdf:type owl:NamedIndividual ,
+                               :AttestationParticipation ;
+                      :certifieCompetence :TravailEquipe ;
+                      :nom "Attestation de participation au hackathon" ;
+                      rdfs:label "Attestation Hackathon"@fr .
+
+
+###  http://stackunity.org/education#BasesDeDonnees
+:BasesDeDonnees rdf:type owl:NamedIndividual ,
+                         :MatiereTechnique ;
+                :matiereDeveloppe :SQL ;
+                :codeMatiere "INF204" ;
+                :coefficient 2.5 ;
+                :nom "Bases de données" ;
+                :nombreHeures 42 ;
+                rdfs:label "Bases de données"@fr .
+
+
+###  http://stackunity.org/education#Bilel
+:Bilel rdf:type owl:NamedIndividual ,
+                :Stagiaire ;
+       :effectueStage :StageInitiationData ;
+       :parleLangue :Arabe ,
+                    :Francais ;
+       :possedeCompetence :Python ;
+       :suitFormationAlternance :AlternanceDeveloppeur ;
+       :suitParcours :ParcoursReconversionIT ;
+       :nom "Bilel Karray" ;
+       rdfs:label "Bilel"@fr .
+
+
+###  http://stackunity.org/education#BootcampFullStack
+:BootcampFullStack rdf:type owl:NamedIndividual ,
+                            :Bootcamp ;
+                   :contient :ModuleDjango ,
+                             :ModuleJavaScript ;
+                   :delivreCertification :CertificationDjango ;
+                   :utiliseRessource :PodcastCarriere ;
+                   :duree 120 ;
+                   :nom "Bootcamp Full Stack" ;
+                   rdfs:label "Bootcamp Full Stack"@fr .
+
+
+###  http://stackunity.org/education#BourseMeriteAmira
+:BourseMeriteAmira rdf:type owl:NamedIndividual ,
+                            :BourseMerite ;
+                   :financePar :UniversiteDeTunis ;
+                   :montantBourse 1200.0 ;
+                   :nom "Bourse de mérite 2025-2026" ;
+                   rdfs:label "Bourse de mérite - Amira"@fr .
+
+
+###  http://stackunity.org/education#BourseMobiliteKarim
+:BourseMobiliteKarim rdf:type owl:NamedIndividual ,
+                              :BourseMobilite ;
+                     :financePar :UniversiteDeTunis ;
+                     :montantBourse 3500.0 ;
+                     :nom "Bourse de mobilité internationale" ;
+                     rdfs:label "Bourse de mobilité - Karim"@fr .
+
+
+###  http://stackunity.org/education#BourseSocialeYasmine
+:BourseSocialeYasmine rdf:type owl:NamedIndividual ,
+                               :BourseSociale ;
+                      :montantBourse 900.0 ;
+                      :nom "Bourse sociale 2025-2026" ;
+                      rdfs:label "Bourse sociale - Yasmine"@fr .
+
+
+###  http://stackunity.org/education#CabinetPsychologie
+:CabinetPsychologie rdf:type owl:NamedIndividual ,
+                             :SalleDeCours ;
+                    :estSitueDans :UniversiteDeTunis ;
+                    :capaciteEspace 4 ;
+                    :nom "Cabinet de psychologie" ;
+                    rdfs:label "Cabinet de psychologie"@fr .
+
+
+###  http://stackunity.org/education#CampagneVaccinationOctobre
+:CampagneVaccinationOctobre rdf:type owl:NamedIndividual ,
+                                     :CampagneSante ;
+                            :campagneAssureePar :VaccinationGrippeUT ;
+                            :dateEvenement "2026-10-20"^^xsd:date ;
+                            :lieu "Infirmerie centrale" ;
+                            :nom "Campagne de vaccination d'octobre" ;
+                            rdfs:label "Campagne de vaccination d'octobre"@fr .
+
+
+###  http://stackunity.org/education#CertifAbsenceNour
+:CertifAbsenceNour rdf:type owl:NamedIndividual ,
+                            :CertificatAbsence ;
+                   :certificatPour :Nour ;
+                   :dateCertificat "2025-11-12"^^xsd:date ;
+                   :dureeAbsenceJours 3 ;
+                   :nom "Certificat d'absence de Nour" ;
+                   :validiteMois 1 ;
+                   rdfs:label "Certificat d'absence - Nour"@fr .
+
+
+###  http://stackunity.org/education#CertifAptitudeKarim
+:CertifAptitudeKarim rdf:type owl:NamedIndividual ,
+                              :CertificatAptitudeSport ;
+                     :certificatPour :Karim ;
+                     :dateCertificat "2025-10-04"^^xsd:date ;
+                     :nom "Certificat d'aptitude sportive de Karim" ;
+                     :validiteMois 12 ;
+                     rdfs:label "Certificat d'aptitude - Karim"@fr .
+
+
+###  http://stackunity.org/education#CertifAptitudeStageAmira
+:CertifAptitudeStageAmira rdf:type owl:NamedIndividual ,
+                                   :CertificatAptitudeStage ;
+                          :certificatPour :Amira ;
+                          :dateCertificat "2026-01-20"^^xsd:date ;
+                          :nom "Certificat d'aptitude au stage d'Amira" ;
+                          :validiteMois 6 ;
+                          rdfs:label "Certificat d'aptitude au stage - Amira"@fr .
+
+
+###  http://stackunity.org/education#CertificationAWS
+:CertificationAWS rdf:type owl:NamedIndividual ,
+                           :CertificationProfessionnelle ;
+                  :certifieCompetence :GestionTemps ;
+                  :nom "Certification Cloud Practitioner" ;
+                  rdfs:label "Certification Cloud"@fr .
+
+
+###  http://stackunity.org/education#CertificationAnglaisB2
+:CertificationAnglaisB2 rdf:type owl:NamedIndividual ,
+                                 :CertificationAcademique ;
+                        :certifieCompetence :Communication ;
+                        :nom "Certification d'anglais niveau B2" ;
+                        rdfs:label "Certification Anglais B2"@fr .
+
+
+###  http://stackunity.org/education#CertificationDjango
+:CertificationDjango rdf:type owl:NamedIndividual ,
+                              :Certification ;
+                     :certifieCompetence :Django ;
+                     :nom "Certification Django" ;
+                     rdfs:label "Certification Django"@fr .
+
+
+###  http://stackunity.org/education#CertificationJavaScript
+:CertificationJavaScript rdf:type owl:NamedIndividual ,
+                                  :Certification ;
+                         :certifieCompetence :JavaScript ;
+                         :nom "Certification JavaScript" ;
+                         rdfs:label "Certification JavaScript"@fr .
+
+
+###  http://stackunity.org/education#CertificationPython
+:CertificationPython rdf:type owl:NamedIndividual ,
+                              :Certification ;
+                     :certifieCompetence :Python ;
+                     :nom "Certification Python" ;
+                     rdfs:label "Certification Python"@fr .
+
+
+###  http://stackunity.org/education#CertificationSQLPro
+:CertificationSQLPro rdf:type owl:NamedIndividual ,
+                              :CertificationProfessionnelle ;
+                     :certifieCompetence :SQL ;
+                     :anneeObtention "2026"^^xsd:gYear ;
+                     :nom "Certification SQL professionnelle" ;
+                     rdfs:label "Certification SQL"@fr .
+
+
+###  http://stackunity.org/education#Chant
+:Chant rdf:type owl:NamedIndividual ,
+                :CompetenceArtistique ;
+       :nom "Chant" ;
+       rdfs:label "Chant"@fr .
+
+
+###  http://stackunity.org/education#ChoraleUniversitaire
+:ChoraleUniversitaire rdf:type owl:NamedIndividual ,
+                               :Chorale ;
+                      :clubDuDomaine :DomaineSpectacle ;
+                      :developpeCompetenceClub :Chant ;
+                      :organiseEvenement :ConcertDeFinAnnee ;
+                      :capaciteMax 40 ;
+                      :cotisation 20.0 ;
+                      :jourSeance "Mardi" ;
+                      :nom "Chorale universitaire" ;
+                      :nombreMembres 35 ;
+                      rdfs:label "Chorale universitaire"@fr .
+
+
+###  http://stackunity.org/education#ClubBasketballUniversitaire
+:ClubBasketballUniversitaire rdf:type owl:NamedIndividual ,
+                                      :Basketball ;
+                             :developpeCompetenceClub :EspritSportif ;
+                             :heberge :UniversiteDeTunis ;
+                             :capaciteMax 20 ;
+                             :cotisation 25.0 ;
+                             :jourSeance "Jeudi" ;
+                             :nom "Club de basketball universitaire" ;
+                             rdfs:label "Club de basketball universitaire"@fr .
+
+
+###  http://stackunity.org/education#ClubCodeUniversitaire
+:ClubCodeUniversitaire rdf:type owl:NamedIndividual ,
+                                :ClubProgrammation ;
+                       :clubDuDomaine :DomaineWeb ;
+                       :clubUtiliseOutil :VSCode ;
+                       :dirigePar :Rim ;
+                       :organiseEvenement :Hackathon2026 ;
+                       :anneeCreation "2020"^^xsd:gYear ;
+                       :capaciteMax 35 ;
+                       :cotisation 20.0 ;
+                       :jourSeance "Vendredi" ;
+                       :nom "Club de programmation" ;
+                       rdfs:label "Club de programmation"@fr .
+
+
+###  http://stackunity.org/education#ClubEcoCampus
+:ClubEcoCampus rdf:type owl:NamedIndividual ,
+                        :ClubEnvironnement ;
+               :anneeCreation "2021"^^xsd:gYear ;
+               :capaciteMax 30 ;
+               :cotisation 5.0 ;
+               :nom "Club éco-campus" ;
+               rdfs:label "Club éco-campus"@fr .
+
+
+###  http://stackunity.org/education#ClubFootballUniversitaire
+:ClubFootballUniversitaire rdf:type owl:NamedIndividual ,
+                                    :Football ;
+                           :clubDuDomaine :DomaineActivitePhysique ;
+                           :developpeCompetenceClub :EspritSportif ,
+                                                    :TravailEquipe ;
+                           :dirigePar :Rim ;
+                           :heberge :UniversiteDeTunis ;
+                           :necessiteCertificat :CertifAptitudeKarim ;
+                           :organiseEvenement :TournoiInterFacultes ;
+                           :anneeCreation "2012"^^xsd:gYear ;
+                           :capaciteMax 25 ;
+                           :cotisation 30.0 ;
+                           :jourSeance "Mercredi" ;
+                           :nom "Club de football universitaire" ;
+                           :nombreMembres 22 ;
+                           rdfs:label "Club de football universitaire"@fr .
+
+
+###  http://stackunity.org/education#ClubIAUniversitaire
+:ClubIAUniversitaire rdf:type owl:NamedIndividual ,
+                              :ClubIntelligenceArtificielle ;
+                     :clubDuDomaine :DomaineDonnees ;
+                     :encadrePar :Walid ;
+                     :organiseEvenement :ConferenceIA ;
+                     :anneeCreation "2023"^^xsd:gYear ;
+                     :capaciteMax 25 ;
+                     :cotisation 25.0 ;
+                     :nom "Club d'intelligence artificielle" ;
+                     rdfs:label "Club d'intelligence artificielle"@fr .
+
+
+###  http://stackunity.org/education#ClubImprovisation
+:ClubImprovisation rdf:type owl:NamedIndividual ,
+                            :TheatreImprovisation ;
+                   :developpeCompetenceClub :Communication ,
+                                            :JeuScenique ;
+                   :capaciteMax 16 ;
+                   :cotisation 10.0 ;
+                   :jourSeance "Jeudi" ;
+                   :nom "Ligue d'improvisation" ;
+                   rdfs:label "Ligue d'improvisation"@fr .
+
+
+###  http://stackunity.org/education#ClubNatationUniversitaire
+:ClubNatationUniversitaire rdf:type owl:NamedIndividual ,
+                                    :Natation ;
+                           :heberge :UniversiteDeTunis ;
+                           :capaciteMax 15 ;
+                           :cotisation 50.0 ;
+                           :jourSeance "Samedi" ;
+                           :nom "Club de natation universitaire" ;
+                           rdfs:label "Club de natation universitaire"@fr .
+
+
+###  http://stackunity.org/education#ClubPremiersSecours
+:ClubPremiersSecours rdf:type owl:NamedIndividual ,
+                              :ClubSecourisme ;
+                     :anneeCreation "2019"^^xsd:gYear ;
+                     :capaciteMax 20 ;
+                     :cotisation 10.0 ;
+                     :nom "Club de premiers secours" ;
+                     rdfs:label "Club de premiers secours"@fr .
+
+
+###  http://stackunity.org/education#ClubRobotiqueUniversitaire
+:ClubRobotiqueUniversitaire rdf:type owl:NamedIndividual ,
+                                     :ClubRobotique ;
+                            :clubDuDomaine :DomaineDonnees ;
+                            :clubUtiliseOutil :ProtegeOutil ;
+                            :heberge :UniversiteDeTunis ;
+                            :anneeCreation "2018"^^xsd:gYear ;
+                            :capaciteMax 30 ;
+                            :cotisation 40.0 ;
+                            :jourSeance "Mercredi" ;
+                            :nom "Club de robotique" ;
+                            rdfs:label "Club de robotique"@fr .
+
+
+###  http://stackunity.org/education#ClubSolidariteEtudiante
+:ClubSolidariteEtudiante rdf:type owl:NamedIndividual ,
+                                  :ClubSolidarite ;
+                         :developpeCompetenceClub :Leadership ,
+                                                  :TravailEquipe ;
+                         :anneeCreation "2016"^^xsd:gYear ;
+                         :capaciteMax 50 ;
+                         :cotisation 5.0 ;
+                         :nom "Club de solidarité étudiante" ;
+                         rdfs:label "Club de solidarité étudiante"@fr .
+
+
+###  http://stackunity.org/education#ClubTheatreComedie
+:ClubTheatreComedie rdf:type owl:NamedIndividual ,
+                             :TheatreComedie ;
+                    :clubDuDomaine :DomaineSpectacle ;
+                    :developpeCompetenceClub :Communication ,
+                                             :JeuScenique ;
+                    :organiseEvenement :SpectacleDePrintemps ;
+                    :anneeCreation "2015"^^xsd:gYear ;
+                    :capaciteMax 20 ;
+                    :cotisation 10.0 ;
+                    :jourSeance "Lundi" ;
+                    :nom "Troupe de comédie" ;
+                    :nombreMembres 17 ;
+                    rdfs:label "Troupe de comédie"@fr .
+
+
+###  http://stackunity.org/education#ClubTheatreDrame
+:ClubTheatreDrame rdf:type owl:NamedIndividual ,
+                           :TheatreDrame ;
+                  :developpeCompetenceClub :JeuScenique ;
+                  :capaciteMax 12 ;
+                  :cotisation 10.0 ;
+                  :nom "Atelier de drame" ;
+                  rdfs:label "Atelier de drame"@fr .
+
+
+###  http://stackunity.org/education#Communication
+:Communication rdf:type owl:NamedIndividual ,
+                        :CompetenceTransversale ;
+               :nom "Communication" ;
+               rdfs:label "Communication"@fr .
+
+
+###  http://stackunity.org/education#CompetenceExpert
+:CompetenceExpert rdf:type owl:NamedIndividual ,
+                           :NiveauCompetence ;
+                  :nom "Expert" ;
+                  rdfs:label "Expert"@fr .
+
+
+###  http://stackunity.org/education#CompetenceNovice
+:CompetenceNovice rdf:type owl:NamedIndividual ,
+                           :NiveauCompetence ;
+                  :nom "Novice" ;
+                  rdfs:label "Novice"@fr .
+
+
+###  http://stackunity.org/education#ConcertDeFinAnnee
+:ConcertDeFinAnnee rdf:type owl:NamedIndividual ,
+                            :Concert ;
+                   :dateEvenement "2026-06-20"^^xsd:date ;
+                   :lieu "Théâtre municipal de Tunis" ;
+                   :nom "Concert de fin d'année" ;
+                   rdfs:label "Concert de fin d'année"@fr .
+
+
+###  http://stackunity.org/education#ConferenceIA
+:ConferenceIA rdf:type owl:NamedIndividual ,
+                       :Spectacle ;
+              :dateEvenement "2026-11-05"^^xsd:date ;
+              :lieu "Amphithéâtre A" ;
+              :nom "Journée portes ouvertes de l'IA" ;
+              rdfs:label "Journée de l'IA"@fr .
+
+
+###  http://stackunity.org/education#ConsultationDentaireUT
+:ConsultationDentaireUT rdf:type owl:NamedIndividual ,
+                                 :ConsultationDentaire ;
+                        :assureParPersonnel :DrAmel ;
+                        :serviceLocaliseDans :InfirmerieCentrale ;
+                        :serviceRattacheA :UniversiteDeTunis ;
+                        :dureeConsultationMinutes 30 ;
+                        :estGratuit "true"^^xsd:boolean ;
+                        :horairesOuverture "Mardi et jeudi, 9h - 14h" ;
+                        :nom "Consultation dentaire" ;
+                        :surRendezVous "true"^^xsd:boolean ;
+                        rdfs:label "Consultation dentaire - Université de Tunis"@fr .
+
+
+###  http://stackunity.org/education#ConsultationGeneraleUT
+:ConsultationGeneraleUT rdf:type owl:NamedIndividual ,
+                                 :ConsultationGenerale ;
+                        :assureParPersonnel :DrSonia ,
+                                            :InfirmierRami ;
+                        :estOuvertA :Ahmed ,
+                                    :Amira ,
+                                    :Firas ,
+                                    :Karim ,
+                                    :Nour ,
+                                    :Salma ,
+                                    :Yasmine ;
+                        :serviceLocaliseDans :InfirmerieCentrale ;
+                        :serviceRattacheA :UniversiteDeTunis ;
+                        :dureeConsultationMinutes 20 ;
+                        :estGratuit "true"^^xsd:boolean ;
+                        :horairesOuverture "Lundi au vendredi, 8h30 - 16h30" ;
+                        :nom "Consultation de médecine générale" ;
+                        :surRendezVous "false"^^xsd:boolean ;
+                        :telephoneService "+21671000001" ;
+                        rdfs:label "Consultation générale - Université de Tunis"@fr .
+
+
+###  http://stackunity.org/education#ConsultationOphtalmoUT
+:ConsultationOphtalmoUT rdf:type owl:NamedIndividual ,
+                                 :ConsultationOphtalmologique ;
+                        :serviceRattacheA :UniversiteDeTunis ;
+                        :dureeConsultationMinutes 25 ;
+                        :estGratuit "false"^^xsd:boolean ;
+                        :horairesOuverture "Mercredi, 9h - 13h" ;
+                        :nom "Consultation d'ophtalmologie" ;
+                        :surRendezVous "true"^^xsd:boolean ;
+                        rdfs:label "Consultation ophtalmologique"@fr .
+
+
+###  http://stackunity.org/education#ConventionBilateraleIA
+:ConventionBilateraleIA rdf:type owl:NamedIndividual ,
+                                 :ConventionBilaterale ;
+                        :accueilliPar :LaboratoireIA ;
+                        :nom "Convention bilatérale Laboratoire IA" ;
+                        rdfs:label "Convention bilatérale Laboratoire IA"@fr .
+
+
+###  http://stackunity.org/education#ConventionCadreUniversite
+:ConventionCadreUniversite rdf:type owl:NamedIndividual ,
+                                    :ConventionCadre ;
+                           :accueilliPar :TechSolutions ;
+                           :encadreAcademique :Ahmed ;
+                           :nom "Convention cadre Université / TechSolutions" ;
+                           rdfs:label "Convention cadre Université / TechSolutions"@fr .
+
+
+###  http://stackunity.org/education#ConventionStackUnity
+:ConventionStackUnity rdf:type owl:NamedIndividual ,
+                               :ConventionTripartite ;
+                      :accueilliPar :StackUnityTunisie ;
+                      :valideFormation :ProgrammeInformatique ;
+                      :dateDebut "2026-02-01"^^xsd:date ;
+                      :dateFin "2026-07-15"^^xsd:date ;
+                      :nom "Convention tripartite StackUnity" ;
+                      :numeroConvention "CONV-2026-001" ;
+                      rdfs:label "Convention tripartite StackUnity"@fr .
+
+
+###  http://stackunity.org/education#CoursDjangoAvance
+:CoursDjangoAvance rdf:type owl:NamedIndividual ,
+                            :Cours ;
+                   :developpe :Django ;
+                   :necessite :Django ;
+                   :nom "Cours Django avancé" ;
+                   rdfs:label "Cours Django avancé"@fr .
+
+
+###  http://stackunity.org/education#CoursPythonDebutant
+:CoursPythonDebutant rdf:type owl:NamedIndividual ,
+                              :Cours ;
+                     :developpe :Python ;
+                     :nom "Cours Python débutant" ;
+                     rdfs:label "Cours Python débutant"@fr .
+
+
+###  http://stackunity.org/education#DepGestionUT
+:DepGestionUT rdf:type owl:NamedIndividual ,
+                       :DepartementGestion ;
+              :partieDe :UniversiteDeTunis ;
+              :nom "Département de gestion" ;
+              rdfs:label "Département de gestion - Université de Tunis"@fr .
+
+
+###  http://stackunity.org/education#DepInformatiqueUT
+:DepInformatiqueUT rdf:type owl:NamedIndividual ,
+                            :DepartementInformatique ;
+                   :partieDe :UniversiteDeTunis ;
+                   :proposeFormation :BootcampFullStack ,
+                                     :ModuleSQL ,
+                                     :ProgrammeInformatique ;
+                   :nom "Département d'informatique" ;
+                   rdfs:label "Département d'informatique - Université de Tunis"@fr .
+
+
+###  http://stackunity.org/education#DepLanguesUT
+:DepLanguesUT rdf:type owl:NamedIndividual ,
+                       :DepartementLangues ;
+              :partieDe :UniversiteDeTunis ;
+              :proposeFormation :FormationAnglaisTechnique ;
+              :nom "Département de langues" ;
+              rdfs:label "Département de langues - Université de Tunis"@fr .
+
+
+###  http://stackunity.org/education#DepistageUT
+:DepistageUT rdf:type owl:NamedIndividual ,
+                      :CampagneDepistage ;
+             :assureParPersonnel :InfirmierRami ;
+             :serviceRattacheA :UniversiteDeTunis ;
+             :estGratuit "true"^^xsd:boolean ;
+             :nom "Dépistage de la vue et de la tension" ;
+             rdfs:label "Dépistage de la vue et de la tension"@fr .
+
+
+###  http://stackunity.org/education#Django
+:Django rdf:type owl:NamedIndividual ,
+                 :CompetenceTechnique ;
+        :nom "Django" ;
+        rdfs:label "Django"@fr .
+
+
+###  http://stackunity.org/education#DocumentDjango
+:DocumentDjango rdf:type owl:NamedIndividual ,
+                         :Document ;
+                :nom "Support de cours Django" ;
+                rdfs:label "Document Django"@fr .
+
+
+###  http://stackunity.org/education#DocumentPython
+:DocumentPython rdf:type owl:NamedIndividual ,
+                         :Document ;
+                :nom "Support de cours Python" ;
+                rdfs:label "Document Python"@fr .
+
+
+###  http://stackunity.org/education#DomaineActivitePhysique
+:DomaineActivitePhysique rdf:type owl:NamedIndividual ,
+                                  :DomaineSport ;
+                         :nom "Activité physique" ;
+                         rdfs:label "Activité physique"@fr .
+
+
+###  http://stackunity.org/education#DomaineDonnees
+:DomaineDonnees rdf:type owl:NamedIndividual ,
+                         :DomaineTechnologie ;
+                :nom "Science des données" ;
+                rdfs:label "Science des données"@fr .
+
+
+###  http://stackunity.org/education#DomaineSpectacle
+:DomaineSpectacle rdf:type owl:NamedIndividual ,
+                           :DomaineArtsCulture ;
+                  :nom "Arts du spectacle" ;
+                  rdfs:label "Arts du spectacle"@fr .
+
+
+###  http://stackunity.org/education#DomaineWeb
+:DomaineWeb rdf:type owl:NamedIndividual ,
+                     :DomaineTechnologie ;
+            :nom "Développement web" ;
+            rdfs:label "Développement web"@fr .
+
+
+###  http://stackunity.org/education#DrAmel
+:DrAmel rdf:type owl:NamedIndividual ,
+                 :Medecin ;
+        :nom "Dr Amel Cherif" ;
+        :specialiteMedicale "Chirurgie dentaire" ;
+        rdfs:label "Dr Amel"@fr .
+
+
+###  http://stackunity.org/education#DrSonia
+:DrSonia rdf:type owl:NamedIndividual ,
+                  :Medecin ;
+         :delivreCertificat :CertifAbsenceNour ,
+                            :CertifAptitudeStageAmira ;
+         :parleLangue :Arabe ,
+                      :Francais ;
+         :email "sonia.medical@stackunity.org" ;
+         :nom "Dr Sonia Belhaj" ;
+         :specialiteMedicale "Médecine générale" ;
+         rdfs:label "Dr Sonia"@fr .
+
+
+###  http://stackunity.org/education#DrYoussef
+:DrYoussef rdf:type owl:NamedIndividual ,
+                    :Medecin ;
+           :delivreCertificat :CertifAptitudeKarim ;
+           :parleLangue :Anglais ,
+                        :Arabe ,
+                        :Francais ;
+           :nom "Dr Youssef Mejri" ;
+           :specialiteMedicale "Médecine du sport" ;
+           rdfs:label "Dr Youssef"@fr .
+
+
+###  http://stackunity.org/education#EducationSanteUT
+:EducationSanteUT rdf:type owl:NamedIndividual ,
+                           :EducationSante ;
+                  :assureParPersonnel :DrSonia ;
+                  :serviceRattacheA :UniversiteDeTunis ;
+                  :estGratuit "true"^^xsd:boolean ;
+                  :nom "Ateliers d'éducation à la santé" ;
+                  rdfs:label "Éducation à la santé"@fr .
+
+
+###  http://stackunity.org/education#EntretienPsyUT
+:EntretienPsyUT rdf:type owl:NamedIndividual ,
+                         :EntretienPsychologique ;
+                :assureParPersonnel :PsychologueMariem ;
+                :consultePar :PsychologueMariem ;
+                :estOuvertA :Amira ,
+                            :Karim ,
+                            :Nour ,
+                            :Yasmine ;
+                :serviceLocaliseDans :CabinetPsychologie ;
+                :serviceRattacheA :UniversiteDeTunis ;
+                :dureeConsultationMinutes 45 ;
+                :estGratuit "true"^^xsd:boolean ;
+                :horairesOuverture "Lundi au jeudi, 10h - 16h" ;
+                :nom "Entretien psychologique individuel" ;
+                :surRendezVous "true"^^xsd:boolean ;
+                rdfs:label "Entretien psychologique individuel"@fr .
+
+
+###  http://stackunity.org/education#EspritSportif
+:EspritSportif rdf:type owl:NamedIndividual ,
+                        :CompetenceSportive ;
+               :nom "Esprit sportif" ;
+               rdfs:label "Esprit sportif"@fr .
+
+
+###  http://stackunity.org/education#ExamenDjango
+:ExamenDjango rdf:type owl:NamedIndividual ,
+                       :Examen ;
+              :concerneFormation :ModuleDjango ;
+              :evalue :Django ;
+              :nom "Examen final Django" ;
+              rdfs:label "Examen Django"@fr .
+
+
+###  http://stackunity.org/education#ExercicePython
+:ExercicePython rdf:type owl:NamedIndividual ,
+                         :Exercice ;
+                :nom "Exercices de programmation Python" ;
+                rdfs:label "Exercice Python"@fr .
+
+
+###  http://stackunity.org/education#ExpressionEcrite
+:ExpressionEcrite rdf:type owl:NamedIndividual ,
+                           :MatiereLitteraire ;
+                  :codeMatiere "LAN120" ;
+                  :coefficient 1.0 ;
+                  :nom "Expression écrite" ;
+                  :nombreHeures 20 ;
+                  rdfs:label "Expression écrite"@fr .
+
+
+###  http://stackunity.org/education#Firas
+:Firas rdf:type owl:NamedIndividual ,
+                :Apprenant ,
+                :Etudiant ;
+       :beneficieDeBourse :BourseMobiliteKarim ;
+       :parleLangue :Arabe ,
+                    :Francais ;
+       :possedeCompetence :Python ;
+       :suitParcours :ParcoursDeveloppementWeb ;
+       :nom "Firas Nefzi" ;
+       rdfs:label "Firas"@fr .
+
+
+###  http://stackunity.org/education#FormationAnglaisTechnique
+:FormationAnglaisTechnique rdf:type owl:NamedIndividual ,
+                                    :Webformation ;
+                           :aPourMatiere :AnglaisTechnique ;
+                           :enseigneEnLangue :Anglais ;
+                           :utiliseOutil :Moodle ;
+                           :duree 24 ;
+                           :nom "Anglais technique pour informaticiens" ;
+                           :tauxReussite 88.5 ;
+                           rdfs:label "Formation Anglais technique"@fr .
+
+
+###  http://stackunity.org/education#Francais
+:Francais rdf:type owl:NamedIndividual ,
+                   :LangueEtrangere ;
+          :nom "Français" ;
+          rdfs:label "Français"@fr .
+
+
+###  http://stackunity.org/education#GestionTemps
+:GestionTemps rdf:type owl:NamedIndividual ,
+                       :CompetenceTransversale ;
+              :nom "Gestion du temps" ;
+              rdfs:label "Gestion du temps"@fr .
+
+
+###  http://stackunity.org/education#GroupeParoleUT
+:GroupeParoleUT rdf:type owl:NamedIndividual ,
+                         :GroupeDeParole ;
+                :consultePar :PsychologueMariem ;
+                :serviceRattacheA :UniversiteDeTunis ;
+                :estGratuit "true"^^xsd:boolean ;
+                :horairesOuverture "Vendredi, 14h - 15h30" ;
+                :nom "Groupe de parole étudiant" ;
+                :surRendezVous "false"^^xsd:boolean ;
+                rdfs:label "Groupe de parole étudiant"@fr .
+
+
+###  http://stackunity.org/education#GroupeRockUniversitaire
+:GroupeRockUniversitaire rdf:type owl:NamedIndividual ,
+                                  :GroupeMusiqueModerne ;
+                         :capaciteMax 8 ;
+                         :cotisation 15.0 ;
+                         :nom "Groupe rock universitaire" ;
+                         rdfs:label "Groupe rock universitaire"@fr .
+
+
+###  http://stackunity.org/education#Hackathon2026
+:Hackathon2026 rdf:type owl:NamedIndividual ,
+                        :Tournoi ;
+               :dateEvenement "2026-03-21"^^xsd:date ;
+               :lieu "Salle informatique 1" ;
+               :nom "Hackathon universitaire 2026" ;
+               rdfs:label "Hackathon 2026"@fr .
+
+
+###  http://stackunity.org/education#Hatem
+:Hatem rdf:type owl:NamedIndividual ,
+                :Administrateur ;
+       :nom "Hatem Mansouri" ;
+       rdfs:label "Hatem"@fr .
+
+
+###  http://stackunity.org/education#Ines
+:Ines rdf:type owl:NamedIndividual ,
+               :AncienApprenant ;
+      :effectueStage :StagePFEMobile ;
+      :obtientCertification :CertificationDjango ;
+      :obtientDiplome :LicenceInformatique ;
+      :parleLangue :Anglais ,
+                   :Arabe ;
+      :nom "Inès Ferchichi" ;
+      rdfs:label "Inès"@fr .
+
+
+###  http://stackunity.org/education#InfirmerieCentrale
+:InfirmerieCentrale rdf:type owl:NamedIndividual ,
+                             :Infirmerie ;
+                    :estSitueDans :UniversiteDeTunis ;
+                    :capaciteEspace 12 ;
+                    :nom "Infirmerie centrale" ;
+                    rdfs:label "Infirmerie centrale"@fr .
+
+
+###  http://stackunity.org/education#InfirmierRami
+:InfirmierRami rdf:type owl:NamedIndividual ,
+                        :Infirmier ;
+               :nom "Rami Toumi" ;
+               :specialiteMedicale "Soins infirmiers" ;
+               rdfs:label "Rami"@fr .
+
+
+###  http://stackunity.org/education#IngenieurLogiciel
+:IngenieurLogiciel rdf:type owl:NamedIndividual ,
+                            :DiplomeIngenieur ;
+                   :delivrePar :UniversiteDeTunis ;
+                   :creditsECTS 300 ;
+                   :nom "Ingénieur en génie logiciel" ;
+                   rdfs:label "Ingénieur en génie logiciel"@fr .
+
+
+###  http://stackunity.org/education#InscAdminKarim
+:InscAdminKarim rdf:type owl:NamedIndividual ,
+                         :InscriptionAdministrative ;
+                :inscriptionDe :Karim ;
+                :inscriptionPourPeriode :AnneeUniv2025_2026 ;
+                :dateInscription "2025-09-10"^^xsd:date ;
+                :nom "Inscription administrative de Karim" ;
+                :statutInscription "Validée" ;
+                rdfs:label "Inscription administrative - Karim"@fr .
+
+
+###  http://stackunity.org/education#InscClubYasmine
+:InscClubYasmine rdf:type owl:NamedIndividual ,
+                          :InscriptionClub ;
+                 :inscriptionAuClub :ChoraleUniversitaire ;
+                 :inscriptionDe :Yasmine ;
+                 :dateInscription "2025-10-02"^^xsd:date ;
+                 :nom "Inscription de Yasmine à la chorale" ;
+                 :statutInscription "En attente" ;
+                 rdfs:label "Inscription au club - Yasmine"@fr .
+
+
+###  http://stackunity.org/education#InscPedaAmira
+:InscPedaAmira rdf:type owl:NamedIndividual ,
+                        :InscriptionPedagogique ;
+               :inscriptionDe :Amira ;
+               :inscriptionPourFormation :ModuleJavaScript ;
+               :inscriptionPourPeriode :Semestre1_2025 ;
+               :dateInscription "2025-09-20"^^xsd:date ;
+               :nom "Inscription pédagogique d'Amira" ;
+               :statutInscription "Validée" ;
+               rdfs:label "Inscription pédagogique - Amira"@fr .
+
+
+###  http://stackunity.org/education#JavaScript
+:JavaScript rdf:type owl:NamedIndividual ,
+                     :CompetenceTechnique ;
+            :description "Programmation web côté client et serveur avec JavaScript."@fr ;
+            :nom "JavaScript" ;
+            rdfs:label "JavaScript"@fr .
+
+
+###  http://stackunity.org/education#JeuScenique
+:JeuScenique rdf:type owl:NamedIndividual ,
+                      :CompetenceArtistique ;
+             :nom "Jeu scénique" ;
+             rdfs:label "Jeu scénique"@fr .
+
+
+###  http://stackunity.org/education#JourneeSanteMentale
+:JourneeSanteMentale rdf:type owl:NamedIndividual ,
+                              :CampagneSante ;
+                     :campagneAssureePar :GroupeParoleUT ;
+                     :dateEvenement "2026-10-10"^^xsd:date ;
+                     :lieu "Amphithéâtre A" ;
+                     :nom "Journée de la santé mentale" ;
+                     rdfs:label "Journée de la santé mentale"@fr .
+
+
+###  http://stackunity.org/education#Karim
+:Karim rdf:type owl:NamedIndividual ,
+                :Apprenant ;
+       :beneficieDeBourse :BourseMobiliteKarim ;
+       :beneficieDuService :ConsultationGeneraleUT ,
+                           :VisiteAptitudeUT ;
+       :estMembreDe :ClubFootballUniversitaire ,
+                    :OrchestreMalouf ;
+       :niveauDeLangue :NiveauB2 ;
+       :obtientCertification :CertificationJavaScript ;
+       :obtientDiplome :LicenceInformatique ;
+       :parleLangue :Anglais ,
+                    :Arabe ,
+                    :Francais ;
+       :participeA :SeancePython1 ;
+       :possedeCompetence :Leadership ,
+                          :Python ;
+       :suitParcours :ParcoursDataScience ;
+       :email "karim@stackunity.org" ;
+       :nom "Karim Trabelsi" ;
+       rdfs:label "Karim"@fr .
+
+
+###  http://stackunity.org/education#KineYassine
+:KineYassine rdf:type owl:NamedIndividual ,
+                      :Medecin ;
+             :nom "Yassine Lahmar" ;
+             :specialiteMedicale "Kinésithérapie" ;
+             rdfs:label "Yassine"@fr .
+
+
+###  http://stackunity.org/education#KinesitherapieUT
+:KinesitherapieUT rdf:type owl:NamedIndividual ,
+                           :Kinesitherapie ;
+                  :assureParPersonnel :KineYassine ;
+                  :serviceRattacheA :UniversiteDeTunis ;
+                  :dureeConsultationMinutes 40 ;
+                  :estGratuit "false"^^xsd:boolean ;
+                  :nom "Séances de kinésithérapie" ;
+                  :surRendezVous "true"^^xsd:boolean ;
+                  rdfs:label "Kinésithérapie"@fr .
+
+
+###  http://stackunity.org/education#LaboratoireIA
+:LaboratoireIA rdf:type owl:NamedIndividual ,
+                        :Laboratoire ;
+               :nom "Laboratoire d'Intelligence Artificielle" ;
+               :ville "Tunis" ;
+               rdfs:label "Laboratoire d'Intelligence Artificielle"@fr .
+
+
+###  http://stackunity.org/education#LangueDesSignesTunisienne
+:LangueDesSignesTunisienne rdf:type owl:NamedIndividual ,
+                                    :LangueDesSignes ;
+                           :nom "Langue des signes tunisienne" ;
+                           rdfs:label "Langue des signes tunisienne"@fr .
+
+
+###  http://stackunity.org/education#Leadership
+:Leadership rdf:type owl:NamedIndividual ,
+                     :CompetenceTransversale ;
+            :nom "Leadership" ;
+            rdfs:label "Leadership"@fr .
+
+
+###  http://stackunity.org/education#Leila
+:Leila rdf:type owl:NamedIndividual ,
+                :ChargeDeCours ;
+       :appartientADepartement :DepLanguesUT ;
+       :enseigneMatiere :AnglaisTechnique ,
+                        :ExpressionEcrite ;
+       :parleLangue :Anglais ,
+                    :Arabe ,
+                    :Francais ;
+       :nom "Leïla Dridi" ;
+       rdfs:label "Leïla"@fr .
+
+
+###  http://stackunity.org/education#LicenceInformatique
+:LicenceInformatique rdf:type owl:NamedIndividual ,
+                              :Licence ;
+                     :delivrePar :UniversiteDeTunis ;
+                     :creditsECTS 180 ;
+                     :nom "Licence en informatique" ;
+                     rdfs:label "Licence en informatique"@fr .
+
+
+###  http://stackunity.org/education#LivreSQL
+:LivreSQL rdf:type owl:NamedIndividual ,
+                   :Livre ;
+          :nom "Apprendre SQL pas à pas" ;
+          rdfs:label "Livre SQL"@fr .
+
+
+###  http://stackunity.org/education#MasterIA
+:MasterIA rdf:type owl:NamedIndividual ,
+                   :Master ;
+          :delivrePar :UniversiteDeTunis ;
+          :creditsECTS 120 ;
+          :nom "Master en intelligence artificielle" ;
+          rdfs:label "Master en intelligence artificielle"@fr .
+
+
+###  http://stackunity.org/education#MasterclassIA
+:MasterclassIA rdf:type owl:NamedIndividual ,
+                        :Masterclass ;
+               :appartientAuDomaine :DomaineDonnees ;
+               :developpe :Ontologies ;
+               :enseigne :Walid ;
+               :duree 6 ;
+               :nom "Masterclass sur l'intelligence artificielle" ;
+               rdfs:label "Masterclass IA"@fr .
+
+
+###  http://stackunity.org/education#Mathematiques
+:Mathematiques rdf:type owl:NamedIndividual ,
+                        :MatiereScientifique ;
+               :codeMatiere "MAT101" ;
+               :coefficient 3.0 ;
+               :nom "Mathématiques" ;
+               :nombreHeures 60 ;
+               rdfs:label "Mathématiques"@fr .
+
+
+###  http://stackunity.org/education#Mehdi
+:Mehdi rdf:type owl:NamedIndividual ,
+                :TuteurEntreprise ;
+       :nom "Mehdi Bouzid" ;
+       rdfs:label "Mehdi"@fr .
+
+
+###  http://stackunity.org/education#ModuleDjango
+:ModuleDjango rdf:type owl:NamedIndividual ,
+                       :Module ;
+              :aPourMatiere :ProgrammationWeb ;
+              :appartientAuDomaine :DomaineWeb ;
+              :developpe :Django ;
+              :enseigne :Ahmed ;
+              :necessite :Python ;
+              :seDerouleEn :Semestre2_2026 ;
+              :utiliseOutil :VSCode ;
+              :utiliseRessource :DocumentDjango ,
+                                :VideoDjango ;
+              :creditsECTS 6 ;
+              :duree 40 ;
+              :nom "Module Django" ;
+              rdfs:label "Module Django"@fr .
+
+
+###  http://stackunity.org/education#ModuleJavaScript
+:ModuleJavaScript rdf:type owl:NamedIndividual ,
+                           :Module ;
+                  :aPourMatiere :ProgrammationWeb ;
+                  :appartientAuDomaine :DomaineWeb ;
+                  :developpe :JavaScript ;
+                  :seDerouleEn :Semestre1_2025 ;
+                  :utiliseOutil :VSCode ;
+                  :utiliseRessource :VideoJavaScript ;
+                  :creditsECTS 5 ;
+                  :duree 35 ;
+                  :nom "Module JavaScript" ;
+                  rdfs:label "Module JavaScript"@fr .
+
+
+###  http://stackunity.org/education#ModulePython
+:ModulePython rdf:type owl:NamedIndividual ,
+                       :Module ;
+              :aPourMatiere :Algorithmique ;
+              :appartientAuDomaine :DomaineDonnees ;
+              :developpe :Python ;
+              :seDerouleEn :Semestre1_2025 ;
+              :utiliseOutil :Moodle ,
+                            :VSCode ;
+              :utiliseRessource :ExercicePython ,
+                                :VideoPython ;
+              :creditsECTS 5 ;
+              :duree 30 ;
+              :nom "Module Python" ;
+              rdfs:label "Module Python"@fr .
+
+
+###  http://stackunity.org/education#ModuleSQL
+:ModuleSQL rdf:type owl:NamedIndividual ,
+                    :Module ;
+           :aPourMatiere :BasesDeDonnees ;
+           :appartientAuDomaine :DomaineDonnees ;
+           :developpe :SQL ;
+           :seDerouleEn :Semestre2_2026 ;
+           :utiliseRessource :LivreSQL ;
+           :creditsECTS 4 ;
+           :duree 25 ;
+           :nom "Module SQL" ;
+           rdfs:label "Module SQL"@fr .
+
+
+###  http://stackunity.org/education#Moodle
+:Moodle rdf:type owl:NamedIndividual ,
+                 :PlateformeELearning ;
+        :nom "Moodle" ;
+        :urlOutil "https://moodle.org"^^xsd:anyURI ;
+        :versionOutil "4.3" ;
+        rdfs:label "Moodle"@fr .
+
+
+###  http://stackunity.org/education#NiveauA2
+:NiveauA2 rdf:type owl:NamedIndividual ,
+                   :NiveauLangue ;
+          :nom "A2" ;
+          rdfs:label "Niveau A2"@fr .
+
+
+###  http://stackunity.org/education#NiveauAvance
+:NiveauAvance rdf:type owl:NamedIndividual ,
+                       :Niveau ;
+              :nom "Avancé" ;
+              rdfs:label "Avancé"@fr .
+
+
+###  http://stackunity.org/education#NiveauB2
+:NiveauB2 rdf:type owl:NamedIndividual ,
+                   :NiveauLangue ;
+          :nom "B2" ;
+          rdfs:label "Niveau B2"@fr .
+
+
+###  http://stackunity.org/education#NiveauC1
+:NiveauC1 rdf:type owl:NamedIndividual ,
+                   :NiveauLangue ;
+          :nom "C1" ;
+          rdfs:label "Niveau C1"@fr .
+
+
+###  http://stackunity.org/education#NiveauDebutant
+:NiveauDebutant rdf:type owl:NamedIndividual ,
+                         :Niveau ;
+                :nom "Débutant" ;
+                rdfs:label "Débutant"@fr .
+
+
+###  http://stackunity.org/education#NiveauIntermediaire
+:NiveauIntermediaire rdf:type owl:NamedIndividual ,
+                              :Niveau ;
+                     :nom "Intermédiaire" ;
+                     rdfs:label "Intermédiaire"@fr .
+
+
+###  http://stackunity.org/education#NiveauL1
+:NiveauL1 rdf:type owl:NamedIndividual ,
+                   :NiveauAcademique ;
+          :nom "Première année" ;
+          rdfs:label "Première année"@fr .
+
+
+###  http://stackunity.org/education#NiveauL2
+:NiveauL2 rdf:type owl:NamedIndividual ,
+                   :NiveauAcademique ;
+          :nom "Deuxième année" ;
+          rdfs:label "Deuxième année"@fr .
+
+
+###  http://stackunity.org/education#NiveauL3
+:NiveauL3 rdf:type owl:NamedIndividual ,
+                   :NiveauAcademique ;
+          :nom "Troisième année" ;
+          rdfs:label "Troisième année"@fr .
+
+
+###  http://stackunity.org/education#Nour
+:Nour rdf:type owl:NamedIndividual ,
+               :Etudiant ;
+      :beneficieDeBourse :BourseMeriteAmira ;
+      :beneficieDuService :ConsultationGeneraleUT ;
+      :effectueStage :StageEteAnalyse ;
+      :estMembreDe :ClubRobotiqueUniversitaire ;
+      :niveauDeLangue :NiveauB2 ;
+      :obtientCertification :CertificationSQLPro ;
+      :parleLangue :Anglais ,
+                   :Arabe ,
+                   :Francais ;
+      :possedeCompetence :GestionTemps ,
+                         :SQL ;
+      :suitParcours :ParcoursLicenceInfo ;
+      :email "nour@stackunity.org" ;
+      :moyenneGenerale 14.8 ;
+      :nom "Nour Hamdi" ;
+      :telephone "+21620123456" ;
+      rdfs:label "Nour"@fr .
+
+
+###  http://stackunity.org/education#Ontologies
+:Ontologies rdf:type owl:NamedIndividual ,
+                     :CompetenceTechnique ;
+            :nom "Ontologies OWL" ;
+            rdfs:label "Ontologies OWL"@fr .
+
+
+###  http://stackunity.org/education#OrchestreMalouf
+:OrchestreMalouf rdf:type owl:NamedIndividual ,
+                          :Orchestre ;
+                 :clubDuDomaine :DomaineSpectacle ;
+                 :encadrePar :Salma ;
+                 :organiseEvenement :ConcertDeFinAnnee ;
+                 :capaciteMax 18 ;
+                 :cotisation 35.0 ;
+                 :jourSeance "Vendredi" ;
+                 :nom "Orchestre Malouf" ;
+                 :nombreMembres 15 ;
+                 rdfs:label "Orchestre Malouf"@fr .
+
+
+###  http://stackunity.org/education#ParcoursDataScience
+:ParcoursDataScience rdf:type owl:NamedIndividual ,
+                              :ParcoursApprentissage ;
+                     :possedeEtape :ModulePython ,
+                                   :ModuleSQL ;
+                     :nom "Parcours Data Science" ;
+                     rdfs:label "Parcours Data Science"@fr .
+
+
+###  http://stackunity.org/education#ParcoursDeveloppementWeb
+:ParcoursDeveloppementWeb rdf:type owl:NamedIndividual ,
+                                   :ParcoursApprentissage ;
+                          :possedeEtape :ModuleDjango ,
+                                        :ModulePython ;
+                          :nom "Parcours Développement Web" ;
+                          rdfs:label "Parcours Développement Web"@fr .
+
+
+###  http://stackunity.org/education#ParcoursLicenceInfo
+:ParcoursLicenceInfo rdf:type owl:NamedIndividual ,
+                              :ParcoursInitial ;
+                     :possedeEtape :ModuleJavaScript ,
+                                   :ModulePython ,
+                                   :ModuleSQL ;
+                     :nom "Parcours Licence Informatique" ;
+                     rdfs:label "Parcours Licence Informatique"@fr .
+
+
+###  http://stackunity.org/education#ParcoursReconversionIT
+:ParcoursReconversionIT rdf:type owl:NamedIndividual ,
+                                 :ParcoursContinu ;
+                        :possedeEtape :BootcampFullStack ;
+                        :nom "Parcours de reconversion vers l'informatique" ;
+                        rdfs:label "Parcours reconversion IT"@fr .
+
+
+###  http://stackunity.org/education#ParcoursSurMesure
+:ParcoursSurMesure rdf:type owl:NamedIndividual ,
+                            :ParcoursPersonnalise ;
+                   :possedeEtape :MasterclassIA ,
+                                 :ModulePython ;
+                   :nom "Parcours sur mesure en IA" ;
+                   rdfs:label "Parcours sur mesure"@fr .
+
+
+###  http://stackunity.org/education#PodcastCarriere
+:PodcastCarriere rdf:type owl:NamedIndividual ,
+                          :Podcast ;
+                 :nom "Réussir sa carrière dans l'informatique" ;
+                 rdfs:label "Podcast carrière IT"@fr .
+
+
+###  http://stackunity.org/education#PosteSecoursTournoi
+:PosteSecoursTournoi rdf:type owl:NamedIndividual ,
+                              :PosteDeSecours ;
+                     :assureParPersonnel :DrYoussef ,
+                                         :InfirmierRami ;
+                     :serviceRattacheA :UniversiteDeTunis ;
+                     :estGratuit "true"^^xsd:boolean ;
+                     :nom "Poste de secours pour les événements sportifs" ;
+                     rdfs:label "Poste de secours - événements"@fr .
+
+
+###  http://stackunity.org/education#PremiersSoinsUT
+:PremiersSoinsUT rdf:type owl:NamedIndividual ,
+                          :PremiersSoins ;
+                 :assureParPersonnel :InfirmierRami ;
+                 :serviceLocaliseDans :InfirmerieCentrale ;
+                 :serviceRattacheA :UniversiteDeTunis ;
+                 :estGratuit "true"^^xsd:boolean ;
+                 :horairesOuverture "Lundi au samedi, 8h - 18h" ;
+                 :nom "Premiers soins sur le campus" ;
+                 :surRendezVous "false"^^xsd:boolean ;
+                 :telephoneService "+21671000002" ;
+                 rdfs:label "Premiers soins - campus"@fr .
+
+
+###  http://stackunity.org/education#ProgrammationWeb
+:ProgrammationWeb rdf:type owl:NamedIndividual ,
+                           :MatiereTechnique ;
+                  :matiereDeveloppe :Django ,
+                                    :JavaScript ;
+                  :codeMatiere "INF210" ;
+                  :coefficient 3.0 ;
+                  :nom "Programmation web" ;
+                  :nombreHeures 60 ;
+                  rdfs:label "Programmation web"@fr .
+
+
+###  http://stackunity.org/education#ProgrammeInformatique
+:ProgrammeInformatique rdf:type owl:NamedIndividual ,
+                                :Programme ;
+                       :aPourMatiere :Algorithmique ,
+                                     :BasesDeDonnees ,
+                                     :Mathematiques ;
+                       :appartientAuDomaine :DomaineWeb ;
+                       :contient :ModuleDjango ,
+                                 :ModulePython ;
+                       :prepareDiplome :LicenceInformatique ;
+                       :seDerouleEn :AnneeUniv2025_2026 ;
+                       :creditsECTS 180 ;
+                       :description "Programme général de formation en informatique."@fr ;
+                       :nom "Programme Informatique" ;
+                       :tauxReussite 85.0 ;
+                       rdfs:label "Programme Informatique"@fr .
+
+
+###  http://stackunity.org/education#ProjetWeb
+:ProjetWeb rdf:type owl:NamedIndividual ,
+                    :Projet ;
+           :concerneFormation :BootcampFullStack ;
+           :evalue :Django ,
+                   :JavaScript ;
+           :nom "Projet de développement web" ;
+           rdfs:label "Projet web"@fr .
+
+
+###  http://stackunity.org/education#ProtegeOutil
+:ProtegeOutil rdf:type owl:NamedIndividual ,
+                       :LogicielDeveloppement ;
+              :nom "Protégé" ;
+              :urlOutil "https://protege.stanford.edu"^^xsd:anyURI ;
+              :versionOutil "5.6" ;
+              rdfs:label "Protégé"@fr .
+
+
+###  http://stackunity.org/education#PsychologueMariem
+:PsychologueMariem rdf:type owl:NamedIndividual ,
+                            :Psychologue ;
+                   :parleLangue :Arabe ,
+                                :Francais ;
+                   :nom "Mariem Ayari" ;
+                   :specialiteMedicale "Psychologie clinique" ;
+                   rdfs:label "Mariem"@fr .
+
+
+###  http://stackunity.org/education#Python
+:Python rdf:type owl:NamedIndividual ,
+                 :CompetenceTechnique ;
+        :description "Programmation avec le langage Python."@fr ;
+        :nom "Python" ;
+        rdfs:label "Python"@fr .
+
+
+###  http://stackunity.org/education#QuizDjango
+:QuizDjango rdf:type owl:NamedIndividual ,
+                     :Quiz ;
+            :concerneFormation :ModuleDjango ;
+            :evalue :Django ;
+            :nom "Quiz Django" ;
+            rdfs:label "Quiz Django"@fr .
+
+
+###  http://stackunity.org/education#QuizJavaScript
+:QuizJavaScript rdf:type owl:NamedIndividual ,
+                         :Quiz ;
+                :concerneFormation :ModuleJavaScript ;
+                :evalue :JavaScript ;
+                :nom "Quiz JavaScript" ;
+                rdfs:label "Quiz JavaScript"@fr .
+
+
+###  http://stackunity.org/education#QuizPython
+:QuizPython rdf:type owl:NamedIndividual ,
+                     :Quiz ;
+            :concerneFormation :ModulePython ;
+            :evalue :Python ;
+            :nom "Quiz Python débutant" ;
+            rdfs:label "Quiz Python"@fr .
+
+
+###  http://stackunity.org/education#RapportPFEWeb
+:RapportPFEWeb rdf:type owl:NamedIndividual ,
+                        :RapportDeStage ;
+               :attribueNiveau :NiveauAvance ;
+               :evalue :JavaScript ;
+               :nom "Rapport de PFE - Plateforme web" ;
+               rdfs:label "Rapport PFE Web"@fr .
+
+
+###  http://stackunity.org/education#Rim
+:Rim rdf:type owl:NamedIndividual ,
+              :ResponsableClub ;
+     :nom "Rim Chaabane" ;
+     rdfs:label "Rim"@fr .
+
+
+###  http://stackunity.org/education#SQL
+:SQL rdf:type owl:NamedIndividual ,
+              :CompetenceTechnique ;
+     :description "Interrogation et gestion de bases de données relationnelles."@fr ;
+     :nom "SQL" ;
+     rdfs:label "SQL"@fr .
+
+
+###  http://stackunity.org/education#SalleB12
+:SalleB12 rdf:type owl:NamedIndividual ,
+                   :SalleDeCours ;
+          :estSitueDans :UniversiteDeTunis ;
+          :capaciteEspace 40 ;
+          :nom "Salle B12" ;
+          rdfs:label "Salle B12"@fr .
+
+
+###  http://stackunity.org/education#SalleInfo1
+:SalleInfo1 rdf:type owl:NamedIndividual ,
+                     :SalleInformatique ;
+            :estSitueDans :UniversiteDeTunis ;
+            :capaciteEspace 30 ;
+            :nom "Salle informatique 1" ;
+            rdfs:label "Salle informatique 1"@fr .
+
+
+###  http://stackunity.org/education#Salma
+:Salma rdf:type owl:NamedIndividual ,
+                :Enseignant ;
+       :appartientADepartement :DepInformatiqueUT ;
+       :enseigne :AtelierCreativite ,
+                 :ModuleJavaScript ;
+       :enseigneMatiere :ProgrammationWeb ;
+       :email "salma@stackunity.org" ;
+       :nom "Salma Jlassi" ;
+       rdfs:label "Salma"@fr .
+
+
+###  http://stackunity.org/education#Sami
+:Sami rdf:type owl:NamedIndividual ,
+               :Tuteur ;
+      :nom "Sami" ;
+      rdfs:label "Sami"@fr .
+
+
+###  http://stackunity.org/education#SeanceDjangoTP
+:SeanceDjangoTP rdf:type owl:NamedIndividual ,
+                         :SeanceDeTP ;
+                :animePar :Ahmed ;
+                :lieuSeance :SalleInfo1 ;
+                :seanceDe :ModuleDjango ;
+                :dateSeance "2025-10-14"^^xsd:date ;
+                :heureDebut "14:00:00"^^xsd:time ;
+                :heureFin "16:00:00"^^xsd:time ;
+                :nom "Django - travaux pratiques" ;
+                rdfs:label "Django - TP"@fr .
+
+
+###  http://stackunity.org/education#SeanceJSTD
+:SeanceJSTD rdf:type owl:NamedIndividual ,
+                     :SeanceDeTD ;
+            :animePar :Salma ;
+            :lieuSeance :SalleB12 ;
+            :seanceDe :ModuleJavaScript ;
+            :dateSeance "2025-10-16"^^xsd:date ;
+            :heureDebut "10:45:00"^^xsd:time ;
+            :heureFin "12:15:00"^^xsd:time ;
+            :nom "JavaScript - travaux dirigés" ;
+            rdfs:label "JavaScript - TD"@fr .
+
+
+###  http://stackunity.org/education#SeancePython1
+:SeancePython1 rdf:type owl:NamedIndividual ,
+                        :SeanceDeCours ;
+               :animePar :Ahmed ;
+               :lieuSeance :AmphiA ;
+               :seanceDe :ModulePython ;
+               :dateSeance "2025-09-22"^^xsd:date ;
+               :heureDebut "09:00:00"^^xsd:time ;
+               :heureFin "10:30:00"^^xsd:time ;
+               :nom "Introduction à Python - cours" ;
+               rdfs:label "Python - séance 1"@fr .
+
+
+###  http://stackunity.org/education#Semestre1_2025
+:Semestre1_2025 rdf:type owl:NamedIndividual ,
+                         :Semestre ;
+                :dateDebut "2025-09-15"^^xsd:date ;
+                :dateFin "2026-01-31"^^xsd:date ;
+                :nom "Semestre 1" ;
+                rdfs:label "Semestre 1"@fr .
+
+
+###  http://stackunity.org/education#Semestre2_2026
+:Semestre2_2026 rdf:type owl:NamedIndividual ,
+                         :Semestre ;
+                :dateDebut "2026-02-09"^^xsd:date ;
+                :dateFin "2026-06-30"^^xsd:date ;
+                :nom "Semestre 2" ;
+                rdfs:label "Semestre 2"@fr .
+
+
+###  http://stackunity.org/education#SessionControle
+:SessionControle rdf:type owl:NamedIndividual ,
+                          :SessionExamens ;
+                 :dateDebut "2026-06-10"^^xsd:date ;
+                 :dateFin "2026-06-20"^^xsd:date ;
+                 :nom "Session de contrôle" ;
+                 rdfs:label "Session de contrôle"@fr .
+
+
+###  http://stackunity.org/education#SessionPrincipale
+:SessionPrincipale rdf:type owl:NamedIndividual ,
+                            :SessionExamens ;
+                   :dateDebut "2026-01-10"^^xsd:date ;
+                   :dateFin "2026-01-25"^^xsd:date ;
+                   :nom "Session principale d'examens" ;
+                   rdfs:label "Session principale"@fr .
+
+
+###  http://stackunity.org/education#SoutenancePFEWeb
+:SoutenancePFEWeb rdf:type owl:NamedIndividual ,
+                           :Soutenance ;
+                  :associeRessource :WebinaireStage ;
+                  :attribueNiveau :NiveauAvance ;
+                  :concerneFormation :BootcampFullStack ;
+                  :dateEvaluation "2026-07-20"^^xsd:date ;
+                  :nom "Soutenance du PFE - Plateforme web" ;
+                  :score 17.5 ;
+                  rdfs:label "Soutenance PFE Web"@fr .
+
+
+###  http://stackunity.org/education#SpectacleDePrintemps
+:SpectacleDePrintemps rdf:type owl:NamedIndividual ,
+                               :Spectacle ;
+                      :dateEvenement "2026-04-15"^^xsd:date ;
+                      :lieu "Salle des fêtes" ;
+                      :nom "Spectacle de printemps" ;
+                      rdfs:label "Spectacle de printemps"@fr .
+
+
+###  http://stackunity.org/education#StackUnityMobile
+:StackUnityMobile rdf:type owl:NamedIndividual ,
+                           :ApplicationMobile ;
+                  :nom "Application mobile StackUnity" ;
+                  :versionOutil "1.0" ;
+                  rdfs:label "Application StackUnity"@fr .
+
+
+###  http://stackunity.org/education#StackUnityTunisie
+:StackUnityTunisie rdf:type owl:NamedIndividual ,
+                            :Entreprise ;
+                   :nom "StackUnity Tunisie" ;
+                   :secteurActivite "Développement logiciel" ;
+                   :ville "Tunis" ;
+                   rdfs:label "StackUnity Tunisie"@fr .
+
+
+###  http://stackunity.org/education#StageDoctoratIA
+:StageDoctoratIA rdf:type owl:NamedIndividual ,
+                          :StageDoctorat ;
+                 :accueilliPar :LaboratoireIA ;
+                 :dureeSemaines 40 ;
+                 :nom "Stage de doctorat en intelligence artificielle" ;
+                 rdfs:label "Stage de doctorat IA"@fr .
+
+
+###  http://stackunity.org/education#StageEteAnalyse
+:StageEteAnalyse rdf:type owl:NamedIndividual ,
+                          :StageInitiation ;
+                 :accueilliPar :StackUnityTunisie ;
+                 :developpeCompetenceStage :Python ,
+                                           :SQL ;
+                 :stageDansDomaine :DomaineDonnees ;
+                 :dureeSemaines 8 ;
+                 :estRemunere "true"^^xsd:boolean ;
+                 :gratification 300.0 ;
+                 :nom "Stage d'été en analyse de données" ;
+                 rdfs:label "Stage d'été - Analyse"@fr .
+
+
+###  http://stackunity.org/education#StageInitiationData
+:StageInitiationData rdf:type owl:NamedIndividual ,
+                              :StageInitiation ;
+                     :accueilliPar :TechSolutions ;
+                     :developpeCompetenceStage :Python ,
+                                               :SQL ;
+                     :stageDansDomaine :DomaineDonnees ;
+                     :dureeSemaines 6 ;
+                     :estRemunere "false"^^xsd:boolean ;
+                     :nom "Stage d'initiation à l'analyse de données" ;
+                     rdfs:label "Stage d'initiation - Data"@fr .
+
+
+###  http://stackunity.org/education#StageLabIA
+:StageLabIA rdf:type owl:NamedIndividual ,
+                     :StageLaboratoire ;
+            :accueilliPar :LaboratoireIA ;
+            :developpeCompetenceStage :Ontologies ;
+            :encadreAcademique :Salma ;
+            :stageDansDomaine :DomaineDonnees ;
+            :dureeSemaines 12 ;
+            :nom "Stage au Laboratoire d'Intelligence Artificielle" ;
+            :sujet "Construction d'ontologies pour l'éducation" ;
+            rdfs:label "Stage au Laboratoire IA"@fr .
+
+
+###  http://stackunity.org/education#StageMasterOntologies
+:StageMasterOntologies rdf:type owl:NamedIndividual ,
+                                :StageMasterRecherche ;
+                       :accueilliPar :LaboratoireIA ;
+                       :developpeCompetenceStage :Ontologies ;
+                       :stageDansDomaine :DomaineDonnees ;
+                       :dureeSemaines 20 ;
+                       :nom "Stage de master recherche en ontologies" ;
+                       rdfs:label "Master recherche - Ontologies"@fr .
+
+
+###  http://stackunity.org/education#StageObservationLycee
+:StageObservationLycee rdf:type owl:NamedIndividual ,
+                                :StageObservation ;
+                       :accueilliPar :TechSolutions ;
+                       :developpeCompetenceStage :GestionTemps ;
+                       :dureeSemaines 2 ;
+                       :estRemunere "false"^^xsd:boolean ;
+                       :nom "Stage d'observation en entreprise" ;
+                       rdfs:label "Stage d'observation"@fr .
+
+
+###  http://stackunity.org/education#StagePFEMobile
+:StagePFEMobile rdf:type owl:NamedIndividual ,
+                         :StagePFE ;
+                :accueilliPar :TechSolutions ;
+                :developpeCompetenceStage :GestionTemps ,
+                                          :JavaScript ;
+                :encadreAcademique :Walid ;
+                :stageDansDomaine :DomaineWeb ;
+                :superviseParTuteur :Mehdi ;
+                :dureeSemaines 20 ;
+                :estRemunere "true"^^xsd:boolean ;
+                :gratification 500.0 ;
+                :nom "PFE - Application mobile de suivi des apprenants" ;
+                :sujet "Développement d'une application mobile de suivi des apprenants" ;
+                rdfs:label "PFE - Application mobile"@fr .
+
+
+###  http://stackunity.org/education#StagePFEWeb
+:StagePFEWeb rdf:type owl:NamedIndividual ,
+                      :StagePFE ;
+             :accueilliPar :StackUnityTunisie ;
+             :developpeCompetenceStage :Django ,
+                                       :JavaScript ;
+             :encadreAcademique :Ahmed ;
+             :evalueParRapport :RapportPFEWeb ;
+             :stageDansDomaine :DomaineWeb ;
+             :stageNecessiteCertificat :CertifAptitudeStageAmira ;
+             :superviseParTuteur :Mehdi ;
+             :valideFormation :BootcampFullStack ;
+             :dateDebut "2026-02-01"^^xsd:date ;
+             :dateFin "2026-07-15"^^xsd:date ;
+             :dureeSemaines 24 ;
+             :estRemunere "true"^^xsd:boolean ;
+             :gratification 600.0 ;
+             :nom "PFE - Plateforme web d'apprentissage" ;
+             :numeroConvention "CONV-2026-001" ;
+             :sujet "Conception d'une plateforme web d'apprentissage en ligne" ;
+             rdfs:label "PFE - Plateforme web"@fr .
+
+
+###  http://stackunity.org/education#Statistiques
+:Statistiques rdf:type owl:NamedIndividual ,
+                       :MatiereScientifique ;
+              :codeMatiere "MAT202" ;
+              :coefficient 2.0 ;
+              :nom "Statistiques" ;
+              :nombreHeures 30 ;
+              rdfs:label "Statistiques"@fr .
+
+
+###  http://stackunity.org/education#SuiviSportifUT
+:SuiviSportifUT rdf:type owl:NamedIndividual ,
+                         :SuiviSportif ;
+                :assureParPersonnel :DrYoussef ;
+                :serviceRattacheA :UniversiteDeTunis ;
+                :estGratuit "true"^^xsd:boolean ;
+                :nom "Suivi médico-sportif des clubs" ;
+                :surRendezVous "true"^^xsd:boolean ;
+                rdfs:label "Suivi médico-sportif"@fr .
+
+
+###  http://stackunity.org/education#TPSQL
+:TPSQL rdf:type owl:NamedIndividual ,
+                :TravailPratique ;
+       :concerneFormation :ModuleSQL ;
+       :evalue :SQL ;
+       :nom "TP SQL - requêtes avancées" ;
+       rdfs:label "TP SQL"@fr .
+
+
+###  http://stackunity.org/education#TechSolutions
+:TechSolutions rdf:type owl:NamedIndividual ,
+                        :Entreprise ;
+               :nom "TechSolutions" ;
+               :secteurActivite "Conseil informatique" ;
+               :ville "Sfax" ;
+               rdfs:label "TechSolutions"@fr .
+
+
+###  http://stackunity.org/education#TournoiInterFacultes
+:TournoiInterFacultes rdf:type owl:NamedIndividual ,
+                               :Tournoi ;
+                      :dateEvenement "2026-05-10"^^xsd:date ;
+                      :lieu "Stade universitaire" ;
+                      :nom "Tournoi inter-facultés" ;
+                      rdfs:label "Tournoi inter-facultés"@fr .
+
+
+###  http://stackunity.org/education#TransportMedicalUT
+:TransportMedicalUT rdf:type owl:NamedIndividual ,
+                             :TransportMedical ;
+                    :serviceRattacheA :UniversiteDeTunis ;
+                    :estGratuit "true"^^xsd:boolean ;
+                    :nom "Transport médical d'urgence" ;
+                    :surRendezVous "false"^^xsd:boolean ;
+                    :telephoneService "190" ;
+                    rdfs:label "Transport médical d'urgence"@fr .
+
+
+###  http://stackunity.org/education#TravailEquipe
+:TravailEquipe rdf:type owl:NamedIndividual ,
+                        :CompetenceTransversale ;
+               :nom "Travail d'équipe" ;
+               rdfs:label "Travail d'équipe"@fr .
+
+
+###  http://stackunity.org/education#UniversiteDeTunis
+:UniversiteDeTunis rdf:type owl:NamedIndividual ,
+                            :Universite ;
+                   :nom "Université de Tunis" ;
+                   :ville "Tunis" ;
+                   rdfs:label "Université de Tunis"@fr .
+
+
+###  http://stackunity.org/education#VSCode
+:VSCode rdf:type owl:NamedIndividual ,
+                 :LogicielDeveloppement ;
+        :nom "Visual Studio Code" ;
+        :versionOutil "1.90" ;
+        rdfs:label "Visual Studio Code"@fr .
+
+
+###  http://stackunity.org/education#VaccinationGrippeUT
+:VaccinationGrippeUT rdf:type owl:NamedIndividual ,
+                              :Vaccination ;
+                     :assureParPersonnel :DrSonia ,
+                                         :InfirmierRami ;
+                     :serviceLocaliseDans :InfirmerieCentrale ;
+                     :serviceRattacheA :UniversiteDeTunis ;
+                     :estGratuit "true"^^xsd:boolean ;
+                     :nom "Campagne de vaccination antigrippale" ;
+                     :surRendezVous "false"^^xsd:boolean ;
+                     rdfs:label "Vaccination antigrippale"@fr .
+
+
+###  http://stackunity.org/education#VideoDjango
+:VideoDjango rdf:type owl:NamedIndividual ,
+                      :Video ;
+             :nom "Premiers pas avec Django" ;
+             rdfs:label "Vidéo Django"@fr .
+
+
+###  http://stackunity.org/education#VideoJavaScript
+:VideoJavaScript rdf:type owl:NamedIndividual ,
+                          :Video ;
+                 :nom "Introduction à JavaScript" ;
+                 rdfs:label "Vidéo JavaScript"@fr .
+
+
+###  http://stackunity.org/education#VideoPython
+:VideoPython rdf:type owl:NamedIndividual ,
+                      :Video ;
+             :nom "Introduction à Python" ;
+             rdfs:label "Vidéo Python"@fr .
+
+
+###  http://stackunity.org/education#VisiteAptitudeUT
+:VisiteAptitudeUT rdf:type owl:NamedIndividual ,
+                           :VisiteAptitudeSport ;
+                  :assureParPersonnel :DrYoussef ;
+                  :serviceLocaliseDans :InfirmerieCentrale ;
+                  :serviceRattacheA :UniversiteDeTunis ;
+                  :dureeConsultationMinutes 30 ;
+                  :estGratuit "true"^^xsd:boolean ;
+                  :horairesOuverture "Samedi, 9h - 12h" ;
+                  :nom "Visite d'aptitude pour les clubs sportifs" ;
+                  :surRendezVous "true"^^xsd:boolean ;
+                  rdfs:label "Visite d'aptitude sportive"@fr .
+
+
+###  http://stackunity.org/education#Walid
+:Walid rdf:type owl:NamedIndividual ,
+                :Professeur ;
+       :appartientADepartement :DepInformatiqueUT ;
+       :dirigeDepartement :DepInformatiqueUT ;
+       :enseigneMatiere :Algorithmique ,
+                        :BasesDeDonnees ;
+       :parleLangue :Anglais ,
+                    :Arabe ,
+                    :Francais ;
+       :email "walid@stackunity.org" ;
+       :nom "Walid Zouari" ;
+       rdfs:label "Walid"@fr .
+
+
+###  http://stackunity.org/education#WebinaireStage
+:WebinaireStage rdf:type owl:NamedIndividual ,
+                         :Webinaire ;
+                :nom "Comment réussir son stage de fin d'études" ;
+                rdfs:label "Webinaire stage"@fr .
+
+
+###  http://stackunity.org/education#Yasmine
+:Yasmine rdf:type owl:NamedIndividual ,
+                  :Apprenant ;
+         :beneficieDeBourse :BourseSocialeYasmine ;
+         :beneficieDuService :EntretienPsyUT ,
+                             :VaccinationGrippeUT ;
+         :effectueStage :StageObservationLycee ;
+         :estMembreDe :ChoraleUniversitaire ,
+                      :ClubNatationUniversitaire ;
+         :niveauDeLangue :NiveauB2 ;
+         :parleLangue :Arabe ,
+                      :Francais ;
+         :participeA :SeanceDjangoTP ;
+         :possedeCompetence :Django ;
+         :suitParcours :ParcoursDeveloppementWeb ;
+         :nom "Yasmine Gharbi" ;
+         rdfs:label "Yasmine"@fr .
+
+
+#################################################################
+#    General axioms
+#################################################################
+
+[ rdf:type owl:AllDisjointClasses ;
+  owl:members ( :AbonnementTransport
+                :CovoiturageEtudiant
+                :NavetteUniversitaire
+              )
+] .
+
+
+[ rdf:type owl:AllDisjointClasses ;
+  owl:members ( :AccompagnementEmploi
+                :ForumEmploi
+                :OrientationAcademique
+              )
+] .
+
+
+[ rdf:type owl:AllDisjointClasses ;
+  owl:members ( :Amphitheatre
+                :SalleDeCours
+                :SalleInformatique
+              )
+] .
+
+
+[ rdf:type owl:AllDisjointClasses ;
+  owl:members ( :AnneeUniversitaire
+                :Semestre
+                :SessionExamens
+              )
+] .
+
+
+[ rdf:type owl:AllDisjointClasses ;
+  owl:members ( :ApplicationMobile
+                :LogicielDeveloppement
+                :PlateformeELearning
+              )
+] .
+
+
+[ rdf:type owl:AllDisjointClasses ;
+  owl:members ( :Apprenant
+                :Enseignant
+                :Tuteur
+              )
+] .
+
+
+[ rdf:type owl:AllDisjointClasses ;
+  owl:members ( :AtelierGestionStress
+                :EntretienPsychologique
+                :GroupeDeParole
+              )
+] .
+
+
+[ rdf:type owl:AllDisjointClasses ;
+  owl:members ( :AttestationParticipation
+                :CertificationAcademique
+                :CertificationProfessionnelle
+              )
+] .
+
+
+[ rdf:type owl:AllDisjointClasses ;
+  owl:members ( :Basketball
+                :Football
+                :Natation
+              )
+] .
+
+
+[ rdf:type owl:AllDisjointClasses ;
+  owl:members ( :Bourse
+                :Certification
+                :Club
+                :Competence
+                :Departement
+                :Diplome
+                :Domaine
+                :Espace
+                :Evaluation
+                :Evenement
+                :Formation
+                :Inscription
+                :Langue
+                :Matiere
+                :Niveau
+                :Organisme
+                :OutilNumerique
+                :ParcoursApprentissage
+                :PeriodeAcademique
+                :Personne
+                :RessourcePedagogique
+                :Seance
+                :Stage
+              )
+] .
+
+
+[ rdf:type owl:AllDisjointClasses ;
+  owl:members ( :BourseMerite
+                :BourseMobilite
+                :BourseSociale
+              )
+] .
+
+
+[ rdf:type owl:AllDisjointClasses ;
+  owl:members ( :Cafeteria
+                :PanierSolidaire
+                :RestaurantUniversitaire
+              )
+] .
+
+
+[ rdf:type owl:AllDisjointClasses ;
+  owl:members ( :CampagneDepistage
+                :EducationSante
+                :Vaccination
+              )
+] .
+
+
+[ rdf:type owl:AllDisjointClasses ;
+  owl:members ( :CertificatAbsence
+                :CertificatAptitudeSport
+                :CertificatAptitudeStage
+              )
+] .
+
+
+[ rdf:type owl:AllDisjointClasses ;
+  owl:members ( :Certification
+                :Club
+                :Competence
+                :Evaluation
+                :Evenement
+                :Formation
+                :Niveau
+                :Organisme
+                :ParcoursApprentissage
+                :Personne
+                :RessourcePedagogique
+                :Stage
+              )
+] .
+
+
+[ rdf:type owl:AllDisjointClasses ;
+  owl:members ( :Certification
+                :Competence
+                :Evaluation
+                :Formation
+                :Niveau
+                :ParcoursApprentissage
+                :Personne
+                :RessourcePedagogique
+              )
+] .
+
+
+[ rdf:type owl:AllDisjointClasses ;
+  owl:members ( :Chorale
+                :GroupeMusiqueModerne
+                :Orchestre
+              )
+] .
+
+
+[ rdf:type owl:AllDisjointClasses ;
+  owl:members ( :ClubEnvironnement
+                :ClubSecourisme
+                :ClubSolidarite
+              )
+] .
+
+
+[ rdf:type owl:AllDisjointClasses ;
+  owl:members ( :ClubHumanitaire
+                :ClubMusique
+                :ClubSport
+                :ClubTechnologie
+                :ClubTheatre
+              )
+] .
+
+
+[ rdf:type owl:AllDisjointClasses ;
+  owl:members ( :ClubIntelligenceArtificielle
+                :ClubProgrammation
+                :ClubRobotique
+              )
+] .
+
+
+[ rdf:type owl:AllDisjointClasses ;
+  owl:members ( :ClubMusique
+                :ClubSport
+                :ClubTheatre
+              )
+] .
+
+
+[ rdf:type owl:AllDisjointClasses ;
+  owl:members ( :Concert
+                :Spectacle
+                :Tournoi
+              )
+] .
+
+
+[ rdf:type owl:AllDisjointClasses ;
+  owl:members ( :ConsultationDentaire
+                :ConsultationGenerale
+                :ConsultationOphtalmologique
+              )
+] .
+
+
+[ rdf:type owl:AllDisjointClasses ;
+  owl:members ( :ConsultationMedicale
+                :PremiersSecoursMedicaux
+                :PreventionSante
+                :SanteSportive
+                :SoutienPsychologique
+              )
+] .
+
+
+[ rdf:type owl:AllDisjointClasses ;
+  owl:members ( :ConventionBilaterale
+                :ConventionCadre
+                :ConventionTripartite
+              )
+] .
+
+
+[ rdf:type owl:AllDisjointClasses ;
+  owl:members ( :Cours
+                :Module
+                :Programme
+              )
+] .
+
+
+[ rdf:type owl:AllDisjointClasses ;
+  owl:members ( :DepartementGestion
+                :DepartementInformatique
+                :DepartementLangues
+              )
+] .
+
+
+[ rdf:type owl:AllDisjointClasses ;
+  owl:members ( :DiplomeIngenieur
+                :Licence
+                :Master
+              )
+] .
+
+
+[ rdf:type owl:AllDisjointClasses ;
+  owl:members ( :Document
+                :Exercice
+                :Video
+              )
+] .
+
+
+[ rdf:type owl:AllDisjointClasses ;
+  owl:members ( :DomaineArtsCulture
+                :DomaineSport
+                :DomaineTechnologie
+              )
+] .
+
+
+[ rdf:type owl:AllDisjointClasses ;
+  owl:members ( :Entreprise
+                :Laboratoire
+                :Universite
+              )
+] .
+
+
+[ rdf:type owl:AllDisjointClasses ;
+  owl:members ( :Examen
+                :Projet
+                :Quiz
+              )
+] .
+
+
+[ rdf:type owl:AllDisjointClasses ;
+  owl:members ( :HebergementUrgence
+                :LogementPartage
+                :ResidenceUniversitaire
+              )
+] .
+
+
+[ rdf:type owl:AllDisjointClasses ;
+  owl:members ( :Infirmier
+                :Medecin
+                :Psychologue
+              )
+] .
+
+
+[ rdf:type owl:AllDisjointClasses ;
+  owl:members ( :InscriptionAdministrative
+                :InscriptionClub
+                :InscriptionPedagogique
+              )
+] .
+
+
+[ rdf:type owl:AllDisjointClasses ;
+  owl:members ( :Kinesitherapie
+                :SuiviSportif
+                :VisiteAptitudeSport
+              )
+] .
+
+
+[ rdf:type owl:AllDisjointClasses ;
+  owl:members ( :LangueDesSignes
+                :LangueEtrangere
+                :LangueNationale
+              )
+] .
+
+
+[ rdf:type owl:AllDisjointClasses ;
+  owl:members ( :Livre
+                :Podcast
+                :Webinaire
+              )
+] .
+
+
+[ rdf:type owl:AllDisjointClasses ;
+  owl:members ( :MatiereLitteraire
+                :MatiereScientifique
+                :MatiereTechnique
+              )
+] .
+
+
+[ rdf:type owl:AllDisjointClasses ;
+  owl:members ( :NiveauAcademique
+                :NiveauCompetence
+                :NiveauLangue
+              )
+] .
+
+
+[ rdf:type owl:AllDisjointClasses ;
+  owl:members ( :ParcoursContinu
+                :ParcoursInitial
+                :ParcoursPersonnalise
+              )
+] .
+
+
+[ rdf:type owl:AllDisjointClasses ;
+  owl:members ( :PosteDeSecours
+                :PremiersSoins
+                :TransportMedical
+              )
+] .
+
+
+[ rdf:type owl:AllDisjointClasses ;
+  owl:members ( :RapportDeStage
+                :Soutenance
+                :TravailPratique
+              )
+] .
+
+
+[ rdf:type owl:AllDisjointClasses ;
+  owl:members ( :SeanceDeCours
+                :SeanceDeTD
+                :SeanceDeTP
+              )
+] .
+
+
+[ rdf:type owl:AllDisjointClasses ;
+  owl:members ( :ServiceHebergement
+                :ServiceOrientationEmploi
+                :ServiceRestauration
+                :ServiceTransport
+              )
+] .
+
+
+[ rdf:type owl:AllDisjointClasses ;
+  owl:members ( :StageConvention
+                :StageEntreprise
+                :StageRecherche
+              )
+] .
+
+
+[ rdf:type owl:AllDisjointClasses ;
+  owl:members ( :StageDoctorat
+                :StageLaboratoire
+                :StageMasterRecherche
+              )
+] .
+
+
+[ rdf:type owl:AllDisjointClasses ;
+  owl:members ( :StageInitiation
+                :StageObservation
+                :StagePFE
+              )
+] .
+
+
+[ rdf:type owl:AllDisjointClasses ;
+  owl:members ( :TheatreComedie
+                :TheatreDrame
+                :TheatreImprovisation
+              )
+] .
+
+
+###  Generated by the OWL API (version 4.5.29.2024-05-13T12:11:03Z) https://github.com/owlcs/owlapi
+
+#################################################################
+#    Axiomes complémentaires (caractéristiques, cardinalités, classe définie)
+#################################################################
+
+### Propriétés fonctionnelles : au plus une valeur par individu
+:codeMatiere        rdf:type owl:FunctionalProperty .
+:montantBourse      rdf:type owl:FunctionalProperty .
+:numeroConvention   rdf:type owl:FunctionalProperty .
+:moyenneGenerale    rdf:type owl:FunctionalProperty .
+:gratification      rdf:type owl:FunctionalProperty .
+:nombreMembres      rdf:type owl:FunctionalProperty .
+:capaciteMax        rdf:type owl:FunctionalProperty .
+:superviseParTuteur rdf:type owl:FunctionalProperty .
+:encadreAcademique  rdf:type owl:FunctionalProperty .
+:accueilliPar       rdf:type owl:FunctionalProperty .
+:delivrePar         rdf:type owl:FunctionalProperty .
+:financePar         rdf:type owl:FunctionalProperty .
+
+### Classe définie : un Boursier est un Apprenant qui bénéficie d'au moins une Bourse
+:Boursier rdf:type owl:Class ;
+          owl:equivalentClass [ rdf:type owl:Class ;
+                                owl:intersectionOf ( :Apprenant
+                                                     [ rdf:type owl:Restriction ;
+                                                       owl:onProperty :beneficieDeBourse ;
+                                                       owl:someValuesFrom :Bourse
+                                                     ] )
+                              ] ;
+          rdfs:subClassOf :Apprenant ;
+          rdfs:label "Boursier"@fr .
+
+### Restriction de cardinalité : un Stage est accueilli par au plus une organisation
+:Stage rdfs:subClassOf [ rdf:type owl:Restriction ;
+                         owl:onProperty :accueilliPar ;
+                         owl:maxCardinality "1"^^xsd:nonNegativeInteger
+                       ] .

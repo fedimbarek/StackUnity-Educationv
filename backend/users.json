@@ -1,0 +1,61 @@
+{
+  "admin": {
+    "hash": "scrypt:32768:8:1$z7TIrHZXL0e2E4Nr$39b89bc60b37fda0d0e0d79c624edfa15bf6b5f07416f9376f586dfb71f2be273c7e3f6e4f6b33a087c83fa63eb4bd8d74bbc3be20083e1483d4ef2fdb7e3b7b",
+    "role": "admin"
+  },
+  "amira": {
+    "hash": "scrypt:32768:8:1$vlWZnj1q0pXSP9Wt$38c5e72247f59cc81641ff96db8c145f4ce533b97f3a9e1db24190031fe5cee41d7959dd5b8091291d218a4d48ccd176f2a4fd8b9262c0eda9fe8a07d942cacb",
+    "role": "apprenant",
+    "person": "Amira"
+  },
+  "bilel": {
+    "hash": "scrypt:32768:8:1$QgTJ4666RQmkDIiq$5910862b6c29b40d899fb5f672e93e35eb0c53d6a5cd87332fe9e1d223b7ba672d2ca2bfc6d3031e63097fb5f7ce33f6db38a4c06c2f8d40d71a11474b913131",
+    "role": "apprenant",
+    "person": "Bilel"
+  },
+  "ahmed": {
+    "hash": "scrypt:32768:8:1$MNmYsgWSY35k5VlQ$043f4b9d1cd6de9b2c7e260b6bb5e4cca0d498f0c7a84228aa1266a4e631a2e34b5fe1032d92eda3d01929af86de80ae193945ad9059627c5c3345e1d15fc640",
+    "role": "enseignant",
+    "person": "Ahmed"
+  },
+  "walid": {
+    "hash": "scrypt:32768:8:1$E4iHXOIrZ93yWMH3$de5b446344e62d145e0dd9e9b34608702586e77b4849c866d7823cdb004502b34a2adf7858a660db9dad6b6b3986c8fde8b5b8cc382d4fb70ae3c665aa219652",
+    "role": "enseignant",
+    "person": "Walid"
+  },
+  "drsonia": {
+    "hash": "scrypt:32768:8:1$YwWX3FKNuM5E8YT4$539751162b3422bd00f4518ebe8bf602fb093417886d165f30113fb9f24586bb440bfbe1014039b7a380ded7240522000eb47b18385486d8806676283d1bffb1",
+    "role": "medical",
+    "person": "DrSonia"
+  },
+  "mariem": {
+    "hash": "scrypt:32768:8:1$S69Pv7ZDO4cw9d5R$7a1383f5f00986ad3693439237ea013e7389364875cc383fc4ca40417b94c1c493b097336023f77f2bb2a18c639c4258861f4934509c67073dd8eb09fe6ba9c4",
+    "role": "medical",
+    "person": "PsychologueMariem"
+  },
+  "rim": {
+    "hash": "scrypt:32768:8:1$MgnglCjgbb3FrkQL$bfc42931c1dc637193fe372b8a3b062b1324dffddc4e2be315b5346ba63e9dec45995c1032ad18a76b9765c73844b1787273356656a8dfd710d308119065e9a2",
+    "role": "responsable_club",
+    "person": "Rim"
+  },
+  "mehdi": {
+    "hash": "scrypt:32768:8:1$qi2ujLv59aQxIKQj$774f0247608c90855cf767cdb0b958c00fb3bc71f682a28f7258b041415ed0e4582ee2cca8fecd735e4510e5685ce5c582039c3a4d139ba47a2b0889127f2875",
+    "role": "tuteur_entreprise",
+    "person": "Mehdi"
+  },
+  "sami": {
+    "hash": "scrypt:32768:8:1$qMavbnYyWa5bzriL$7b7c0a1125e5e968eb1e9e3ca22c065456a58658c3d2071804cd46c69183480ccf79831fe62b64c574a139d277c4c1084932058cced52b4e937175f710dde1d3",
+    "role": "tuteur",
+    "person": "Sami"
+  },
+  "ahmed2": {
+    "hash": "scrypt:32768:8:1$UBWBprdnRR27xKTH$b331e0d3aec49adde1be217b49c423bf6d0e031d43c6daaff7d19dcd19286914d2a148145a5c400d0abdc677591379f8ac35f3ade0df7e76eed86139e69e9bd9",
+    "role": "enseignant",
+    "person": "Ahmed2"
+  },
+  "fediMbarek": {
+    "hash": "scrypt:32768:8:1$GeaVahgtPU5on1xz$0108eb6fa0a26f558787738e33309c0b79ce59a20fede7877773172da9d540628469896fea8940edc89872a0c99e316c4600a33f025c61a29a245f6c9fbad20b",
+    "role": "apprenant",
+    "person": "FediMbarek"
+  }
+}
