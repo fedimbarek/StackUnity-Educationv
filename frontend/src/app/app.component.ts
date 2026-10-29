@@ -29,7 +29,7 @@ import { canAccess, isFull } from './core/roles';
             <a routerLink="/sparql" routerLinkActive="on"><i class="dot"></i>Console SPARQL</a>
             <small class="muted sec">Intelligence</small>
             <a routerLink="/ia" routerLinkActive="on"><i class="dot"></i>Assistant IA</a>
-            <a routerLink="/scenario" routerLinkActive="on"><i class="dot"></i>Scénario Amira</a>
+            <a routerLink="/scenario" routerLinkActive="on"><i class="dot"></i>Scénario StackUnity</a>
           }
           <div class="grow"></div>
           @if (full()) { <button class="ghost" (click)="download()">Télécharger .ttl</button> }

@@ -89,7 +89,7 @@ export class AiComponent {
   res = signal<AiAnswer | null>(null); reco = signal<any>(null); fiche = signal<any>(null);
   busy = signal(false); error = signal('');
   question = ''; learner = ''; subject = '';
-  examples = ['Quels apprenants ont une bourse ?', 'Combien de membres par club ?', 'Que sais-tu sur Amira ?',
+  examples = ['Quels apprenants ont une bourse ?', 'Combien de membres par club ?', 'Que sais-tu sur fedi ?',
               'Quels clubs ont plus de 20 membres ?', 'Quelles matières ont un coefficient entre 2 et 4 ?', 'Quel club a le plus de membres ?'];
 
   constructor() {

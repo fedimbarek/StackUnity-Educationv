@@ -12,7 +12,7 @@ interface Step { title: string; desc: string; run: () => Observable<Result>; }
   selector: 'app-scenario',
   imports: [RouterLink],
   template: `
-    <h2>Scénario : le dossier 360° d'Amira</h2>
+    <h2>Scénario : le dossier 360°fedi</h2>
     <p class="muted">
       Amira Ben Salah, apprenante, veut faire le point sur son parcours : bourse, stage PFE, club, services de santé,
       compétences… puis savoir quoi développer ensuite. Le scénario traverse toute l'application :

@@ -235,12 +235,6 @@
     :developpe :Python ;
     :nom "Cours Python débutant" .
 
-:DepGestionUT a :DepartementGestion,
-        owl:NamedIndividual ;
-    rdfs:label "Département de gestion - Université de Tunis"@fr ;
-    :nom "Département de gestion" ;
-    :partieDe :UniversiteDeTunis .
-
 :DepistageUT a :CampagneDepistage,
         owl:NamedIndividual ;
     rdfs:label "Dépistage de la vue et de la tension"@fr ;
@@ -852,6 +846,19 @@
     rdfs:domain :Bourse ;
     rdfs:range :Organisme .
 
+:formation a :Formation,
+        owl:NamedIndividual ;
+    rdfs:label "formation" ;
+    :aPourMatiere :SeancePython1 ;
+    :appartientAuDomaine :BootcampFullStack ;
+    :description "dde" ;
+    :duree 2 ;
+    :estProposeePar :DepGestionUT ;
+    :nom "deb" ;
+    :prepareDiplome :Francais ;
+    :seDerouleEn :Semestre1_2025 ;
+    :tauxReussite 2.0 .
+
 :gratification a owl:DatatypeProperty,
         owl:FunctionalProperty ;
     rdfs:label "gratification mensuelle (DT)"@fr ;
@@ -1344,6 +1351,12 @@
     rdfs:label "Covoiturage étudiant"@fr ;
     rdfs:subClassOf :ServiceTransport .
 
+:DepGestionUT a :DepartementGestion,
+        owl:NamedIndividual ;
+    rdfs:label "Département de gestion - Université de Tunis"@fr ;
+    :nom "Département de gestion" ;
+    :partieDe :UniversiteDeTunis .
+
 :DepLanguesUT a :DepartementLangues,
         owl:NamedIndividual ;
     rdfs:label "Département de langues - Université de Tunis"@fr ;
@@ -1589,17 +1602,6 @@
     :lieuSeance :SalleB12 ;
     :nom "JavaScript - travaux dirigés" ;
     :seanceDe :ModuleJavaScript .
-
-:SeancePython1 a :SeanceDeCours,
-        owl:NamedIndividual ;
-    rdfs:label "Python - séance 1"@fr ;
-    :animePar :Ahmed ;
-    :dateSeance "2025-09-22"^^xsd:date ;
-    :heureDebut "09:00:00"^^xsd:time ;
-    :heureFin "10:30:00"^^xsd:time ;
-    :lieuSeance :AmphiA ;
-    :nom "Introduction à Python - cours" ;
-    :seanceDe :ModulePython .
 
 :SpectacleDePrintemps a :Spectacle,
         owl:NamedIndividual ;
@@ -2171,6 +2173,17 @@
     rdfs:label "Séance de TP"@fr ;
     rdfs:subClassOf :Seance .
 
+:SeancePython1 a :SeanceDeCours,
+        owl:NamedIndividual ;
+    rdfs:label "Python - séance 1"@fr ;
+    :animePar :Ahmed ;
+    :dateSeance "2025-09-22"^^xsd:date ;
+    :heureDebut "09:00:00"^^xsd:time ;
+    :heureFin "10:30:00"^^xsd:time ;
+    :lieuSeance :AmphiA ;
+    :nom "Introduction à Python - cours" ;
+    :seanceDe :ModulePython .
+
 :Soutenance a owl:Class ;
     rdfs:label "Soutenance"@fr ;
     rdfs:subClassOf :Evaluation .
@@ -2665,13 +2678,6 @@ xsd:time a rdfs:Datatype .
     rdfs:label "Semestre"@fr ;
     rdfs:subClassOf :PeriodeAcademique .
 
-:Semestre1_2025 a :Semestre,
-        owl:NamedIndividual ;
-    rdfs:label "Semestre 1"@fr ;
-    :dateDebut "2025-09-15"^^xsd:date ;
-    :dateFin "2026-01-31"^^xsd:date ;
-    :nom "Semestre 1" .
-
 :ServiceHebergement a owl:Class ;
     rdfs:label "Hébergement"@fr ;
     rdfs:subClassOf :ServiceVieEtudiante .
@@ -2715,16 +2721,6 @@ xsd:time a rdfs:Datatype .
 :Video a owl:Class ;
     rdfs:label "Vidéo"@fr ;
     rdfs:subClassOf :RessourcePedagogique .
-
-:BootcampFullStack a :Bootcamp,
-        owl:NamedIndividual ;
-    rdfs:label "Bootcamp Full Stack"@fr ;
-    :contient :ModuleDjango,
-        :ModuleJavaScript ;
-    :delivreCertification :CertificationDjango ;
-    :duree 120 ;
-    :nom "Bootcamp Full Stack" ;
-    :utiliseRessource :PodcastCarriere .
 
 :ClubMusique a owl:Class ;
     rdfs:label "Club de musique"@fr ;
@@ -2786,6 +2782,13 @@ xsd:time a rdfs:Datatype .
     :nom "Programmation web" ;
     :nombreHeures 60 .
 
+:Semestre1_2025 a :Semestre,
+        owl:NamedIndividual ;
+    rdfs:label "Semestre 1"@fr ;
+    :dateDebut "2025-09-15"^^xsd:date ;
+    :dateFin "2026-01-31"^^xsd:date ;
+    :nom "Semestre 1" .
+
 :ServiceVieEtudiante a owl:Class ;
     rdfs:label "Service de vie étudiante"@fr ;
     rdfs:comment "Service d'accompagnement de la vie quotidienne et professionnelle des apprenants (hébergement, restauration, transport, orientation)."@fr .
@@ -2811,6 +2814,16 @@ xsd:time a rdfs:Datatype .
     :nom "Ahmed" ;
     :parleLangue :Arabe,
         :Francais .
+
+:BootcampFullStack a :Bootcamp,
+        owl:NamedIndividual ;
+    rdfs:label "Bootcamp Full Stack"@fr ;
+    :contient :ModuleDjango,
+        :ModuleJavaScript ;
+    :delivreCertification :CertificationDjango ;
+    :duree 120 ;
+    :nom "Bootcamp Full Stack" ;
+    :utiliseRessource :PodcastCarriere .
 
 :DomaineWeb a :DomaineTechnologie,
         owl:NamedIndividual ;
@@ -2976,15 +2989,15 @@ xsd:date a rdfs:Datatype .
     rdfs:comment "Séance planifiée dans l'emploi du temps."@fr ;
     rdfs:subClassOf :Matiere .
 
-:Francais a :LangueEtrangere,
-        owl:NamedIndividual ;
-    rdfs:label "Français"@fr ;
-    :nom "Français" .
-
 :Arabe a :LangueNationale,
         owl:NamedIndividual ;
     rdfs:label "Arabe"@fr ;
     :nom "Arabe" .
+
+:Francais a :LangueEtrangere,
+        owl:NamedIndividual ;
+    rdfs:label "Français"@fr ;
+    :nom "Français" .
 
 :Certification a owl:Class ;
     rdfs:label "Certification"@fr ;
