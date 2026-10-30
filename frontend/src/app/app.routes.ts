@@ -67,6 +67,8 @@ export const routes: Routes = [
     component: AssistantComponent,
     canActivate: [authGuard]
   },
+   { path: 'bourses-ai', canActivate: [accessGuard],
+  loadComponent: () => import('./features/bourses-ai/bourses-ai.component').then(m => m.BoursesAiComponent) },
 
   // Route inconnue (doit rester la DERNIÈRE route)
   { path: '**', redirectTo: '' }

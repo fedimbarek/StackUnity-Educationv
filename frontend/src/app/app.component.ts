@@ -1,4 +1,3 @@
-
 import { Component, computed, inject } from '@angular/core';
 import { RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
 
@@ -63,15 +62,20 @@ import { canAccess, isFull } from './core/roles';
             </a>
 
             <a routerLink="/scenario" routerLinkActive="on">
-              <i class="dot"></i>Scénario Amira
+              <i class="dot"></i>Scénario StackUnity
             </a>
           }
 
-          <!-- NOUVEAU : Assistant NLP Personnes & Organismes -->
+          <!-- Assistants NLP -->
           <small class="muted sec">NLP & Sémantique</small>
 
           <a routerLink="/assistant" routerLinkActive="on">
             <i class="dot"></i>Assistant IA – Personnes & Organismes
+          </a>
+
+          <!-- NOUVEAU : Assistant NLP Bourses & Inscriptions -->
+          <a routerLink="/bourses-ai" routerLinkActive="on">
+            <i class="dot"></i>Assistant IA – Bourses & Inscriptions
           </a>
 
           <div class="grow"></div>

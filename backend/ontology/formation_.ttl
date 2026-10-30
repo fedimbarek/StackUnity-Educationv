@@ -8,6 +8,42 @@
     rdfs:label "StackUnity - Éducation et Formation"@fr ;
     rdfs:comment "Ontologie permettant de modéliser les personnes, formations, compétences, prérequis, ressources pédagogiques, évaluations, parcours d'apprentissage, clubs et stages."@fr .
 
+:100 a :BourseMerite,
+        owl:NamedIndividual ;
+    rdfs:label "inscription" ;
+    :description "test" ;
+    :financePar :ConventionCadreUniversite ;
+    :montantBourse 5000.0 ;
+    :nom "Amira" .
+
+:12 a :InscriptionAdministrative,
+        owl:NamedIndividual ;
+    rdfs:label "inscription" ;
+    :dateInscription "2026-10-30"^^xsd:date ;
+    :inscriptionDe :Amira ;
+    :inscriptionPourPeriode :AnneeUniv2025_2026 ;
+    :nom "Amira" ;
+    :statutInscription "validée" .
+
+:1222 a :Enseignant,
+        owl:NamedIndividual ;
+    rdfs:label "validation" ;
+    :appartientADepartement :DepInformatiqueUT ;
+    :dateNaissance "2026-10-23"^^xsd:date ;
+    :email "validation@gmail.com" ;
+    :enseigneMatiere :SeanceDjangoTP ;
+    :nom "validation" ;
+    :telephone "21345540" .
+
+:188 a :InscriptionAdministrative,
+        owl:NamedIndividual ;
+    rdfs:label "validation" ;
+    :dateInscription "2026-10-30"^^xsd:date ;
+    :inscriptionDe :Bilel ;
+    :inscriptionPourPeriode :Semestre1_2025 ;
+    :nom "validaton_inscri" ;
+    :statutInscription "active" .
+
 :2 a :Formation,
         owl:NamedIndividual ;
     rdfs:label "dd" ;
@@ -22,6 +58,14 @@
     :capaciteEspace 22 ;
     :estSitueDans :StagePFEWeb ;
     :nom "ddza" .
+
+:24 a :CertificatMedical,
+        owl:NamedIndividual ;
+    rdfs:label "Validation sante" ;
+    :certificatPour :Firas ;
+    :dateCertificat "2026-10-31"^^xsd:date ;
+    :nom "Vamlidation finale" ;
+    :validiteMois 7 .
 
 :Ahmed2 a :Enseignant,
         owl:NamedIndividual ;
@@ -39,6 +83,16 @@
     :enseigneMatiere :Statistiques ;
     :nom "Anis Sassi" .
 
+:AtelierGestionStressEtudiants a :AtelierGestionStress,
+        owl:NamedIndividual ;
+    rdfs:label "Atelier de gestion du stress"@fr ;
+    :consultePar :PsychologueMariem ;
+    :estGratuit true ;
+    :horairesOuverture "Vendredi, 16h - 17h30" ;
+    :nom "Atelier gestion du stress pour étudiants" ;
+    :serviceRattacheA :UniversiteDeTunis ;
+    :surRendezVous false .
+
 :AtelierStressUT a :AtelierGestionStress,
         owl:NamedIndividual ;
     rdfs:label "Atelier de gestion du stress"@fr ;
@@ -55,16 +109,13 @@
     :certifieCompetence :GestionTemps ;
     :nom "Attestation de stage" .
 
-:Bilel a :Stagiaire,
+:Bourses_farah a :BourseMerite,
         owl:NamedIndividual ;
-    rdfs:label "Bilel"@fr ;
-    :effectueStage :StageInitiationData ;
-    :nom "Bilel Karray" ;
-    :parleLangue :Arabe,
-        :Francais ;
-    :possedeCompetence :Python ;
-    :suitFormationAlternance :AlternanceDeveloppeur ;
-    :suitParcours :ParcoursReconversionIT .
+    rdfs:label "Inscription" ;
+    :description "test" ;
+    :financePar :StackUnityTunisie ;
+    :montantBourse 6000.0 ;
+    :nom "Farah Hammami" .
 
 :Boursier a owl:Class ;
     rdfs:label "Boursier"@fr ;
@@ -73,6 +124,22 @@
             owl:intersectionOf ( :Apprenant [ a owl:Restriction ;
                         owl:onProperty :beneficieDeBourse ;
                         owl:someValuesFrom :Bourse ] ) ] .
+
+:CafeteriaCentraleUT a :Cafeteria,
+        owl:NamedIndividual ;
+    rdfs:label "Cafétéria centrale"@fr ;
+    :estActif true ;
+    :lieu "Bâtiment A" ;
+    :nom "Cafétéria centrale" ;
+    :serviceRattacheA :UniversiteDeTunis .
+
+:CampagneDepistageDiabete a :CampagneDepistage,
+        owl:NamedIndividual ;
+    rdfs:label "Campagne de dépistage du diabète"@fr ;
+    :assureParPersonnel :InfirmierRami ;
+    :estGratuit true ;
+    :nom "Dépistage du diabète" ;
+    :serviceRattacheA :UniversiteDeTunis .
 
 :CampagneVaccinationOctobre a :CampagneSante,
         owl:NamedIndividual ;
@@ -182,15 +249,13 @@
     rdfs:label "Novice"@fr ;
     :nom "Novice" .
 
-:ConsultationDentaireUT a :ConsultationDentaire,
+:ConsultationDentaireGratuiteUT a :ConsultationDentaire,
         owl:NamedIndividual ;
-    rdfs:label "Consultation dentaire - Université de Tunis"@fr ;
+    rdfs:label "Consultation dentaire gratuite"@fr ;
     :assureParPersonnel :DrAmel ;
-    :dureeConsultationMinutes 30 ;
     :estGratuit true ;
-    :horairesOuverture "Mardi et jeudi, 9h - 14h" ;
-    :nom "Consultation dentaire" ;
-    :serviceLocaliseDans :InfirmerieCentrale ;
+    :horairesOuverture "Mardi, 9h - 12h" ;
+    :nom "Consultation dentaire gratuite" ;
     :serviceRattacheA :UniversiteDeTunis ;
     :surRendezVous true .
 
@@ -209,13 +274,6 @@
     rdfs:label "Convention bilatérale Laboratoire IA"@fr ;
     :accueilliPar :LaboratoireIA ;
     :nom "Convention bilatérale Laboratoire IA" .
-
-:ConventionCadreUniversite a :ConventionCadre,
-        owl:NamedIndividual ;
-    rdfs:label "Convention cadre Université / TechSolutions"@fr ;
-    :accueilliPar :TechSolutions ;
-    :encadreAcademique :Ahmed ;
-    :nom "Convention cadre Université / TechSolutions" .
 
 :ConventionStackUnity a :ConventionTripartite,
         owl:NamedIndividual ;
@@ -239,6 +297,13 @@
     rdfs:label "Cours Python débutant"@fr ;
     :developpe :Python ;
     :nom "Cours Python débutant" .
+
+:CovoiturageEtudiantUT a :CovoiturageEtudiant,
+        owl:NamedIndividual ;
+    rdfs:label "Covoiturage étudiant"@fr ;
+    :estActif true ;
+    :lieu "Campus de Tunis" ;
+    :nom "Plateforme de covoiturage" .
 
 :DepGestionUT a :DepartementGestion,
         owl:NamedIndividual ;
@@ -290,6 +355,14 @@
         owl:NamedIndividual ;
     rdfs:label "Hatem"@fr ;
     :nom "Hatem Mansouri" .
+
+:HebergementUrgenceUT a :HebergementUrgence,
+        owl:NamedIndividual ;
+    rdfs:label "Hébergement d'urgence"@fr ;
+    :estActif true ;
+    :lieu "Cité universitaire, Tunis" ;
+    :nom "Hébergement d'urgence pour étudiants" ;
+    :serviceRattacheA :UniversiteDeTunis .
 
 :Ines a :AncienApprenant,
         owl:NamedIndividual ;
@@ -399,6 +472,23 @@
         owl:NamedIndividual ;
     rdfs:label "Troisième année"@fr ;
     :nom "Troisième année" .
+
+:NumerosUrgenceMedicale a :TransportMedical,
+        owl:NamedIndividual ;
+    rdfs:label "Numéro d'urgence médicale"@fr ;
+    :estGratuit true ;
+    :nom "Numéro d'urgence médicale" ;
+    :serviceRattacheA :UniversiteDeTunis ;
+    :surRendezVous false ;
+    :telephoneService "190" .
+
+:OrientationProfessionnelleUT a :OrientationAcademique,
+        owl:NamedIndividual ;
+    rdfs:label "Orientation professionnelle"@fr ;
+    :estActif true ;
+    :lieu "Bâtiment administratif" ;
+    :nom "Service d'orientation professionnelle" ;
+    :serviceRattacheA :UniversiteDeTunis .
 
 :ParcoursSurMesure a :ParcoursPersonnalise,
         owl:NamedIndividual ;
@@ -646,6 +736,11 @@
     rdfs:domain :Evaluation ;
     rdfs:range :Formation .
 
+:consulte a owl:ObjectProperty ;
+    rdfs:label "consulte le service"@fr ;
+    rdfs:domain :Apprenant ;
+    rdfs:range :ServiceMedical .
+
 :contient a owl:ObjectProperty ;
     rdfs:label "contient"@fr ;
     rdfs:domain :Formation ;
@@ -863,6 +958,11 @@
     rdfs:domain :Stage ;
     rdfs:range xsd:decimal .
 
+:habite a owl:ObjectProperty ;
+    rdfs:label "habite dans"@fr ;
+    rdfs:domain :Apprenant ;
+    rdfs:range :ServiceHebergement .
+
 :heberge a owl:ObjectProperty ;
     rdfs:label "est hébergé par"@fr ;
     rdfs:domain :Club ;
@@ -1066,6 +1166,11 @@
     rdfs:domain :Formation ;
     rdfs:range :Competence .
 
+:sInscritA a owl:ObjectProperty ;
+    rdfs:label "est inscrit à"@fr ;
+    rdfs:domain :Apprenant ;
+    rdfs:range :ServiceVieEtudiante .
+
 :score a owl:DatatypeProperty ;
     rdfs:label "score"@fr ;
     rdfs:domain :Evaluation ;
@@ -1185,6 +1290,11 @@
     rdfs:domain :Formation ;
     rdfs:range :RessourcePedagogique .
 
+:utiliseTransport a owl:ObjectProperty ;
+    rdfs:label "utilise le transport"@fr ;
+    rdfs:domain :Apprenant ;
+    rdfs:range :ServiceTransport .
+
 :valideFormation a owl:ObjectProperty ;
     rdfs:label "valide la formation"@fr ;
     rdfs:domain :Stage ;
@@ -1204,10 +1314,6 @@
     rdfs:label "ville"@fr ;
     rdfs:domain :Organisme ;
     rdfs:range xsd:string .
-
-:AbonnementTransport a owl:Class ;
-    rdfs:label "Abonnement de transport"@fr ;
-    rdfs:subClassOf :ServiceTransport .
 
 :AccompagnementEmploi a owl:Class ;
     rdfs:label "Accompagnement à l'emploi"@fr ;
@@ -1256,6 +1362,17 @@
     :certifieCompetence :TravailEquipe ;
     :nom "Attestation de participation au hackathon" .
 
+:Bilel a :Stagiaire,
+        owl:NamedIndividual ;
+    rdfs:label "Bilel"@fr ;
+    :effectueStage :StageInitiationData ;
+    :nom "Bilel Karray" ;
+    :parleLangue :Arabe,
+        :Francais ;
+    :possedeCompetence :Python ;
+    :suitFormationAlternance :AlternanceDeveloppeur ;
+    :suitParcours :ParcoursReconversionIT .
+
 :Bootcamp a owl:Class ;
     rdfs:label "Bootcamp"@fr ;
     rdfs:subClassOf :Formation .
@@ -1265,10 +1382,6 @@
     rdfs:label "Bourse sociale - Yasmine"@fr ;
     :montantBourse 900.0 ;
     :nom "Bourse sociale 2025-2026" .
-
-:Cafeteria a owl:Class ;
-    rdfs:label "Cafétéria"@fr ;
-    rdfs:subClassOf :ServiceRestauration .
 
 :CertifAbsenceNour a :CertificatAbsence,
         owl:NamedIndividual ;
@@ -1370,9 +1483,24 @@
     :lieu "Amphithéâtre A" ;
     :nom "Journée portes ouvertes de l'IA" .
 
-:CovoiturageEtudiant a owl:Class ;
-    rdfs:label "Covoiturage étudiant"@fr ;
-    rdfs:subClassOf :ServiceTransport .
+:ConsultationDentaireUT a :ConsultationDentaire,
+        owl:NamedIndividual ;
+    rdfs:label "Consultation dentaire - Université de Tunis"@fr ;
+    :assureParPersonnel :DrAmel ;
+    :dureeConsultationMinutes 30 ;
+    :estGratuit true ;
+    :horairesOuverture "Mardi et jeudi, 9h - 14h" ;
+    :nom "Consultation dentaire" ;
+    :serviceLocaliseDans :InfirmerieCentrale ;
+    :serviceRattacheA :UniversiteDeTunis ;
+    :surRendezVous true .
+
+:ConventionCadreUniversite a :ConventionCadre,
+        owl:NamedIndividual ;
+    rdfs:label "Convention cadre Université / TechSolutions"@fr ;
+    :accueilliPar :TechSolutions ;
+    :encadreAcademique :Ahmed ;
+    :nom "Convention cadre Université / TechSolutions" .
 
 :DepLanguesUT a :DepartementLangues,
         owl:NamedIndividual ;
@@ -1391,12 +1519,6 @@
     rdfs:label "Activité physique"@fr ;
     :nom "Activité physique" .
 
-:DrAmel a :Medecin,
-        owl:NamedIndividual ;
-    rdfs:label "Dr Amel"@fr ;
-    :nom "Dr Amel Cherif" ;
-    :specialiteMedicale "Chirurgie dentaire" .
-
 :ExercicePython a :Exercice,
         owl:NamedIndividual ;
     rdfs:label "Exercice Python"@fr ;
@@ -1409,17 +1531,6 @@
     :coefficient 1.0 ;
     :nom "Expression écrite" ;
     :nombreHeures 20 .
-
-:Firas a :Apprenant,
-        :Etudiant,
-        owl:NamedIndividual ;
-    rdfs:label "Firas"@fr ;
-    :beneficieDeBourse :BourseMobiliteKarim ;
-    :nom "Firas Nefzi" ;
-    :parleLangue :Arabe,
-        :Francais ;
-    :possedeCompetence :Python ;
-    :suitParcours :ParcoursDeveloppementWeb .
 
 :FormationAnglaisTechnique a :Webformation,
         owl:NamedIndividual ;
@@ -1451,10 +1562,6 @@
     :dateEvenement "2026-03-21"^^xsd:date ;
     :lieu "Salle informatique 1" ;
     :nom "Hackathon universitaire 2026" .
-
-:HebergementUrgence a owl:Class ;
-    rdfs:label "Hébergement d'urgence"@fr ;
-    rdfs:subClassOf :ServiceHebergement .
 
 :Infirmerie a owl:Class ;
     rdfs:label "Infirmerie"@fr ;
@@ -1503,9 +1610,13 @@
     :nom "Mathématiques" ;
     :nombreHeures 60 .
 
-:NavetteUniversitaire a owl:Class ;
+:NavetteUniversitaireUT a :NavetteUniversitaire,
+        owl:NamedIndividual ;
     rdfs:label "Navette universitaire"@fr ;
-    rdfs:subClassOf :ServiceTransport .
+    :estActif true ;
+    :lieu "Tunis centre ↔ Campus" ;
+    :nom "Navette universitaire" ;
+    :serviceRattacheA :UniversiteDeTunis .
 
 :NiveauC1 a :NiveauLangue,
         owl:NamedIndividual ;
@@ -1524,10 +1635,6 @@
     :nombreMembres 15 ;
     :organiseEvenement :ConcertDeFinAnnee .
 
-:OrientationAcademique a owl:Class ;
-    rdfs:label "Orientation académique"@fr ;
-    rdfs:subClassOf :ServiceOrientationEmploi .
-
 :PanierSolidaire a owl:Class ;
     rdfs:label "Panier solidaire"@fr ;
     rdfs:subClassOf :ServiceRestauration .
@@ -1536,7 +1643,8 @@
         owl:NamedIndividual ;
     rdfs:label "Parcours Data Science"@fr ;
     :nom "Parcours Data Science" ;
-    :possedeEtape :ModulePython,
+    :possedeEtape :ModuleBigData,
+        :ModulePython,
         :ModuleSQL .
 
 :ParcoursLicenceInfo a :ParcoursInitial,
@@ -1576,13 +1684,14 @@
     :evalue :JavaScript ;
     :nom "Rapport de PFE - Plateforme web" .
 
-:ResidenceUniversitaire a owl:Class ;
-    rdfs:label "Résidence universitaire"@fr ;
-    rdfs:subClassOf :ServiceHebergement .
-
-:RestaurantUniversitaire a owl:Class ;
-    rdfs:label "Restaurant universitaire"@fr ;
-    rdfs:subClassOf :ServiceRestauration .
+:ResidenceUniversitaireTunis a :ResidenceUniversitaire,
+        owl:NamedIndividual ;
+    rdfs:label "Résidence universitaire de Tunis"@fr ;
+    :capaciteEspace 400 ;
+    :estActif true ;
+    :lieu "Cité universitaire, Tunis" ;
+    :nom "Résidence universitaire de Tunis" ;
+    :serviceRattacheA :UniversiteDeTunis .
 
 :SalleB12 a :SalleDeCours,
         owl:NamedIndividual ;
@@ -1597,17 +1706,6 @@
     :capaciteEspace 30 ;
     :estSitueDans :UniversiteDeTunis ;
     :nom "Salle informatique 1" .
-
-:SeanceDjangoTP a :SeanceDeTP,
-        owl:NamedIndividual ;
-    rdfs:label "Django - TP"@fr ;
-    :animePar :Ahmed ;
-    :dateSeance "2025-10-14"^^xsd:date ;
-    :heureDebut "14:00:00"^^xsd:time ;
-    :heureFin "16:00:00"^^xsd:time ;
-    :lieuSeance :SalleInfo1 ;
-    :nom "Django - travaux pratiques" ;
-    :seanceDe :ModuleDjango .
 
 :SeanceJSTD a :SeanceDeTD,
         owl:NamedIndividual ;
@@ -1795,6 +1893,10 @@
     rdfs:domain :Departement ;
     rdfs:range :Formation .
 
+:AbonnementTransport a owl:Class ;
+    rdfs:label "Abonnement de transport"@fr ;
+    rdfs:subClassOf :ServiceTransport .
+
 :Amphitheatre a owl:Class ;
     rdfs:label "Amphithéâtre"@fr ;
     rdfs:subClassOf :Espace .
@@ -1807,34 +1909,9 @@
     :nom "Anglais technique" ;
     :nombreHeures 24 .
 
-:AnneeUniv2025_2026 a :AnneeUniversitaire,
-        owl:NamedIndividual ;
-    rdfs:label "Année universitaire 2025-2026"@fr ;
-    :contientPeriode :Semestre1_2025,
-        :Semestre2_2026 ;
-    :dateDebut "2025-09-15"^^xsd:date ;
-    :dateFin "2026-06-30"^^xsd:date ;
-    :nom "Année universitaire 2025-2026" .
-
 :ApplicationMobile a owl:Class ;
     rdfs:label "Application mobile"@fr ;
     rdfs:subClassOf :OutilNumerique .
-
-:AtelierGestionStress a owl:Class ;
-    rdfs:label "Atelier de gestion du stress"@fr ;
-    rdfs:subClassOf :SoutienPsychologique .
-
-:AttestationParticipation a owl:Class ;
-    rdfs:label "Attestation de participation"@fr ;
-    rdfs:subClassOf :Certification .
-
-:Basketball a owl:Class ;
-    rdfs:label "Basketball"@fr ;
-    rdfs:subClassOf :ClubSport .
-
-:BourseMerite a owl:Class ;
-    rdfs:label "Bourse de mérite"@fr ;
-    rdfs:subClassOf :Bourse .
 
 :BourseMeriteAmira a :BourseMerite,
         owl:NamedIndividual ;
@@ -1858,16 +1935,9 @@
     rdfs:label "Bourse sociale"@fr ;
     rdfs:subClassOf :Bourse .
 
-:CabinetPsychologie a :SalleDeCours,
-        owl:NamedIndividual ;
-    rdfs:label "Cabinet de psychologie"@fr ;
-    :capaciteEspace 4 ;
-    :estSitueDans :UniversiteDeTunis ;
-    :nom "Cabinet de psychologie" .
-
-:CampagneDepistage a owl:Class ;
-    rdfs:label "Campagne de dépistage"@fr ;
-    rdfs:subClassOf :PreventionSante .
+:Cafeteria a owl:Class ;
+    rdfs:label "Cafétéria"@fr ;
+    rdfs:subClassOf :ServiceRestauration .
 
 :CertifAptitudeKarim a :CertificatAptitudeSport,
         owl:NamedIndividual ;
@@ -1888,10 +1958,6 @@
 :CertificatAptitudeStage a owl:Class ;
     rdfs:label "Certificat d'aptitude au stage"@fr ;
     rdfs:subClassOf :CertificatMedical .
-
-:CertificationAcademique a owl:Class ;
-    rdfs:label "Certification académique"@fr ;
-    rdfs:subClassOf :Certification .
 
 :CertificationDjango a :Certification,
         owl:NamedIndividual ;
@@ -1954,10 +2020,6 @@
     :lieu "Théâtre municipal de Tunis" ;
     :nom "Concert de fin d'année" .
 
-:ConsultationDentaire a owl:Class ;
-    rdfs:label "Consultation dentaire"@fr ;
-    rdfs:subClassOf :ConsultationMedicale .
-
 :ConsultationGenerale a owl:Class ;
     rdfs:label "Consultation générale"@fr ;
     rdfs:subClassOf :ConsultationMedicale .
@@ -1965,6 +2027,17 @@
 :ConsultationOphtalmologique a owl:Class ;
     rdfs:label "Consultation ophtalmologique"@fr ;
     rdfs:subClassOf :ConsultationMedicale .
+
+:ConsultationPsychologiqueAnonyme a :EntretienPsychologique,
+        owl:NamedIndividual ;
+    rdfs:label "Consultation psychologique anonyme"@fr ;
+    :consultePar :PsychologueMariem ;
+    :estGratuit true ;
+    :horairesOuverture "Lundi et mercredi, 14h - 17h" ;
+    :nom "Consultation psychologique anonyme" ;
+    :serviceLocaliseDans :CabinetPsychologie ;
+    :serviceRattacheA :UniversiteDeTunis ;
+    :surRendezVous true .
 
 :ConventionBilaterale a owl:Class ;
     rdfs:label "Convention bilatérale"@fr ;
@@ -2002,6 +2075,12 @@
     rdfs:label "Domaine sport"@fr ;
     rdfs:subClassOf :Domaine .
 
+:DrAmel a :Medecin,
+        owl:NamedIndividual ;
+    rdfs:label "Dr Amel"@fr ;
+    :nom "Dr Amel Cherif" ;
+    :specialiteMedicale "Chirurgie dentaire" .
+
 :EducationSante a owl:Class ;
     rdfs:label "Éducation à la santé"@fr ;
     rdfs:subClassOf :PreventionSante .
@@ -2023,10 +2102,6 @@
     :serviceRattacheA :UniversiteDeTunis ;
     :surRendezVous true .
 
-:EntretienPsychologique a owl:Class ;
-    rdfs:label "Entretien psychologique individuel"@fr ;
-    rdfs:subClassOf :SoutienPsychologique .
-
 :EspritSportif a :CompetenceSportive,
         owl:NamedIndividual ;
     rdfs:label "Esprit sportif"@fr ;
@@ -2040,29 +2115,32 @@
     rdfs:label "Exercice"@fr ;
     rdfs:subClassOf :RessourcePedagogique .
 
-:Football a owl:Class ;
-    rdfs:label "Football"@fr ;
-    rdfs:subClassOf :ClubSport .
+:Firas a :Apprenant,
+        :Etudiant,
+        owl:NamedIndividual ;
+    rdfs:label "Firas"@fr ;
+    :beneficieDeBourse :BourseMobiliteKarim ;
+    :nom "Firas Nefzi" ;
+    :parleLangue :Arabe,
+        :Francais ;
+    :possedeCompetence :Python ;
+    :suitParcours :ParcoursDeveloppementWeb .
 
 :FormationEnAlternance a owl:Class ;
     rdfs:label "Formation en alternance"@fr ;
     rdfs:subClassOf :Formation .
 
-:GroupeDeParole a owl:Class ;
-    rdfs:label "Groupe de parole"@fr ;
-    rdfs:subClassOf :SoutienPsychologique .
-
 :GroupeMusiqueModerne a owl:Class ;
     rdfs:label "Groupe de musique moderne"@fr ;
     rdfs:subClassOf :ClubMusique .
 
+:HebergementUrgence a owl:Class ;
+    rdfs:label "Hébergement d'urgence"@fr ;
+    rdfs:subClassOf :ServiceHebergement .
+
 :Infirmier a owl:Class ;
     rdfs:label "Infirmier"@fr ;
     rdfs:subClassOf :PersonnelMedical .
-
-:InscriptionAdministrative a owl:Class ;
-    rdfs:label "Inscription administrative"@fr ;
-    rdfs:subClassOf :Inscription .
 
 :Kinesitherapie a owl:Class ;
     rdfs:label "Kinésithérapie"@fr ;
@@ -2071,14 +2149,6 @@
 :Laboratoire a owl:Class ;
     rdfs:label "Laboratoire"@fr ;
     rdfs:subClassOf :Organisme .
-
-:LangueDesSignes a owl:Class ;
-    rdfs:label "Langue des signes"@fr ;
-    rdfs:subClassOf :Langue .
-
-:LangueNationale a owl:Class ;
-    rdfs:label "Langue nationale"@fr ;
-    rdfs:subClassOf :Langue .
 
 :Licence a owl:Class ;
     rdfs:label "Licence"@fr ;
@@ -2104,10 +2174,6 @@
     :urlOutil "https://moodle.org"^^xsd:anyURI ;
     :versionOutil "4.3" .
 
-:Natation a owl:Class ;
-    rdfs:label "Natation"@fr ;
-    rdfs:subClassOf :ClubSport .
-
 :NiveauAvance a :Niveau,
         owl:NamedIndividual ;
     rdfs:label "Avancé"@fr ;
@@ -2116,6 +2182,10 @@
 :Orchestre a owl:Class ;
     rdfs:label "Orchestre"@fr ;
     rdfs:subClassOf :ClubMusique .
+
+:OrientationAcademique a owl:Class ;
+    rdfs:label "Orientation académique"@fr ;
+    rdfs:subClassOf :ServiceOrientationEmploi .
 
 :ParcoursContinu a owl:Class ;
     rdfs:label "Parcours de formation continue"@fr ;
@@ -2176,6 +2246,22 @@
     rdfs:label "Projet"@fr ;
     rdfs:subClassOf :Evaluation .
 
+:ResidenceUniversitaire a owl:Class ;
+    rdfs:label "Résidence universitaire"@fr ;
+    rdfs:subClassOf :ServiceHebergement .
+
+:RestaurantUniversitaire a owl:Class ;
+    rdfs:label "Restaurant universitaire"@fr ;
+    rdfs:subClassOf :ServiceRestauration .
+
+:RestaurantUniversitaireUT a :RestaurantUniversitaire,
+        owl:NamedIndividual ;
+    rdfs:label "Restaurant universitaire"@fr ;
+    :estActif true ;
+    :lieu "Campus de Tunis" ;
+    :nom "Restaurant universitaire" ;
+    :serviceRattacheA :UniversiteDeTunis .
+
 :Rim a :ResponsableClub,
         owl:NamedIndividual ;
     rdfs:label "Rim"@fr ;
@@ -2196,6 +2282,17 @@
 :SeanceDeTP a owl:Class ;
     rdfs:label "Séance de TP"@fr ;
     rdfs:subClassOf :Seance .
+
+:SeanceDjangoTP a :SeanceDeTP,
+        owl:NamedIndividual ;
+    rdfs:label "Django - TP"@fr ;
+    :animePar :Ahmed ;
+    :dateSeance "2025-10-14"^^xsd:date ;
+    :heureDebut "14:00:00"^^xsd:time ;
+    :heureFin "16:00:00"^^xsd:time ;
+    :lieuSeance :SalleInfo1 ;
+    :nom "Django - travaux pratiques" ;
+    :seanceDe :ModuleDjango .
 
 :Soutenance a owl:Class ;
     rdfs:label "Soutenance"@fr ;
@@ -2241,22 +2338,6 @@
 :SuiviSportif a owl:Class ;
     rdfs:label "Suivi médico-sportif"@fr ;
     rdfs:subClassOf :SanteSportive .
-
-:TheatreComedie a owl:Class ;
-    rdfs:label "Comédie"@fr ;
-    rdfs:subClassOf :ClubTheatre .
-
-:TheatreDrame a owl:Class ;
-    rdfs:label "Drame"@fr ;
-    rdfs:subClassOf :ClubTheatre .
-
-:TheatreImprovisation a owl:Class ;
-    rdfs:label "Théâtre d'improvisation"@fr ;
-    rdfs:subClassOf :ClubTheatre .
-
-:TransportMedical a owl:Class ;
-    rdfs:label "Transport médical"@fr ;
-    rdfs:subClassOf :PremiersSecoursMedicaux .
 
 :TravailPratique a owl:Class ;
     rdfs:label "Travail pratique"@fr ;
@@ -2309,9 +2390,37 @@ xsd:time a rdfs:Datatype .
     :nom "Algorithmique" ;
     :nombreHeures 45 .
 
+:AnneeUniv2025_2026 a :AnneeUniversitaire,
+        owl:NamedIndividual ;
+    rdfs:label "Année universitaire 2025-2026"@fr ;
+    :contientPeriode :Semestre1_2025,
+        :Semestre2_2026 ;
+    :dateDebut "2025-09-15"^^xsd:date ;
+    :dateFin "2026-06-30"^^xsd:date ;
+    :nom "Année universitaire 2025-2026" .
+
 :AnneeUniversitaire a owl:Class ;
     rdfs:label "Année universitaire"@fr ;
     rdfs:subClassOf :PeriodeAcademique .
+
+:AttestationParticipation a owl:Class ;
+    rdfs:label "Attestation de participation"@fr ;
+    rdfs:subClassOf :Certification .
+
+:Basketball a owl:Class ;
+    rdfs:label "Basketball"@fr ;
+    rdfs:subClassOf :ClubSport .
+
+:CabinetPsychologie a :SalleDeCours,
+        owl:NamedIndividual ;
+    rdfs:label "Cabinet de psychologie"@fr ;
+    :capaciteEspace 4 ;
+    :estSitueDans :UniversiteDeTunis ;
+    :nom "Cabinet de psychologie" .
+
+:CampagneDepistage a owl:Class ;
+    rdfs:label "Campagne de dépistage"@fr ;
+    rdfs:subClassOf :PreventionSante .
 
 :CampagneSante a owl:Class ;
     rdfs:label "Campagne de santé"@fr ;
@@ -2325,8 +2434,8 @@ xsd:time a rdfs:Datatype .
     rdfs:label "Certificat d'aptitude sportive"@fr ;
     rdfs:subClassOf :CertificatMedical .
 
-:CertificationProfessionnelle a owl:Class ;
-    rdfs:label "Certification professionnelle"@fr ;
+:CertificationAcademique a owl:Class ;
+    rdfs:label "Certification académique"@fr ;
     rdfs:subClassOf :Certification .
 
 :Communication a :CompetenceTransversale,
@@ -2334,30 +2443,17 @@ xsd:time a rdfs:Datatype .
     rdfs:label "Communication"@fr ;
     :nom "Communication" .
 
-:ConsultationGeneraleUT a :ConsultationGenerale,
-        owl:NamedIndividual ;
-    rdfs:label "Consultation générale - Université de Tunis"@fr ;
-    :assureParPersonnel :DrSonia,
-        :InfirmierRami ;
-    :dureeConsultationMinutes 20 ;
-    :estGratuit true ;
-    :estOuvertA :Ahmed,
-        :Amira,
-        :Firas,
-        :Karim,
-        :Nour,
-        :Salma,
-        :Yasmine ;
-    :horairesOuverture "Lundi au vendredi, 8h30 - 16h30" ;
-    :nom "Consultation de médecine générale" ;
-    :serviceLocaliseDans :InfirmerieCentrale ;
-    :serviceRattacheA :UniversiteDeTunis ;
-    :surRendezVous false ;
-    :telephoneService "+21671000001" .
+:ConsultationDentaire a owl:Class ;
+    rdfs:label "Consultation dentaire"@fr ;
+    rdfs:subClassOf :ConsultationMedicale .
 
 :Cours a owl:Class ;
     rdfs:label "Cours"@fr ;
     rdfs:subClassOf :Formation .
+
+:CovoiturageEtudiant a owl:Class ;
+    rdfs:label "Covoiturage étudiant"@fr ;
+    rdfs:subClassOf :ServiceTransport .
 
 :Document a owl:Class ;
     rdfs:label "Document"@fr ;
@@ -2401,6 +2497,14 @@ xsd:time a rdfs:Datatype .
     rdfs:label "Étudiant"@fr ;
     rdfs:subClassOf :Apprenant .
 
+:Football a owl:Class ;
+    rdfs:label "Football"@fr ;
+    rdfs:subClassOf :ClubSport .
+
+:GroupeDeParole a owl:Class ;
+    rdfs:label "Groupe de parole"@fr ;
+    rdfs:subClassOf :SoutienPsychologique .
+
 :InscriptionClub a owl:Class ;
     rdfs:label "Inscription à un club"@fr ;
     rdfs:subClassOf :Inscription .
@@ -2414,8 +2518,12 @@ xsd:time a rdfs:Datatype .
     rdfs:label "Jeu scénique"@fr ;
     :nom "Jeu scénique" .
 
-:LangueEtrangere a owl:Class ;
-    rdfs:label "Langue étrangère"@fr ;
+:LangueDesSignes a owl:Class ;
+    rdfs:label "Langue des signes"@fr ;
+    rdfs:subClassOf :Langue .
+
+:LangueNationale a owl:Class ;
+    rdfs:label "Langue nationale"@fr ;
     rdfs:subClassOf :Langue .
 
 :Leadership a :CompetenceTransversale,
@@ -2442,6 +2550,14 @@ xsd:time a rdfs:Datatype .
     rdfs:label "Matière scientifique"@fr ;
     rdfs:subClassOf :Matiere .
 
+:Natation a owl:Class ;
+    rdfs:label "Natation"@fr ;
+    rdfs:subClassOf :ClubSport .
+
+:NavetteUniversitaire a owl:Class ;
+    rdfs:label "Navette universitaire"@fr ;
+    rdfs:subClassOf :ServiceTransport .
+
 :NiveauB2 a :NiveauLangue,
         owl:NamedIndividual ;
     rdfs:label "Niveau B2"@fr ;
@@ -2456,6 +2572,7 @@ xsd:time a rdfs:Datatype .
     rdfs:label "Nour"@fr ;
     :beneficieDeBourse :BourseMeriteAmira ;
     :beneficieDuService :ConsultationGeneraleUT ;
+    :consulte :ConsultationGeneraleUT ;
     :effectueStage :StageEteAnalyse ;
     :email "nour@stackunity.org" ;
     :estMembreDe :ClubRobotiqueUniversitaire ;
@@ -2468,6 +2585,7 @@ xsd:time a rdfs:Datatype .
         :Francais ;
     :possedeCompetence :GestionTemps,
         :SQL ;
+    :sInscritA :RestaurantUniversitaireUT ;
     :suitParcours :ParcoursLicenceInfo ;
     :telephone "+21620123456" .
 
@@ -2484,13 +2602,6 @@ xsd:time a rdfs:Datatype .
     rdfs:label "Responsable de club"@fr ;
     rdfs:subClassOf :Personne .
 
-:Semestre2_2026 a :Semestre,
-        owl:NamedIndividual ;
-    rdfs:label "Semestre 2"@fr ;
-    :dateDebut "2026-02-09"^^xsd:date ;
-    :dateFin "2026-06-30"^^xsd:date ;
-    :nom "Semestre 2" .
-
 :SessionExamens a owl:Class ;
     rdfs:label "Session d'examens"@fr ;
     rdfs:subClassOf :PeriodeAcademique .
@@ -2498,13 +2609,6 @@ xsd:time a rdfs:Datatype .
 :Spectacle a owl:Class ;
     rdfs:label "Spectacle"@fr ;
     rdfs:subClassOf :Evenement .
-
-:StackUnityTunisie a :Entreprise,
-        owl:NamedIndividual ;
-    rdfs:label "StackUnity Tunisie"@fr ;
-    :nom "StackUnity Tunisie" ;
-    :secteurActivite "Développement logiciel" ;
-    :ville "Tunis" .
 
 :StageInitiation a owl:Class ;
     rdfs:label "Stage d'initiation"@fr ;
@@ -2514,13 +2618,25 @@ xsd:time a rdfs:Datatype .
     rdfs:label "Stage PFE (projet de fin d'études)"@fr ;
     rdfs:subClassOf :StageEntreprise .
 
+:TheatreComedie a owl:Class ;
+    rdfs:label "Comédie"@fr ;
+    rdfs:subClassOf :ClubTheatre .
+
+:TheatreDrame a owl:Class ;
+    rdfs:label "Drame"@fr ;
+    rdfs:subClassOf :ClubTheatre .
+
+:TheatreImprovisation a owl:Class ;
+    rdfs:label "Théâtre d'improvisation"@fr ;
+    rdfs:subClassOf :ClubTheatre .
+
 :Tournoi a owl:Class ;
     rdfs:label "Tournoi"@fr ;
     rdfs:subClassOf :Evenement .
 
-:Tuteur a owl:Class ;
-    rdfs:label "Tuteur"@fr ;
-    rdfs:subClassOf :Personne .
+:TransportMedical a owl:Class ;
+    rdfs:label "Transport médical"@fr ;
+    rdfs:subClassOf :PremiersSecoursMedicaux .
 
 :Walid a :Professeur,
         owl:NamedIndividual ;
@@ -2528,6 +2644,7 @@ xsd:time a rdfs:Datatype .
     :appartientADepartement :DepInformatiqueUT ;
     :dirigeDepartement :DepInformatiqueUT ;
     :email "walid@stackunity.org" ;
+    :enseigne :ModuleBigData ;
     :enseigneMatiere :Algorithmique,
         :BasesDeDonnees ;
     :nom "Walid Zouari" ;
@@ -2541,9 +2658,11 @@ xsd:time a rdfs:Datatype .
     :beneficieDeBourse :BourseSocialeYasmine ;
     :beneficieDuService :EntretienPsyUT,
         :VaccinationGrippeUT ;
+    :consulte :ConsultationPsychologiqueAnonyme ;
     :effectueStage :StageObservationLycee ;
     :estMembreDe :ChoraleUniversitaire,
         :ClubNatationUniversitaire ;
+    :habite :ResidenceUniversitaireTunis ;
     :niveauDeLangue :NiveauB2 ;
     :nom "Yasmine Gharbi" ;
     :parleLangue :Arabe,
@@ -2552,55 +2671,29 @@ xsd:time a rdfs:Datatype .
     :possedeCompetence :Django ;
     :suitParcours :ParcoursDeveloppementWeb .
 
-:Amira a :Apprenant,
-        owl:NamedIndividual ;
-    rdfs:label "Amira"@fr ;
-    :beneficieDeBourse :BourseMeriteAmira ;
-    :beneficieDuService :ConsultationGeneraleUT,
-        :EntretienPsyUT ;
-    :effectueStage :StagePFEWeb ;
-    :email "amira@stackunity.org" ;
-    :estMembreDe :ClubTheatreComedie ;
-    :niveauDeLangue :NiveauC1 ;
-    :nom "Amira Ben Salah" ;
-    :obtientCertification :AttestationHackathon,
-        :CertificationAnglaisB2 ;
-    :parleLangue :Anglais,
-        :Arabe,
-        :Francais ;
-    :participeA :SeanceJSTD ;
-    :possedeCompetence :JavaScript,
-        :TravailEquipe .
+:AtelierGestionStress a owl:Class ;
+    rdfs:label "Atelier de gestion du stress"@fr ;
+    rdfs:subClassOf :SoutienPsychologique .
 
-:BasesDeDonnees a :MatiereTechnique,
-        owl:NamedIndividual ;
-    rdfs:label "Bases de données"@fr ;
-    :codeMatiere "INF204" ;
-    :coefficient 2.5 ;
-    :matiereDeveloppe :SQL ;
-    :nom "Bases de données" ;
-    :nombreHeures 42 .
+:BourseMerite a owl:Class ;
+    rdfs:label "Bourse de mérite"@fr ;
+    rdfs:subClassOf :Bourse .
 
-:ClubHumanitaire a owl:Class ;
-    rdfs:label "Club humanitaire"@fr ;
-    rdfs:subClassOf :Club .
-
-:ClubTechnologie a owl:Class ;
-    rdfs:label "Club de technologie"@fr ;
-    rdfs:subClassOf :Club .
+:CertificationProfessionnelle a owl:Class ;
+    rdfs:label "Certification professionnelle"@fr ;
+    rdfs:subClassOf :Certification .
 
 :ConsultationMedicale a owl:Class ;
     rdfs:label "Consultation médicale"@fr ;
     rdfs:subClassOf :ServiceMedical .
 
-:DepInformatiqueUT a :DepartementInformatique,
-        owl:NamedIndividual ;
-    rdfs:label "Département d'informatique - Université de Tunis"@fr ;
-    :nom "Département d'informatique" ;
-    :partieDe :UniversiteDeTunis ;
-    :proposeFormation :BootcampFullStack,
-        :ModuleSQL,
-        :ProgrammeInformatique .
+:EntretienPsychologique a owl:Class ;
+    rdfs:label "Entretien psychologique individuel"@fr ;
+    rdfs:subClassOf :SoutienPsychologique .
+
+:InscriptionAdministrative a owl:Class ;
+    rdfs:label "Inscription administrative"@fr ;
+    rdfs:subClassOf :Inscription .
 
 :Karim a :Apprenant,
         owl:NamedIndividual ;
@@ -2608,9 +2701,11 @@ xsd:time a rdfs:Datatype .
     :beneficieDeBourse :BourseMobiliteKarim ;
     :beneficieDuService :ConsultationGeneraleUT,
         :VisiteAptitudeUT ;
+    :consulte :ConsultationDentaireUT ;
     :email "karim@stackunity.org" ;
     :estMembreDe :ClubFootballUniversitaire,
         :OrchestreMalouf ;
+    :inscritA :ModuleBigData ;
     :niveauDeLangue :NiveauB2 ;
     :nom "Karim Trabelsi" ;
     :obtientCertification :CertificationJavaScript ;
@@ -2621,13 +2716,37 @@ xsd:time a rdfs:Datatype .
     :participeA :SeancePython1 ;
     :possedeCompetence :Leadership,
         :Python ;
-    :suitParcours :ParcoursDataScience .
+    :sInscritA :RestaurantUniversitaireUT ;
+    :suitParcours :ParcoursDataScience ;
+    :utiliseTransport :NavetteUniversitaireUT .
 
 :LaboratoireIA a :Laboratoire,
         owl:NamedIndividual ;
     rdfs:label "Laboratoire d'Intelligence Artificielle"@fr ;
     :nom "Laboratoire d'Intelligence Artificielle" ;
     :ville "Tunis" .
+
+:LangueEtrangere a owl:Class ;
+    rdfs:label "Langue étrangère"@fr ;
+    rdfs:subClassOf :Langue .
+
+:ModuleBigData a :Module,
+        owl:NamedIndividual ;
+    rdfs:label "Module Big Data"@fr ;
+    :aPourMatiere :BasesDeDonnees ;
+    :appartientAuDomaine :DomaineDonnees ;
+    :creditsECTS 5 ;
+    :description "Traitement de grands volumes de données."@fr ;
+    :developpe :Python,
+        :SQL ;
+    :duree 40 ;
+    :necessite :SQL ;
+    :nom "Module Big Data",
+        "validation" ;
+    :seDerouleEn :Semestre2_2026 ;
+    :tauxReussite 80.0 ;
+    :utiliseOutil :VSCode ;
+    :utiliseRessource :VideoSQL .
 
 :ModuleSQL a :Module,
         owl:NamedIndividual ;
@@ -2657,14 +2776,6 @@ xsd:time a rdfs:Datatype .
     rdfs:label "Psychologue"@fr ;
     rdfs:subClassOf :PersonnelMedical .
 
-:PsychologueMariem a :Psychologue,
-        owl:NamedIndividual ;
-    rdfs:label "Mariem"@fr ;
-    :nom "Mariem Ayari" ;
-    :parleLangue :Arabe,
-        :Francais ;
-    :specialiteMedicale "Psychologie clinique" .
-
 :Quiz a owl:Class ;
     rdfs:label "Quiz"@fr ;
     rdfs:subClassOf :Evaluation .
@@ -2691,16 +2802,12 @@ xsd:time a rdfs:Datatype .
     rdfs:label "Semestre"@fr ;
     rdfs:subClassOf :PeriodeAcademique .
 
-:Semestre1_2025 a :Semestre,
+:Semestre2_2026 a :Semestre,
         owl:NamedIndividual ;
-    rdfs:label "Semestre 1"@fr ;
-    :dateDebut "2025-09-15"^^xsd:date ;
-    :dateFin "2026-01-31"^^xsd:date ;
-    :nom "Semestre 1" .
-
-:ServiceHebergement a owl:Class ;
-    rdfs:label "Hébergement"@fr ;
-    rdfs:subClassOf :ServiceVieEtudiante .
+    rdfs:label "Semestre 2"@fr ;
+    :dateDebut "2026-02-09"^^xsd:date ;
+    :dateFin "2026-06-30"^^xsd:date ;
+    :nom "Semestre 2" .
 
 :ServiceOrientationEmploi a owl:Class ;
     rdfs:label "Orientation et insertion professionnelle"@fr ;
@@ -2710,9 +2817,12 @@ xsd:time a rdfs:Datatype .
     rdfs:label "Restauration"@fr ;
     rdfs:subClassOf :ServiceVieEtudiante .
 
-:ServiceTransport a owl:Class ;
-    rdfs:label "Transport"@fr ;
-    rdfs:subClassOf :ServiceVieEtudiante .
+:StackUnityTunisie a :Entreprise,
+        owl:NamedIndividual ;
+    rdfs:label "StackUnity Tunisie"@fr ;
+    :nom "StackUnity Tunisie" ;
+    :secteurActivite "Développement logiciel" ;
+    :ville "Tunis" .
 
 :StageConvention a owl:Class ;
     rdfs:label "Stage sous convention"@fr ;
@@ -2738,9 +2848,44 @@ xsd:time a rdfs:Datatype .
     rdfs:label "Travail d'équipe"@fr ;
     :nom "Travail d'équipe" .
 
+:Tuteur a owl:Class ;
+    rdfs:label "Tuteur"@fr ;
+    rdfs:subClassOf :Personne .
+
 :Video a owl:Class ;
     rdfs:label "Vidéo"@fr ;
     rdfs:subClassOf :RessourcePedagogique .
+
+:Amira a :Apprenant,
+        owl:NamedIndividual ;
+    rdfs:label "Amira"@fr ;
+    :beneficieDeBourse :BourseMeriteAmira ;
+    :beneficieDuService :ConsultationGeneraleUT,
+        :EntretienPsyUT ;
+    :consulte :ConsultationGeneraleUT,
+        :ConsultationPsychologiqueAnonyme ;
+    :effectueStage :StagePFEWeb ;
+    :email "amira@stackunity.org" ;
+    :estMembreDe :ClubTheatreComedie ;
+    :niveauDeLangue :NiveauC1 ;
+    :nom "Amira Ben Salah" ;
+    :obtientCertification :AttestationHackathon,
+        :CertificationAnglaisB2 ;
+    :parleLangue :Anglais,
+        :Arabe,
+        :Francais ;
+    :participeA :SeanceJSTD ;
+    :possedeCompetence :JavaScript,
+        :TravailEquipe .
+
+:BasesDeDonnees a :MatiereTechnique,
+        owl:NamedIndividual ;
+    rdfs:label "Bases de données"@fr ;
+    :codeMatiere "INF204" ;
+    :coefficient 2.5 ;
+    :matiereDeveloppe :SQL ;
+    :nom "Bases de données" ;
+    :nombreHeures 42 .
 
 :BootcampFullStack a :Bootcamp,
         owl:NamedIndividual ;
@@ -2751,6 +2896,111 @@ xsd:time a rdfs:Datatype .
     :duree 120 ;
     :nom "Bootcamp Full Stack" ;
     :utiliseRessource :PodcastCarriere .
+
+:ClubHumanitaire a owl:Class ;
+    rdfs:label "Club humanitaire"@fr ;
+    rdfs:subClassOf :Club .
+
+:ClubTechnologie a owl:Class ;
+    rdfs:label "Club de technologie"@fr ;
+    rdfs:subClassOf :Club .
+
+:CompetenceTechnique a owl:Class ;
+    rdfs:label "Compétence technique"@fr ;
+    rdfs:subClassOf :Competence ;
+    owl:disjointWith :CompetenceTransversale .
+
+:CompetenceTransversale a owl:Class ;
+    rdfs:label "Compétence transversale"@fr ;
+    rdfs:subClassOf :Competence .
+
+:ConsultationGeneraleUT a :ConsultationGenerale,
+        owl:NamedIndividual ;
+    rdfs:label "Consultation générale - Université de Tunis"@fr ;
+    :assureParPersonnel :DrSonia,
+        :InfirmierRami ;
+    :dureeConsultationMinutes 20 ;
+    :estGratuit true ;
+    :estOuvertA :Ahmed,
+        :Amira,
+        :Firas,
+        :Karim,
+        :Nour,
+        :Salma,
+        :Yasmine ;
+    :horairesOuverture "Lundi au vendredi, 8h30 - 16h30" ;
+    :nom "Consultation de médecine générale" ;
+    :serviceLocaliseDans :InfirmerieCentrale ;
+    :serviceRattacheA :UniversiteDeTunis ;
+    :surRendezVous false ;
+    :telephoneService "+21671000001" .
+
+:DepInformatiqueUT a :DepartementInformatique,
+        owl:NamedIndividual ;
+    rdfs:label "Département d'informatique - Université de Tunis"@fr ;
+    :nom "Département d'informatique" ;
+    :partieDe :UniversiteDeTunis ;
+    :proposeFormation :BootcampFullStack,
+        :ModuleBigData,
+        :ModuleSQL,
+        :ProgrammeInformatique .
+
+:GestionTemps a :CompetenceTransversale,
+        owl:NamedIndividual ;
+    rdfs:label "Gestion du temps"@fr ;
+    :nom "Gestion du temps" .
+
+:InfirmerieCentrale a :Infirmerie,
+        owl:NamedIndividual ;
+    rdfs:label "Infirmerie centrale"@fr ;
+    :capaciteEspace 12 ;
+    :estSitueDans :UniversiteDeTunis ;
+    :nom "Infirmerie centrale" .
+
+:NiveauLangue a owl:Class ;
+    rdfs:label "Niveau de langue"@fr ;
+    rdfs:subClassOf :Niveau .
+
+:ProgrammationWeb a :MatiereTechnique,
+        owl:NamedIndividual ;
+    rdfs:label "Programmation web"@fr ;
+    :codeMatiere "INF210" ;
+    :coefficient 3.0 ;
+    :matiereDeveloppe :Django,
+        :JavaScript ;
+    :nom "Programmation web" ;
+    :nombreHeures 60 .
+
+:Semestre1_2025 a :Semestre,
+        owl:NamedIndividual ;
+    rdfs:label "Semestre 1"@fr ;
+    :dateDebut "2025-09-15"^^xsd:date ;
+    :dateFin "2026-01-31"^^xsd:date ;
+    :nom "Semestre 1" .
+
+:ServiceHebergement a owl:Class ;
+    rdfs:label "Hébergement"@fr ;
+    rdfs:subClassOf :ServiceVieEtudiante .
+
+:ServiceTransport a owl:Class ;
+    rdfs:label "Transport"@fr ;
+    rdfs:subClassOf :ServiceVieEtudiante .
+
+:SoutienPsychologique a owl:Class ;
+    rdfs:label "Soutien psychologique"@fr ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:onProperty :consultePar ;
+            owl:someValuesFrom :Psychologue ],
+        :ServiceMedical .
+
+:Ahmed a :Enseignant,
+        owl:NamedIndividual ;
+    rdfs:label "Ahmed"@fr ;
+    :appartientADepartement :DepInformatiqueUT ;
+    :enseigneMatiere :ProgrammationWeb ;
+    :nom "Ahmed" ;
+    :parleLangue :Arabe,
+        :Francais .
 
 :ClubMusique a owl:Class ;
     rdfs:label "Club de musique"@fr ;
@@ -2767,86 +3017,16 @@ xsd:time a rdfs:Datatype .
     rdfs:label "Club de théâtre"@fr ;
     rdfs:subClassOf :Club .
 
-:CompetenceTechnique a owl:Class ;
-    rdfs:label "Compétence technique"@fr ;
-    rdfs:subClassOf :Competence ;
-    owl:disjointWith :CompetenceTransversale .
-
-:CompetenceTransversale a owl:Class ;
-    rdfs:label "Compétence transversale"@fr ;
-    rdfs:subClassOf :Competence .
-
-:GestionTemps a :CompetenceTransversale,
+:DomaineWeb a :DomaineTechnologie,
         owl:NamedIndividual ;
-    rdfs:label "Gestion du temps"@fr ;
-    :nom "Gestion du temps" .
-
-:InfirmerieCentrale a :Infirmerie,
-        owl:NamedIndividual ;
-    rdfs:label "Infirmerie centrale"@fr ;
-    :capaciteEspace 12 ;
-    :estSitueDans :UniversiteDeTunis ;
-    :nom "Infirmerie centrale" .
+    rdfs:label "Développement web"@fr ;
+    :nom "Développement web" .
 
 :InfirmierRami a :Infirmier,
         owl:NamedIndividual ;
     rdfs:label "Rami"@fr ;
     :nom "Rami Toumi" ;
     :specialiteMedicale "Soins infirmiers" .
-
-:Module a owl:Class ;
-    rdfs:label "Module"@fr ;
-    rdfs:subClassOf :Formation .
-
-:NiveauLangue a owl:Class ;
-    rdfs:label "Niveau de langue"@fr ;
-    rdfs:subClassOf :Niveau .
-
-:ProgrammationWeb a :MatiereTechnique,
-        owl:NamedIndividual ;
-    rdfs:label "Programmation web"@fr ;
-    :codeMatiere "INF210" ;
-    :coefficient 3.0 ;
-    :matiereDeveloppe :Django,
-        :JavaScript ;
-    :nom "Programmation web" ;
-    :nombreHeures 60 .
-
-:ServiceVieEtudiante a owl:Class ;
-    rdfs:label "Service de vie étudiante"@fr ;
-    rdfs:comment "Service d'accompagnement de la vie quotidienne et professionnelle des apprenants (hébergement, restauration, transport, orientation)."@fr .
-
-:SoutienPsychologique a owl:Class ;
-    rdfs:label "Soutien psychologique"@fr ;
-    rdfs:subClassOf [ a owl:Restriction ;
-            owl:onProperty :consultePar ;
-            owl:someValuesFrom :Psychologue ],
-        :ServiceMedical .
-
-:VSCode a :LogicielDeveloppement,
-        owl:NamedIndividual ;
-    rdfs:label "Visual Studio Code"@fr ;
-    :nom "Visual Studio Code" ;
-    :versionOutil "1.90" .
-
-:Ahmed a :Enseignant,
-        owl:NamedIndividual ;
-    rdfs:label "Ahmed"@fr ;
-    :appartientADepartement :DepInformatiqueUT ;
-    :enseigneMatiere :ProgrammationWeb ;
-    :nom "Ahmed" ;
-    :parleLangue :Arabe,
-        :Francais .
-
-:DomaineWeb a :DomaineTechnologie,
-        owl:NamedIndividual ;
-    rdfs:label "Développement web"@fr ;
-    :nom "Développement web" .
-
-:Langue a owl:Class ;
-    rdfs:label "Langue"@fr ;
-    rdfs:comment "Langue parlée ou enseignée."@fr ;
-    rdfs:subClassOf :Formation .
 
 :MatiereTechnique a owl:Class ;
     rdfs:label "Matière technique"@fr ;
@@ -2855,6 +3035,10 @@ xsd:time a rdfs:Datatype .
 :Medecin a owl:Class ;
     rdfs:label "Médecin"@fr ;
     rdfs:subClassOf :PersonnelMedical .
+
+:Module a owl:Class ;
+    rdfs:label "Module"@fr ;
+    rdfs:subClassOf :Formation .
 
 :ModuleDjango a :Module,
         owl:NamedIndividual ;
@@ -2885,14 +3069,32 @@ xsd:time a rdfs:Datatype .
     :utiliseOutil :VSCode ;
     :utiliseRessource :VideoJavaScript .
 
-:PeriodeAcademique a owl:Class ;
-    rdfs:label "Période académique"@fr ;
-    rdfs:comment "Période de temps structurant l'activité pédagogique."@fr ;
-    rdfs:subClassOf :Diplome .
-
 :PersonnelMedical a owl:Class ;
     rdfs:label "Personnel médical"@fr ;
     rdfs:subClassOf :Personne .
+
+:PsychologueMariem a :Psychologue,
+        owl:NamedIndividual ;
+    rdfs:label "Mariem"@fr ;
+    :nom "Mariem Ayari" ;
+    :parleLangue :Arabe,
+        :Francais ;
+    :specialiteMedicale "Psychologie clinique" .
+
+:ServiceVieEtudiante a owl:Class ;
+    rdfs:label "Service de vie étudiante"@fr ;
+    rdfs:comment "Service d'accompagnement de la vie quotidienne et professionnelle des apprenants (hébergement, restauration, transport, orientation)."@fr .
+
+:VSCode a :LogicielDeveloppement,
+        owl:NamedIndividual ;
+    rdfs:label "Visual Studio Code"@fr ;
+    :nom "Visual Studio Code" ;
+    :versionOutil "1.90" .
+
+:Langue a owl:Class ;
+    rdfs:label "Langue"@fr ;
+    rdfs:comment "Langue parlée ou enseignée."@fr ;
+    rdfs:subClassOf :Formation .
 
 :ModulePython a :Module,
         owl:NamedIndividual ;
@@ -2909,10 +3111,17 @@ xsd:time a rdfs:Datatype .
     :utiliseRessource :ExercicePython,
         :VideoPython .
 
+:PeriodeAcademique a owl:Class ;
+    rdfs:label "Période académique"@fr ;
+    rdfs:comment "Période de temps structurant l'activité pédagogique."@fr ;
+    rdfs:subClassOf :Diplome .
+
 :Anglais a :LangueEtrangere,
         owl:NamedIndividual ;
     rdfs:label "Anglais"@fr ;
     :nom "Anglais" .
+
+xsd:date a rdfs:Datatype .
 
 :Bourse a owl:Class ;
     rdfs:label "Bourse"@fr ;
@@ -2922,18 +3131,16 @@ xsd:time a rdfs:Datatype .
     rdfs:label "Inscription"@fr ;
     rdfs:comment "Démarche d'inscription d'un apprenant."@fr .
 
+:JavaScript a :CompetenceTechnique,
+        owl:NamedIndividual ;
+    rdfs:label "JavaScript"@fr ;
+    :description "Programmation web côté client et serveur avec JavaScript."@fr ;
+    :nom "JavaScript" .
+
 :OutilNumerique a owl:Class ;
     rdfs:label "Outil numérique"@fr ;
     rdfs:comment "Plateforme, logiciel ou application utilisé dans l'apprentissage."@fr ;
     rdfs:subClassOf :Matiere .
-
-:SQL a :CompetenceTechnique,
-        owl:NamedIndividual ;
-    rdfs:label "SQL"@fr ;
-    :description "Interrogation et gestion de bases de données relationnelles."@fr ;
-    :nom "SQL" .
-
-xsd:date a rdfs:Datatype .
 
 :CertificatMedical a owl:Class ;
     rdfs:label "Certificat médical"@fr ;
@@ -2946,6 +3153,11 @@ xsd:date a rdfs:Datatype .
     rdfs:comment "Département académique d'un établissement."@fr ;
     rdfs:subClassOf :Espace .
 
+:Django a :CompetenceTechnique,
+        owl:NamedIndividual ;
+    rdfs:label "Django"@fr ;
+    :nom "Django" .
+
 :DomaineDonnees a :DomaineTechnologie,
         owl:NamedIndividual ;
     rdfs:label "Science des données"@fr ;
@@ -2956,16 +3168,11 @@ xsd:date a rdfs:Datatype .
     rdfs:comment "Événement organisé par un club (spectacle, tournoi, concert...)."@fr ;
     rdfs:subClassOf :Club .
 
-:JavaScript a :CompetenceTechnique,
+:SQL a :CompetenceTechnique,
         owl:NamedIndividual ;
-    rdfs:label "JavaScript"@fr ;
-    :description "Programmation web côté client et serveur avec JavaScript."@fr ;
-    :nom "JavaScript" .
-
-:Django a :CompetenceTechnique,
-        owl:NamedIndividual ;
-    rdfs:label "Django"@fr ;
-    :nom "Django" .
+    rdfs:label "SQL"@fr ;
+    :description "Interrogation et gestion de bases de données relationnelles."@fr ;
+    :nom "SQL" .
 
 :Espace a owl:Class ;
     rdfs:label "Espace"@fr ;
@@ -2984,6 +3191,11 @@ xsd:date a rdfs:Datatype .
 :Domaine a owl:Class ;
     rdfs:label "Domaine"@fr ;
     rdfs:comment "Domaine disciplinaire auquel se rattache une formation ou un club."@fr .
+
+:Francais a :LangueEtrangere,
+        owl:NamedIndividual ;
+    rdfs:label "Français"@fr ;
+    :nom "Français" .
 
 :ParcoursApprentissage a owl:Class ;
     rdfs:label "Parcours d'apprentissage"@fr ;
@@ -3006,11 +3218,6 @@ xsd:date a rdfs:Datatype .
     rdfs:comment "Séance planifiée dans l'emploi du temps."@fr ;
     rdfs:subClassOf :Matiere .
 
-:Francais a :LangueEtrangere,
-        owl:NamedIndividual ;
-    rdfs:label "Français"@fr ;
-    :nom "Français" .
-
 :Arabe a :LangueNationale,
         owl:NamedIndividual ;
     rdfs:label "Arabe"@fr ;
@@ -3021,13 +3228,13 @@ xsd:date a rdfs:Datatype .
     rdfs:comment "Certification obtenue après validation d'une formation ou de compétences."@fr ;
     rdfs:subClassOf :Domaine .
 
-:Enseignant a owl:Class ;
-    rdfs:label "Enseignant"@fr ;
-    rdfs:subClassOf :Personne .
-
 :Matiere a owl:Class ;
     rdfs:label "Matière"@fr ;
     rdfs:comment "Matière enseignée au sein d'une formation."@fr .
+
+:Enseignant a owl:Class ;
+    rdfs:label "Enseignant"@fr ;
+    rdfs:subClassOf :Personne .
 
 :Organisme a owl:Class ;
     rdfs:label "Organisme"@fr ;
@@ -3068,61 +3275,16 @@ xsd:date a rdfs:Datatype .
     rdfs:label "Apprenant"@fr ;
     rdfs:subClassOf :Personne .
 
-:UniversiteDeTunis a :Universite,
-        owl:NamedIndividual ;
-    rdfs:label "Université de Tunis"@fr ;
-    :nom "Université de Tunis" ;
-    :ville "Tunis" .
-
 :Formation a owl:Class ;
     rdfs:label "Formation"@fr ;
     rdfs:comment "Élément de formation ou d'apprentissage."@fr ;
     rdfs:subClassOf :Diplome .
 
-[] a owl:AllDisjointClasses ;
-    owl:members ( :TheatreComedie :TheatreDrame :TheatreImprovisation ) .
-
-[] a owl:AllDisjointClasses ;
-    owl:members ( :Apprenant :Enseignant :Tuteur ) .
-
-[] a owl:AllDisjointClasses ;
-    owl:members ( :AtelierGestionStress :EntretienPsychologique :GroupeDeParole ) .
-
-[] a owl:AllDisjointClasses ;
-    owl:members ( :AttestationParticipation :CertificationAcademique :CertificationProfessionnelle ) .
-
-[] a owl:AllDisjointClasses ;
-    owl:members ( :ClubHumanitaire :ClubMusique :ClubSport :ClubTechnologie :ClubTheatre ) .
-
-[] a owl:AllDisjointClasses ;
-    owl:members ( :Basketball :Football :Natation ) .
-
-[] a owl:AllDisjointClasses ;
-    owl:members ( :Livre :Podcast :Webinaire ) .
-
-[] a owl:AllDisjointClasses ;
-    owl:members ( :DomaineArtsCulture :DomaineSport :DomaineTechnologie ) .
-
-[] a owl:AllDisjointClasses ;
-    owl:members ( :LangueDesSignes :LangueEtrangere :LangueNationale ) .
-
-[] a owl:AllDisjointClasses ;
-    owl:members ( :AbonnementTransport :CovoiturageEtudiant :NavetteUniversitaire ) .
-
-[] a owl:AllDisjointClasses ;
-    owl:members ( :Bourse :Certification :Club :Competence :Departement :Diplome :Domaine :Espace :Evaluation :Evenement :Formation :Inscription :Langue :Matiere :Niveau :Organisme :OutilNumerique :ParcoursApprentissage :PeriodeAcademique :Personne :RessourcePedagogique :Seance :Stage ) .
-
-[] a owl:AllDisjointClasses ;
-    owl:members ( :CertificatAbsence :CertificatAptitudeSport :CertificatAptitudeStage ) .
-
-[] a owl:AllDisjointClasses ;
-    owl:members ( :AccompagnementEmploi :ForumEmploi :OrientationAcademique ) .
-
-[] a owl:AllDisjointClasses ;
-    owl:members ( :NiveauAcademique :NiveauCompetence :NiveauLangue ) .
-
-[] a owl:AllDisjointClasses ;
-    owl:members ( :Certification :Club :Competence :Evaluation :Evenement :Formation :Niveau :Organisme :ParcoursApprentissage :Personne :RessourcePedagogique :Stage ) .
+:UniversiteDeTunis a :Universite,
+        owl:NamedIndividual ;
+    rdfs:label "Université de Tunis"@fr ;
+    :nom "Université de Tunis" ;
+    :ville "Tunis" .
 
 [] a owl:AllDisjointClasses ;
     owl:members ( :ClubIntelligenceArtificielle :ClubProgrammation :ClubRobotique ) .
@@ -3144,6 +3306,9 @@ xsd:date a rdfs:Datatype .
 
 [] a owl:AllDisjointClasses ;
     owl:members ( :Concert :Spectacle :Tournoi ) .
+
+[] a owl:AllDisjointClasses ;
+    owl:members ( :Apprenant :Enseignant :Tuteur ) .
 
 [] a owl:AllDisjointClasses ;
     owl:members ( :ConsultationDentaire :ConsultationGenerale :ConsultationOphtalmologique ) .
@@ -3171,6 +3336,9 @@ xsd:date a rdfs:Datatype .
 
 [] a owl:AllDisjointClasses ;
     owl:members ( :Examen :Projet :Quiz ) .
+
+[] a owl:AllDisjointClasses ;
+    owl:members ( :AtelierGestionStress :EntretienPsychologique :GroupeDeParole ) .
 
 [] a owl:AllDisjointClasses ;
     owl:members ( :HebergementUrgence :LogementPartage :ResidenceUniversitaire ) .
@@ -3203,6 +3371,9 @@ xsd:date a rdfs:Datatype .
     owl:members ( :RapportDeStage :Soutenance :TravailPratique ) .
 
 [] a owl:AllDisjointClasses ;
+    owl:members ( :AttestationParticipation :CertificationAcademique :CertificationProfessionnelle ) .
+
+[] a owl:AllDisjointClasses ;
     owl:members ( :ClubEnvironnement :ClubSecourisme :ClubSolidarite ) .
 
 [] a owl:AllDisjointClasses ;
@@ -3233,6 +3404,9 @@ xsd:date a rdfs:Datatype .
     owl:members ( :Apprenant :Enseignant :Tuteur ) .
 
 [] a owl:AllDisjointClasses ;
+    owl:members ( :ClubHumanitaire :ClubMusique :ClubSport :ClubTechnologie :ClubTheatre ) .
+
+[] a owl:AllDisjointClasses ;
     owl:members ( :AtelierGestionStress :EntretienPsychologique :GroupeDeParole ) .
 
 [] a owl:AllDisjointClasses ;
@@ -3253,103 +3427,36 @@ xsd:date a rdfs:Datatype .
 [] a owl:AllDisjointClasses ;
     owl:members ( :Bourse :Certification :Club :Competence :Departement :Diplome :Domaine :Espace :Evaluation :Evenement :Formation :Inscription :Langue :Matiere :Niveau :Organisme :OutilNumerique :ParcoursApprentissage :PeriodeAcademique :Personne :RessourcePedagogique :Seance :Stage ) .
 
-#################################################################
-# NEFZI — Enrichissement Vie & Santé
-#################################################################
+[] a owl:AllDisjointClasses ;
+    owl:members ( :Basketball :Football :Natation ) .
 
-# ============ PROPRIÉTÉS ============
-:sInscritA a owl:ObjectProperty ;
-    rdfs:label "est inscrit à"@fr ;
-    rdfs:domain :Apprenant ; rdfs:range :ServiceVieEtudiante .
+[] a owl:AllDisjointClasses ;
+    owl:members ( :Livre :Podcast :Webinaire ) .
 
-:consulte a owl:ObjectProperty ;
-    rdfs:label "consulte le service"@fr ;
-    rdfs:domain :Apprenant ; rdfs:range :ServiceMedical .
+[] a owl:AllDisjointClasses ;
+    owl:members ( :DomaineArtsCulture :DomaineSport :DomaineTechnologie ) .
 
-:habite a owl:ObjectProperty ;
-    rdfs:label "habite dans"@fr ;
-    rdfs:domain :Apprenant ; rdfs:range :ServiceHebergement .
+[] a owl:AllDisjointClasses ;
+    owl:members ( :LangueDesSignes :LangueEtrangere :LangueNationale ) .
 
-:utiliseTransport a owl:ObjectProperty ;
-    rdfs:label "utilise le transport"@fr ;
-    rdfs:domain :Apprenant ; rdfs:range :ServiceTransport .
+[] a owl:AllDisjointClasses ;
+    owl:members ( :AbonnementTransport :CovoiturageEtudiant :NavetteUniversitaire ) .
 
-# ============ INSTANCES VIE ============
-:ResidenceUniversitaireTunis a :ResidenceUniversitaire, owl:NamedIndividual ;
-    rdfs:label "Résidence universitaire de Tunis"@fr ;
-    :nom "Résidence universitaire de Tunis" ;
-    :lieu "Cité universitaire, Tunis" ; :estActif true ;
-    :serviceRattacheA :UniversiteDeTunis ; :capaciteEspace 400 .
+[] a owl:AllDisjointClasses ;
+    owl:members ( :Bourse :Certification :Club :Competence :Departement :Diplome :Domaine :Espace :Evaluation :Evenement :Formation :Inscription :Langue :Matiere :Niveau :Organisme :OutilNumerique :ParcoursApprentissage :PeriodeAcademique :Personne :RessourcePedagogique :Seance :Stage ) .
 
-:RestaurantUniversitaireUT a :RestaurantUniversitaire, owl:NamedIndividual ;
-    rdfs:label "Restaurant universitaire"@fr ;
-    :nom "Restaurant universitaire" ; :lieu "Campus de Tunis" ;
-    :estActif true ; :serviceRattacheA :UniversiteDeTunis .
+[] a owl:AllDisjointClasses ;
+    owl:members ( :CertificatAbsence :CertificatAptitudeSport :CertificatAptitudeStage ) .
 
-:CafeteriaCentraleUT a :Cafeteria, owl:NamedIndividual ;
-    rdfs:label "Cafétéria centrale"@fr ;
-    :nom "Cafétéria centrale" ; :lieu "Bâtiment A" ;
-    :estActif true ; :serviceRattacheA :UniversiteDeTunis .
+[] a owl:AllDisjointClasses ;
+    owl:members ( :AccompagnementEmploi :ForumEmploi :OrientationAcademique ) .
 
-:NavetteUniversitaireUT a :NavetteUniversitaire, owl:NamedIndividual ;
-    rdfs:label "Navette universitaire"@fr ;
-    :nom "Navette universitaire" ; :lieu "Tunis centre ↔ Campus" ;
-    :estActif true ; :serviceRattacheA :UniversiteDeTunis .
+[] a owl:AllDisjointClasses ;
+    owl:members ( :NiveauAcademique :NiveauCompetence :NiveauLangue ) .
 
-:CovoiturageEtudiantUT a :CovoiturageEtudiant, owl:NamedIndividual ;
-    rdfs:label "Covoiturage étudiant"@fr ;
-    :nom "Plateforme de covoiturage" ; :lieu "Campus de Tunis" ; :estActif true .
+[] a owl:AllDisjointClasses ;
+    owl:members ( :Certification :Club :Competence :Evaluation :Evenement :Formation :Niveau :Organisme :ParcoursApprentissage :Personne :RessourcePedagogique :Stage ) .
 
-:OrientationProfessionnelleUT a :OrientationAcademique, owl:NamedIndividual ;
-    rdfs:label "Orientation professionnelle"@fr ;
-    :nom "Service d'orientation professionnelle" ;
-    :lieu "Bâtiment administratif" ; :estActif true ;
-    :serviceRattacheA :UniversiteDeTunis .
+[] a owl:AllDisjointClasses ;
+    owl:members ( :TheatreComedie :TheatreDrame :TheatreImprovisation ) .
 
-:HebergementUrgenceUT a :HebergementUrgence, owl:NamedIndividual ;
-    rdfs:label "Hébergement d'urgence"@fr ;
-    :nom "Hébergement d'urgence pour étudiants" ;
-    :lieu "Cité universitaire, Tunis" ; :estActif true ;
-    :serviceRattacheA :UniversiteDeTunis .
-
-# ============ INSTANCES SANTÉ ============
-:ConsultationPsychologiqueAnonyme a :EntretienPsychologique, owl:NamedIndividual ;
-    rdfs:label "Consultation psychologique anonyme"@fr ;
-    :nom "Consultation psychologique anonyme" ;
-    :consultePar :PsychologueMariem ; :estGratuit true ; :surRendezVous true ;
-    :horairesOuverture "Lundi et mercredi, 14h - 17h" ;
-    :serviceLocaliseDans :CabinetPsychologie ; :serviceRattacheA :UniversiteDeTunis .
-
-:NumerosUrgenceMedicale a :TransportMedical, owl:NamedIndividual ;
-    rdfs:label "Numéro d'urgence médicale"@fr ;
-    :nom "Numéro d'urgence médicale" ; :telephoneService "190" ;
-    :estGratuit true ; :surRendezVous false ; :serviceRattacheA :UniversiteDeTunis .
-
-:ConsultationDentaireGratuiteUT a :ConsultationDentaire, owl:NamedIndividual ;
-    rdfs:label "Consultation dentaire gratuite"@fr ;
-    :nom "Consultation dentaire gratuite" ; :assureParPersonnel :DrAmel ;
-    :estGratuit true ; :surRendezVous true ;
-    :horairesOuverture "Mardi, 9h - 12h" ; :serviceRattacheA :UniversiteDeTunis .
-
-:CampagneDepistageDiabete a :CampagneDepistage, owl:NamedIndividual ;
-    rdfs:label "Campagne de dépistage du diabète"@fr ;
-    :nom "Dépistage du diabète" ; :assureParPersonnel :InfirmierRami ;
-    :estGratuit true ; :serviceRattacheA :UniversiteDeTunis .
-
-:AtelierGestionStressEtudiants a :AtelierGestionStress, owl:NamedIndividual ;
-    rdfs:label "Atelier de gestion du stress"@fr ;
-    :nom "Atelier gestion du stress pour étudiants" ;
-    :consultePar :PsychologueMariem ; :estGratuit true ; :surRendezVous false ;
-    :horairesOuverture "Vendredi, 16h - 17h30" ;
-    :serviceRattacheA :UniversiteDeTunis .
-
-# ============ LIENS USER ↔ SERVICES ============
-:Karim :sInscritA :RestaurantUniversitaireUT .
-:Karim :utiliseTransport :NavetteUniversitaireUT .
-:Karim :consulte :ConsultationDentaireUT .
-:Nour :sInscritA :RestaurantUniversitaireUT .
-:Nour :consulte :ConsultationGeneraleUT .
-:Amira :consulte :ConsultationPsychologiqueAnonyme .
-:Amira :consulte :ConsultationGeneraleUT .
-:Yasmine :habite :ResidenceUniversitaireTunis .
-:Yasmine :consulte :ConsultationPsychologiqueAnonyme .

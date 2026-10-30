@@ -8,6 +8,7 @@ import nefzi_nlp_api
 from nlp import generer_sparql
 from store import sparql
 from auth import auth_required
+from ai_bourses import bp as bourses_ai_bp      # NLP Bourses + Inscriptions
 
 app = Flask(__name__)
 app.register_blueprint(auth.bp)
@@ -19,6 +20,7 @@ app.register_blueprint(ai.bp)          # API IA (question -> SPARQL, explication
 app.register_blueprint(prediction.bp)  # API de prédiction de difficulté des matières (Oussama)
 app.register_blueprint(nefzi_business_api.bp)   # API business Vie & Santé (Nefzi)
 app.register_blueprint(nefzi_nlp_api.bp)        # NLP Nefzi (/api/nlp/query, /api/nlp/examples)
+app.register_blueprint(bourses_ai_bp)           # NLP Bourses + Inscriptions (/api/bourses-ai/*)
 
 for m in MODULES:                       # un blueprint REST par module métier
     app.register_blueprint(make_blueprint(m))
