@@ -7,7 +7,7 @@ Pipeline (chaque étape est restituée dans la « trace » renvoyée au front) :
   2. Lexique construit à partir de l'ontologie : labels + noms camelCase des classes, propriétés et individus,
      plus quelques synonymes métier (étudiant -> Apprenant, prof -> Enseignant, ...).
   3. Liaison d'entités (entity linking) : plus long n-gramme de racines trouvé dans le lexique,
-     avec tolérance aux fautes (similarité difflib >= 0.86).
+     avec tolérance aux fautes (similarité difflib >= 0.8 pour les termes d'au moins cinq caractères).
   4. Détection d'intention par règles linguistiques : COUNT (combien), ASK (existe / y a-t-il), DESCRIBE (que sais-tu sur...),
      SUPERLATIF (le plus / le moins / maximum), regroupement (par / chaque), négation (sans / aucun / non).
   5. Extraction des contraintes : comparateurs + nombres (plus de 20, supérieur à 3, entre 2 et 5), booléens (gratuit, rémunéré).
@@ -224,8 +224,8 @@ class Lexicon:
                 key, skey = tuple(t["key"] for _, t in seg), tuple(t["skey"] for _, t in seg)
                 hits, fuzzy = self.e.get(key) or self.e.get(skey), False
                 joined = " ".join(key)
-                if not hits and len(joined) >= 6:
-                    close = difflib.get_close_matches(joined, list(self.by_size.get(size, {})), n=1, cutoff=0.88)
+                if not hits and len(joined) >= 5:
+                    close = difflib.get_close_matches(joined, list(self.by_size.get(size, {})), n=1, cutoff=0.8)
                     if close and close[0][:1] == joined[:1]:
                         hits, fuzzy = self.e[self.by_size[size][close[0]]], True
                 if not hits:
@@ -604,4 +604,3 @@ LIMIT 100"""
         "intention": intention,
         "sparql": requete,
     }
-

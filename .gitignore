@@ -1,30 +1,3 @@
-<<<<<<< HEAD
-# Python
-__pycache__/
-*.py[cod]
-venv/
-venv_old/
-.venv/
-*.egg-info/
-.env
-
-# Node / Angular
-node_modules/
-dist/
-.angular/
-*.tsbuildinfo
-npm-debug.log*
-
-# IDE
-.vscode/settings.json
-.idea/
-
-# OS
-.DS_Store
-Thumbs.db
-*.log
-=======
 __pycache__/
 *.pyc
->>>>>>> 3d5aa3acacaab95058bb469d316a5a2236e830ce
-backend/venv/
+backend/models/difficulty_model.pkl

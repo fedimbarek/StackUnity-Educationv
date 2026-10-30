@@ -1,3 +1,4 @@
+
 import { Component, computed, inject } from '@angular/core';
 import { RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
 
@@ -57,10 +58,6 @@ import { canAccess, isFull } from './core/roles';
 
             <small class="muted sec">Intelligence</small>
 
-            <a routerLink="/nl-query" routerLinkActive="on">
-              <i class="dot"></i>🧠 Recherche IA
-            </a>
-
             <a routerLink="/ia" routerLinkActive="on">
               <i class="dot"></i>Assistant IA
             </a>
@@ -70,7 +67,7 @@ import { canAccess, isFull } from './core/roles';
             </a>
           }
 
-          <!-- Assistant NLP Personnes & Organismes -->
+          <!-- NOUVEAU : Assistant NLP Personnes & Organismes -->
           <small class="muted sec">NLP & Sémantique</small>
 
           <a routerLink="/assistant" routerLinkActive="on">

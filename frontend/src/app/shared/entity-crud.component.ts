@@ -7,6 +7,8 @@ import { ItemTableComponent } from './item-table.component';
 import { ItemDetailComponent } from './item-detail.component';
 import { ItemFormComponent } from './item-form.component';
 
+const MATIERE_CLASSES = ['MatiereTechnique', 'MatiereScientifique', 'MatiereLitteraire'];
+
 /** CRUD complet d'UNE sous-entité (un onglet) : liste, filtre, fiche, création, modification, suppression. */
 @Component({
   selector: 'app-entity-crud',
@@ -27,7 +29,9 @@ import { ItemFormComponent } from './item-form.component';
       </section>
       <section class="card">
         @if (detail(); as d) {
-          <app-item-detail [detail]="d" (edit)="edit(d)" (remove)="remove(d)" (navigate)="go($event)" />
+          <app-item-detail [detail]="d" [showDifficultyPrediction]="canEstimateDifficulty()"
+                           (edit)="edit(d)" (estimateDifficulty)="estimateDifficulty.emit($event)"
+                           (remove)="remove(d)" (navigate)="go($event)" />
         } @else { <p class="muted">Sélectionne une ligne pour voir sa fiche.</p> }
       </section>
     </div>`,
@@ -39,6 +43,7 @@ export class EntityCrudComponent implements OnInit {
   @Input({ required: true }) tab!: EntityTab;
   @Input() openId: string | null = null;
   @Output() changed = new EventEmitter<void>();
+  @Output() estimateDifficulty = new EventEmitter<string>();
 
   rows = signal<Individual[]>([]); props = signal<Prop[]>([]); detail = signal<Detail | null>(null);
   filter = signal(''); err = signal('');
@@ -50,6 +55,9 @@ export class EntityCrudComponent implements OnInit {
     return this.rows().filter(r => !f || (r.label ?? r.id).toLowerCase().includes(f) || r.id.toLowerCase().includes(f)
       || Object.values(r.cols ?? {}).some(v => v.toLowerCase().includes(f)));
   });
+  canEstimateDifficulty() {
+    return this.module === 'matieres' && MATIERE_CLASSES.includes(this.tab.cls);
+  }
 
   ngOnInit() {
     this.api.props().subscribe(p => this.props.set(p));

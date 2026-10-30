@@ -132,6 +132,39 @@ export interface NlpResponse {
   resultats: Record<string, string>[];
 }
 
+// Prédiction de difficulté d'une matière (Oussama)
+export interface DifficultyPredictionRequest {
+  id: string;
+}
+
+export interface DifficultyIndicators {
+  moyenne: number | null;
+  note_minimale: number | null;
+  note_maximale: number | null;
+  taux_reussite: number | null;
+  taux_echec: number | null;
+  ecart_type: number | null;
+  nombre_evaluations: number;
+  nombre_resultats: number;
+  evaluations_ambigues: number;
+  seuil_reussite: number;
+  coefficient: number | null;
+  nombre_heures: number | null;
+  nombre_competences: number;
+  taux_reussite_formation: number | null;
+}
+
+export interface DifficultyPredictionResponse {
+  matiere: string;
+  difficulte: string;
+  methode: 'random_forest' | 'regles_resultats' | 'regles_reussite_formation' | 'regles_charge_pedagogique';
+  confiance_pct?: number;
+  confiance_avertissement?: string;
+  source_donnees?: string;
+  avertissement?: string;
+  indicateurs: DifficultyIndicators;
+}
+
 @Injectable({ providedIn: 'root' })
 export class ApiService {
 
@@ -211,6 +244,13 @@ export class ApiService {
     this.http.post<NlpResponse>(
       `${API}/nlp`,
       { question }
+    );
+
+  // --- Prédiction de difficulté d'une matière ---
+  predictDifficulty = (id: string) =>
+    this.http.post<DifficultyPredictionResponse>(
+      `${API}/prediction/difficulte`,
+      { id } satisfies DifficultyPredictionRequest
     );
 
   // --- Export de l'ontologie ---

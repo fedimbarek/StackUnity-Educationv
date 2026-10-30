@@ -1,0 +1,562 @@
+diff --git a/backend/app.py b/backend/app.py
+index e3ad612..d708ffb 100644
+--- a/backend/app.py
++++ b/backend/app.py
+@@ -1,22 +1,12 @@
+-<<<<<<< HEAD
+-"""StackUnity - Serveur Flask : API JSON <-> requêtes SPARQL sur l'ontologie formation_.ttl."""
+-import os
+-from flask import Flask
+-import auth, schema, misc, queries, ai, dashboard
+-from modules import MODULES, make_blueprint
+-import nefzi_business_api
+-import nefzi_nlp_api
+-=======
+ 
+ """StackUnity - Serveur Flask : API JSON <-> requêtes SPARQL sur l'ontologie formation_.ttl."""
+ import os
+ from flask import Flask, request, jsonify
+-import auth, schema, misc, queries, ai, dashboard
++import auth, schema, misc, queries, ai, dashboard, prediction
+ from modules import MODULES, make_blueprint
+ from nlp import generer_sparql
+ from store import sparql
+ from auth import auth_required
+->>>>>>> 3d5aa3acacaab95058bb469d316a5a2236e830ce
+ 
+ app = Flask(__name__)
+ app.register_blueprint(auth.bp)
+@@ -24,23 +14,11 @@ app.register_blueprint(dashboard.bp)   # dashboard personnalisé selon le rôle
+ app.register_blueprint(misc.bp)
+ app.register_blueprint(schema.bp)
+ app.register_blueprint(queries.bp)     # bibliothèque de requêtes SPARQL
+-<<<<<<< HEAD
+-app.register_blueprint(ai.bp)   
+-app.register_blueprint(nefzi_business_api.bp)
+-app.register_blueprint(nefzi_nlp_api.bp)
+-# API IA (question -> SPARQL, explication, recommandation)
+-for m in MODULES:                       # un blueprint REST par module métier
+-    app.register_blueprint(make_blueprint(m))
+-@app.route("/")
+-
+-def index():
+-    return {"status": "ok", "service": "StackUnity API"}
+-=======
+ app.register_blueprint(ai.bp)          # API IA (question -> SPARQL, explication, recommandation)
++app.register_blueprint(prediction.bp)  # API de prédiction de difficulté des matières
+ 
+ for m in MODULES:                       # un blueprint REST par module métier
+     app.register_blueprint(make_blueprint(m))
+->>>>>>> 3d5aa3acacaab95058bb469d316a5a2236e830ce
+ 
+ @app.after_request
+ def cors(resp):                         # CORS pour Angular (localhost:4200)
+@@ -53,8 +31,6 @@ def cors(resp):                         # CORS pour Angular (localhost:4200)
+ def preflight(_):
+     return "", 204
+ 
+-<<<<<<< HEAD
+-=======
+ # Assistant NLP Personnes et Organismes — compatible avec le frontend Angular
+ @app.post("/api/nlp")
+ @auth_required
+@@ -85,6 +61,5 @@ def assistant_nlp():
+         app.logger.exception("Erreur lors de l'exécution de la requête NLP")
+         return jsonify(error="Erreur lors de l'analyse NLP ou de l'exécution SPARQL."), 500
+ 
+->>>>>>> 3d5aa3acacaab95058bb469d316a5a2236e830ce
+ if __name__ == "__main__":
+     app.run(debug=True, port=5000)
+diff --git a/backend/nlp.py b/backend/nlp.py
+index 51b2813..b7287c8 100644
+--- a/backend/nlp.py
++++ b/backend/nlp.py
+@@ -7,7 +7,7 @@ Pipeline (chaque étape est restituée dans la « trace » renvoyée au front) :
+   2. Lexique construit à partir de l'ontologie : labels + noms camelCase des classes, propriétés et individus,
+      plus quelques synonymes métier (étudiant -> Apprenant, prof -> Enseignant, ...).
+   3. Liaison d'entités (entity linking) : plus long n-gramme de racines trouvé dans le lexique,
+-     avec tolérance aux fautes (similarité difflib >= 0.86).
++     avec tolérance aux fautes (similarité difflib >= 0.8 pour les termes d'au moins cinq caractères).
+   4. Détection d'intention par règles linguistiques : COUNT (combien), ASK (existe / y a-t-il), DESCRIBE (que sais-tu sur...),
+      SUPERLATIF (le plus / le moins / maximum), regroupement (par / chaque), négation (sans / aucun / non).
+   5. Extraction des contraintes : comparateurs + nombres (plus de 20, supérieur à 3, entre 2 et 5), booléens (gratuit, rémunéré).
+@@ -224,8 +224,8 @@ class Lexicon:
+                 key, skey = tuple(t["key"] for _, t in seg), tuple(t["skey"] for _, t in seg)
+                 hits, fuzzy = self.e.get(key) or self.e.get(skey), False
+                 joined = " ".join(key)
+-                if not hits and len(joined) >= 6:
+-                    close = difflib.get_close_matches(joined, list(self.by_size.get(size, {})), n=1, cutoff=0.88)
++                if not hits and len(joined) >= 5:
++                    close = difflib.get_close_matches(joined, list(self.by_size.get(size, {})), n=1, cutoff=0.8)
+                     if close and close[0][:1] == joined[:1]:
+                         hits, fuzzy = self.e[self.by_size[size][close[0]]], True
+                 if not hits:
+@@ -531,8 +531,6 @@ class NL2SPARQL:
+         limit = order[1] if order else 200
+         q = f"SELECT DISTINCT {' '.join(cols)} WHERE {{\n  {body}\n}} {order_clause} LIMIT {limit}"
+         return dict(sparql=q, kind="select", main=main, trace=trace)
+-<<<<<<< HEAD
+-=======
+ 
+ # ============================================================================
+ # Assistant NLP : Personnes & Organismes (ajout, sans modifier le traducteur existant)
+@@ -606,5 +604,3 @@ LIMIT 100"""
+         "intention": intention,
+         "sparql": requete,
+     }
+-
+->>>>>>> 3d5aa3acacaab95058bb469d316a5a2236e830ce
+diff --git a/backend/requirements.txt b/backend/requirements.txt
+index b851c6f..5989b3a 100644
+--- a/backend/requirements.txt
++++ b/backend/requirements.txt
+@@ -1,11 +1,3 @@
+-<<<<<<< HEAD
+-flask==3.1.*
+-rdflib==7.*
+-pyjwt==2.*
+-# --- NLP / TALN (traducteur question -> SPARQL) ---
+-spacy>=3.7        # puis :  python -m spacy download fr_core_news_sm
+-nltk>=3.8         # SnowballStemmer('french') : aucune ressource à télécharger
+-=======
+ 
+ flask==3.1.*
+ rdflib==7.*
+@@ -14,4 +6,8 @@ pyjwt==2.*
+ # --- NLP / TALN (traducteur question -> SPARQL) ---
+ spacy>=3.7
+ nltk>=3.8
+->>>>>>> 3d5aa3acacaab95058bb469d316a5a2236e830ce
++
++# --- Prédiction de difficulté ---
++pandas>=2.2,<4
++scikit-learn>=1.5,<2
++joblib>=1.4,<2
+diff --git a/backend/store.py b/backend/store.py
+index f97a8df..43df0c0 100644
+--- a/backend/store.py
++++ b/backend/store.py
+@@ -20,23 +20,25 @@ def short(v):
+     return s.split("#")[-1] if s.startswith(BASE) else s
+ 
+ def sparql(q, **bind):
+-    res = onto.query(PREFIXES + q, initBindings={k: URIRef(v) for k, v in bind.items()})
++    with LOCK:
++        res = onto.query(PREFIXES + q, initBindings={k: URIRef(v) for k, v in bind.items()})
+     return [{str(k): short(v) for k, v in row.asdict().items()} for row in res]
+ 
+ def run_readonly(text, limit=500):
+     """Exécute une requête SPARQL en lecture seule (SELECT / ASK). Retourne (vars, rows).
+     Lève PermissionError si la requête n'est pas SELECT/ASK, ValueError si elle est invalide."""
+     from rdflib.plugins.sparql import prepareQuery
+-    try:
+-        kind = prepareQuery(PREFIXES + text).algebra.name
+-    except Exception as e:
+-        raise ValueError(f"Requête invalide : {e}")
+-    if kind not in ("SelectQuery", "AskQuery"):
+-        raise PermissionError("Seules les requêtes SELECT/ASK sont autorisées")
+-    try:
+-        res = onto.query(PREFIXES + text)
+-    except Exception as e:
+-        raise ValueError(f"Requête invalide : {e}")
++    with LOCK:
++        try:
++            kind = prepareQuery(PREFIXES + text).algebra.name
++        except Exception as e:
++            raise ValueError(f"Requête invalide : {e}")
++        if kind not in ("SelectQuery", "AskQuery"):
++            raise PermissionError("Seules les requêtes SELECT/ASK sont autorisées")
++        try:
++            res = onto.query(PREFIXES + text)
++        except Exception as e:
++            raise ValueError(f"Requête invalide : {e}")
+     if res.type == "ASK":
+         return ["ASK"], [{"ASK": str(res.askAnswer)}]
+     return ([str(v) for v in res.vars],
+diff --git a/frontend/src/app/app.component.ts b/frontend/src/app/app.component.ts
+index 8500e7f..d9a0b0a 100644
+--- a/frontend/src/app/app.component.ts
++++ b/frontend/src/app/app.component.ts
+@@ -1,12 +1,7 @@
+-<<<<<<< HEAD
+-import { Component, computed, inject } from '@angular/core';
+-import { RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
+-=======
+ 
+ import { Component, computed, inject } from '@angular/core';
+ import { RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
+ 
+->>>>>>> 3d5aa3acacaab95058bb469d316a5a2236e830ce
+ import { AuthService } from './core/auth';
+ import { ApiService } from './core/api.service';
+ import { MODULES } from './core/modules';
+@@ -18,49 +13,6 @@ import { canAccess, isFull } from './core/roles';
+   template: `
+     @if (auth.user()) {
+       <div class="shell">
+-<<<<<<< HEAD
+-        <aside class="side">
+-          <strong class="brand">
+-            <svg viewBox="0 0 64 64" width="26" height="26" aria-hidden="true">
+-              <polygon points="32,6 56,19 32,32 8,19" fill="#5aa9ff"/><polygon points="8,19 32,32 32,58 8,45" fill="#1a73f0"/><polygon points="32,32 56,19 56,45 32,58" fill="#0b4aa8"/>
+-            </svg>
+-            StackUnity
+-          </strong>
+-          <a routerLink="/" routerLinkActive="on" [routerLinkActiveOptions]="{exact:true}"><i class="dot"></i>{{ full() ? 'Tableau de bord' : 'Mon espace' }}</a>
+-          @if (modules().length) {
+-            <small class="muted sec">Modules</small>
+-            @for (m of modules(); track m.id) { <a [routerLink]="'/' + m.id" routerLinkActive="on"><i class="dot"></i>{{ m.title }}</a> }
+-          }
+-          @if (full()) {
+-            <small class="muted sec">Schéma</small>
+-            <a routerLink="/proprietes" routerLinkActive="on"><i class="dot"></i>Propriétés</a>
+-            <a routerLink="/sparql" routerLinkActive="on"><i class="dot"></i>Console SPARQL</a>
+-            <small class="muted sec">Intelligence</small>
+-            <a routerLink="/nl-query" routerLinkActive="on"><i class="dot"></i>🧠 Recherche IA</a>
+-            <a routerLink="/ia" routerLinkActive="on"><i class="dot"></i>Assistant IA</a>
+-            <a routerLink="/scenario" routerLinkActive="on"><i class="dot"></i>Scénario Amira</a>
+-          }
+-          <div class="grow"></div>
+-          @if (full()) { <button class="ghost" (click)="download()">Télécharger .ttl</button> }
+-          <span class="muted userbox">
+-            {{ full() ? auth.user() : auth.name() }} @if (!full() && auth.profile()) { <small class="role-tag">{{ auth.profile() }}</small> }
+-            · <a (click)="auth.logout()">Déconnexion</a>
+-          </span>
+-        </aside>
+-        <main><router-outlet /></main>
+-      </div>
+-    } @else { <main class="bare"><router-outlet /></main> }`,
+-})
+-export class AppComponent {
+-  auth = inject(AuthService);
+-  private api = inject(ApiService);
+-  full = computed(() => isFull(this.auth.role()));
+-  modules = computed(() => MODULES.filter(m => canAccess(this.auth.role(), m.id)));
+-  download() {
+-    this.api.exportTtl().subscribe(b => {
+-      const a = document.createElement('a');
+-      a.href = URL.createObjectURL(b); a.download = 'formation_.ttl'; a.click(); URL.revokeObjectURL(a.href);
+-=======
+ 
+         <aside class="side">
+ 
+@@ -179,7 +131,6 @@ export class AppComponent {
+       a.download = 'formation_.ttl';
+       a.click();
+       URL.revokeObjectURL(a.href);
+->>>>>>> 3d5aa3acacaab95058bb469d316a5a2236e830ce
+     });
+   }
+ }
+diff --git a/frontend/src/app/app.routes.ts b/frontend/src/app/app.routes.ts
+index 7a189e6..151aa87 100644
+--- a/frontend/src/app/app.routes.ts
++++ b/frontend/src/app/app.routes.ts
+@@ -1,22 +1,14 @@
+-<<<<<<< HEAD
+-import { Routes } from '@angular/router';
+-import { authGuard, accessGuard } from './core/auth';
+-=======
+ 
+ import { Routes } from '@angular/router';
+ import { authGuard, accessGuard } from './core/auth';
+ 
+->>>>>>> 3d5aa3acacaab95058bb469d316a5a2236e830ce
+ import { LoginComponent } from './pages/login.component';
+ import { HomeComponent } from './pages/home.component';
+ import { SchemaComponent } from './pages/schema.component';
+ import { SparqlComponent } from './pages/sparql.component';
+ import { AiComponent } from './pages/ai.component';
+ import { ScenarioComponent } from './pages/scenario.component';
+-<<<<<<< HEAD
+-=======
+ 
+->>>>>>> 3d5aa3acacaab95058bb469d316a5a2236e830ce
+ import { PersonnesComponent } from './features/personnes/personnes.component';
+ import { FormationsComponent } from './features/formations/formations.component';
+ import { MatieresComponent } from './features/matieres/matieres.component';
+@@ -27,13 +19,6 @@ import { InscriptionsComponent } from './features/inscriptions/inscriptions.comp
+ import { BoursesComponent } from './features/bourses/bourses.component';
+ import { SanteComponent } from './features/sante/sante.component';
+ import { VieComponent } from './features/vie/vie.component';
+-<<<<<<< HEAD
+-import { NefziNlQueryComponent } from './pages/nefzi-nl-query.component';
+-export const routes: Routes = [
+-  { path: 'login', component: LoginComponent },
+-  { path: '', component: HomeComponent, canActivate: [authGuard] },      // dashboard général (admin) ou personnel (selon le rôle)
+-  // un composant par module métier (chacun a ses onglets / colonnes / formulaires)
+-=======
+ 
+ // Assistant IA NLP - Personnes & Organismes
+ import { AssistantComponent } from './features/assistant/assistant.component';
+@@ -50,7 +35,6 @@ export const routes: Routes = [
+   },
+ 
+   // Modules métier
+->>>>>>> 3d5aa3acacaab95058bb469d316a5a2236e830ce
+   { path: 'personnes', component: PersonnesComponent, canActivate: [authGuard, accessGuard] },
+   { path: 'formations', component: FormationsComponent, canActivate: [authGuard, accessGuard] },
+   { path: 'matieres', component: MatieresComponent, canActivate: [authGuard, accessGuard] },
+@@ -61,14 +45,6 @@ export const routes: Routes = [
+   { path: 'bourses', component: BoursesComponent, canActivate: [authGuard, accessGuard] },
+   { path: 'sante', component: SanteComponent, canActivate: [authGuard, accessGuard] },
+   { path: 'vie', component: VieComponent, canActivate: [authGuard, accessGuard] },
+-<<<<<<< HEAD
+-  { path: 'proprietes', component: SchemaComponent, canActivate: [authGuard, accessGuard] },
+-  { path: 'sparql', component: SparqlComponent, canActivate: [authGuard, accessGuard] },
+-  { path: 'ia', component: AiComponent, canActivate: [authGuard, accessGuard] },
+-  { path: 'scenario', component: ScenarioComponent, canActivate: [authGuard, accessGuard] },
+-  { path: '**', redirectTo: '' },
+-    { path: 'nl-query', component: NefziNlQueryComponent, canActivate: [authGuard] },
+-=======
+ 
+   // Schéma et requêtes SPARQL
+   { path: 'proprietes', component: SchemaComponent, canActivate: [authGuard, accessGuard] },
+@@ -90,5 +66,4 @@ export const routes: Routes = [
+   // Route inconnue
+   { path: '**', redirectTo: '' }
+ 
+->>>>>>> 3d5aa3acacaab95058bb469d316a5a2236e830ce
+ ];
+diff --git a/frontend/src/app/core/api.service.ts b/frontend/src/app/core/api.service.ts
+index 517c9e1..74bdc46 100644
+--- a/frontend/src/app/core/api.service.ts
++++ b/frontend/src/app/core/api.service.ts
+@@ -1,42 +1,8 @@
+-<<<<<<< HEAD
+-=======
+ 
+->>>>>>> 3d5aa3acacaab95058bb469d316a5a2236e830ce
+ import { Injectable, inject } from '@angular/core';
+ import { HttpClient } from '@angular/common/http';
+ import { API } from './auth';
+ 
+-<<<<<<< HEAD
+-export interface OClass { name: string; parent: string | null; count: number; label: string; comment: string; }
+-export interface Individual { id: string; label?: string; type?: string; cols?: Record<string, string>; }
+-export interface Prop { name: string; kind: 'object' | 'data'; domain: string | null; range: string | null; label: string; usage?: number; }
+-export interface Detail {
+-  id: string; label: string; types: string[];
+-  module?: string | null;
+-  properties: { property: string; value: string; node?: boolean }[];
+-  incoming: { source: string; property: string }[];
+-}
+-
+-export interface DashCell { t: string; id?: string; m?: string | null; }
+-export interface DashSection { key: string; title: string; icon: string; empty: string; columns: string[]; rows: DashCell[][]; }
+-export interface MyDashboard {
+-  role: string; profile: string; type: string; title: string; subtitle: string;
+-  person: { id: string; name: string; fields: { label: string; values: DashCell[] }[] };
+-  stats: { label: string; value: number; target: string }[];
+-  sections: DashSection[];
+-}
+-
+-export interface QueryDef { id: string; category: string; title: string; question: string; query: string; }
+-export interface NlpTrace {
+-  tools: Record<string, string | null>;
+-  tokens: { text: string; lemma: string; pos: string; stem: string }[];
+-  entities: { text: string; kind: string; name: string; fuzzy: boolean }[];
+-  intent: string[]; constraints: string[]; notes: string[];
+-}
+-export interface AiAnswer {
+-  question: string; engine: 'nlp'; sparql: string | null; vars: string[]; rows: any[]; answer: string;
+-  warning?: string | null; trace: NlpTrace | null;
+-=======
+ export interface OClass {
+   name: string;
+   parent: string | null;
+@@ -165,63 +131,42 @@ export interface NlpResponse {
+   intention: string;
+   sparql: string;
+   resultats: Record<string, string>[];
+->>>>>>> 3d5aa3acacaab95058bb469d316a5a2236e830ce
++}
++
++export interface DifficultyPredictionRequest {
++  id: string;
++}
++
++export interface DifficultyIndicators {
++  moyenne: number | null;
++  note_minimale: number | null;
++  note_maximale: number | null;
++  taux_reussite: number | null;
++  taux_echec: number | null;
++  ecart_type: number | null;
++  nombre_evaluations: number;
++  nombre_resultats: number;
++  evaluations_ambigues: number;
++  seuil_reussite: number;
++  coefficient: number | null;
++  nombre_heures: number | null;
++  nombre_competences: number;
++  taux_reussite_formation: number | null;
++}
++
++export interface DifficultyPredictionResponse {
++  matiere: string;
++  difficulte: string;
++  methode: 'random_forest' | 'regles_resultats' | 'regles_reussite_formation' | 'regles_charge_pedagogique';
++  confiance_pct?: number;
++  confiance_avertissement?: string;
++  source_donnees?: string;
++  avertissement?: string;
++  indicateurs: DifficultyIndicators;
+ }
+ 
+ @Injectable({ providedIn: 'root' })
+ export class ApiService {
+-<<<<<<< HEAD
+-  private http = inject(HttpClient);
+-  // --- dashboard personnalisé (selon le rôle du compte) ---
+-  myDashboard = () => this.http.get<MyDashboard>(`${API}/me/dashboard`);
+-  // --- transversal ---
+-  modules = () => this.http.get<any[]>(`${API}/modules`);
+-  stats = () => this.http.get<Record<string, number>>(`${API}/stats`);
+-  search = (q: string) => this.http.get<any[]>(`${API}/search`, { params: { q } });
+-  allIndividuals = () => this.http.get<Individual[]>(`${API}/individuals`);
+-  individual = (id: string) => this.http.get<Detail>(`${API}/individuals/${id}`);          // fiche globale (tous modules)
+-  individualsOf = (cls: string) => this.http.get<Individual[]>(`${API}/classes/${cls}/individuals`);
+-  allClasses = () => this.http.get<string[]>(`${API}/classes`);
+-  sparqlUpdate = (update: string) => this.http.post<{ ok: boolean; triples_before: number; triples_after: number; delta: number }>(`${API}/sparql/update`, { update });
+-  sparql = (query: string) => this.http.post<{ vars: string[]; rows: any[] }>(`${API}/sparql`, { query });
+-  queries = () => this.http.get<QueryDef[]>(`${API}/queries`);                      // bibliothèque de requêtes SPARQL
+-  // --- API IA ---
+-  aiStatus = () => this.http.get<{ engine: string; tools: Record<string, string | null>; llm: boolean }>(`${API}/ai/status`);
+-  aiAsk = (question: string) => this.http.post<AiAnswer>(`${API}/ai/ask`, { question });
+-  aiExplain = (id: string) => this.http.post<any>(`${API}/ai/explain`, { id });
+-  aiRecommend = (id: string) => this.http.get<any>(`${API}/ai/recommend/${id}`);
+-  exportTtl = () => this.http.get(`${API}/export.ttl`, { responseType: 'blob' });
+-  // --- CRUD par module : /api/<module>/classes … /api/<module>/items … ---
+-  classes = (m: string) => this.http.get<OClass[]>(`${API}/${m}/classes`);
+-  createClass = (m: string, b: any) => this.http.post(`${API}/${m}/classes`, b);
+-  updateClass = (m: string, n: string, b: any) => this.http.put(`${API}/${m}/classes/${n}`, b);
+-  deleteClass = (m: string, n: string) => this.http.delete(`${API}/${m}/classes/${n}`);
+-  classProps = (m: string, n: string) => this.http.get<string[]>(`${API}/${m}/classes/${n}/properties`);
+-  items = (m: string, cls: string, columns: string[] = []) =>
+-    this.http.get<Individual[]>(`${API}/${m}/classes/${cls}/items`, { params: { columns: columns.join(',') } });
+-  item = (m: string, id: string) => this.http.get<Detail>(`${API}/${m}/items/${id}`);
+-  createItem = (m: string, b: any) => this.http.post(`${API}/${m}/items`, b);
+-  updateItem = (m: string, id: string, b: any) => this.http.put(`${API}/${m}/items/${id}`, b);
+-  deleteItem = (m: string, id: string) => this.http.delete(`${API}/${m}/items/${id}`);
+-  // --- CRUD des propriétés (module Schéma) ---
+-  props = () => this.http.get<Prop[]>(`${API}/properties`);
+-  createProp = (b: any) => this.http.post(`${API}/properties`, b);
+-  updateProp = (n: string, b: any) => this.http.put(`${API}/properties/${n}`, b);
+-  deleteProp = (n: string) => this.http.delete(`${API}/properties/${n}`);
+-
+-  // --- Business : Vie & Santé (statistiques + recherche) ---
+-  businessSanteStats()             { return this.http.get<any>(`${API}/business/sante/stats`); }
+-  businessSanteGratuits()          { return this.http.get<{ items: any[] }>(`${API}/business/sante/gratuits`); }
+-  businessSanteParUser(u: string)  { return this.http.get<{ items: any[] }>(`${API}/business/sante/par-user/${u}`); }
+-  businessSanteRecherche(q: string){ return this.http.get<{ items: any[] }>(`${API}/business/sante/recherche`, { params: { q } }); }
+-  businessVieStats()               { return this.http.get<any>(`${API}/business/vie/stats`); }
+-  businessVieParUser(u: string)    { return this.http.get<{ items: any[] }>(`${API}/business/vie/par-user/${u}`); }
+-
+-  // --- NLP ---
+-  nlQuery(question: string)        { return this.http.post<any>(`${API}/nlp/query`, { question }); }
+-  nlExamples()                     { return this.http.get<{ examples: string[] }>(`${API}/nlp/examples`); }
+-  }
+-=======
+ 
+   private http = inject(HttpClient);
+ 
+@@ -300,6 +245,13 @@ export class ApiService {
+       { question }
+     );
+ 
++  // --- Prédiction de difficulté d'une matière ---
++  predictDifficulty = (id: string) =>
++    this.http.post<DifficultyPredictionResponse>(
++      `${API}/prediction/difficulte`,
++      { id } satisfies DifficultyPredictionRequest
++    );
++
+   // --- Export de l'ontologie ---
+   exportTtl = () =>
+     this.http.get(`${API}/export.ttl`, {
+@@ -355,4 +307,3 @@ export class ApiService {
+   deleteProp = (n: string) =>
+     this.http.delete(`${API}/properties/${n}`);
+ }
+->>>>>>> 3d5aa3acacaab95058bb469d316a5a2236e830ce
+diff --git a/frontend/src/app/features/sante/sante.component.ts b/frontend/src/app/features/sante/sante.component.ts
+index 0be242c..3c01ddc 100644
+--- a/frontend/src/app/features/sante/sante.component.ts
++++ b/frontend/src/app/features/sante/sante.component.ts
+@@ -1,13 +1,7 @@
+ import { Component } from '@angular/core';
+ import { ModulePageComponent } from '../../shared/module-page.component';
+ import { ModuleConfig, meta, tab } from '../../core/module.types';
+-<<<<<<< HEAD
+-import { NefziNlSearchComponent } from '../../shared/nefzi-nl-search.component';
+-import { CommonModule } from '@angular/common';
+-import { FormsModule } from '@angular/forms';
+-=======
+ 
+->>>>>>> 3d5aa3acacaab95058bb469d316a5a2236e830ce
+ /** Module « Sante » : onglets = sous-entités de la classe racine ServiceMedical. */
+ export const SANTE: ModuleConfig = {
+   ...meta('sante'),
+@@ -25,21 +19,7 @@ export const SANTE: ModuleConfig = {
+ 
+ @Component({
+   selector: 'app-sante',
+-<<<<<<< HEAD
+-  imports: [CommonModule, FormsModule, ModulePageComponent, NefziNlSearchComponent],
+-  standalone: true,
+-  template: `
+-    <app-nefzi-nl-search
+-      context="sante"
+-      placeholder="Ex: Quels sont les services de santé gratuits ?">
+-    </app-nefzi-nl-search>
+-    <app-module-page [config]="config" />
+-  `,
+-})
+-export class SanteComponent { config = SANTE; }
+-=======
+   imports: [ModulePageComponent],
+   template: `<app-module-page [config]="config" />`,
+ })
+ export class SanteComponent { config = SANTE; }
+->>>>>>> 3d5aa3acacaab95058bb469d316a5a2236e830ce
+diff --git a/frontend/src/app/features/vie/vie.component.ts b/frontend/src/app/features/vie/vie.component.ts
+index ae2de4d..55a2173 100644
+--- a/frontend/src/app/features/vie/vie.component.ts
++++ b/frontend/src/app/features/vie/vie.component.ts
+@@ -1,13 +1,6 @@
+ import { Component } from '@angular/core';
+ import { ModulePageComponent } from '../../shared/module-page.component';
+ import { ModuleConfig, meta, tab } from '../../core/module.types';
+-<<<<<<< HEAD
+-import { NefziNlSearchComponent } from '../../shared/nefzi-nl-search.component';
+-import { CommonModule } from '@angular/common';
+-import { FormsModule } from '@angular/forms';
+-import { SANTE } from '../sante/sante.component';
+-=======
+->>>>>>> 3d5aa3acacaab95058bb469d316a5a2236e830ce
+ 
+ /** Module « Vie » : onglets = sous-entités de la classe racine ServiceVieEtudiante. */
+ export const VIE: ModuleConfig = {
+@@ -24,21 +17,7 @@ export const VIE: ModuleConfig = {
+ 
+ @Component({
+   selector: 'app-vie',
+-<<<<<<< HEAD
+-  standalone: true,
+-  imports: [CommonModule, ModulePageComponent, NefziNlSearchComponent],
+-  template: `
+-    <app-nefzi-nl-search
+-      context="vie"
+-      placeholder="Ex: Quels sont les services d'hébergement ?">
+-    </app-nefzi-nl-search>
+-    <app-module-page [config]="config" />
+-  `,
+-})
+-export class VieComponent { config = VIE; }
+-=======
+   imports: [ModulePageComponent],
+   template: `<app-module-page [config]="config" />`,
+ })
+ export class VieComponent { config = VIE; }
+->>>>>>> 3d5aa3acacaab95058bb469d316a5a2236e830ce
