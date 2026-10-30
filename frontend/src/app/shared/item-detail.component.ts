@@ -7,6 +7,9 @@ import { Detail } from '../core/api.service';
   template: `
     <h4>{{ detail.label }}
       <button class="small-btn" (click)="edit.emit()">Modifier</button>
+      @if (showDifficultyPrediction) {
+        <button class="small-btn" (click)="estimateDifficulty.emit(detail.id)">Estimer</button>
+      }
       <button class="small-btn danger" (click)="remove.emit()">Supprimer</button></h4>
     <p>@for (t of detail.types; track t) { <span class="tag">{{ t }}</span> }</p>
     <table>
@@ -22,7 +25,9 @@ import { Detail } from '../core/api.service';
 })
 export class ItemDetailComponent {
   @Input({ required: true }) detail!: Detail;
+  @Input() showDifficultyPrediction = false;
   @Output() edit = new EventEmitter<void>();
+  @Output() estimateDifficulty = new EventEmitter<string>();
   @Output() remove = new EventEmitter<void>();
   @Output() navigate = new EventEmitter<string>();
 }

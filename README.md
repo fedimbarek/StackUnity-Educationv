@@ -43,6 +43,55 @@ IA & requêtes : `GET /api/queries` (bibliothèque de 16 requêtes SPARQL), `POS
 Transversal : `POST /api/auth/register|login`, `GET /api/modules`, `/api/stats`, `/api/search?q=`, `POST /api/sparql` (SELECT/ASK), `GET /api/export.ttl`,
 `GET /api/individuals/<Id>` (fiche globale + module), `GET /api/classes/<Classe>/individuals`, `GET/POST /api/properties`, `PUT/DELETE /api/properties/<nom>`.
 
+## Prédiction de difficulté des matières
+
+`POST /api/prediction/difficulte` (JWT requis) reçoit `{"id":"Mathematiques"}`. Les résultats d'étudiants sont chargés depuis `backend/tests/data.csv` et associés à la matière RDF par son identifiant ou son nom. Ce CSV contient 800 notes sur 20, pour 10 matières et 80 résultats par matière. Les données de l'ontologie restent utilisées pour retrouver la matière et ses métadonnées ; si le CSV ne contient pas de notes correspondantes, l'API conserve les règles de secours décrites plus bas.
+
+Le script entraîne un Random Forest sur une ligne agrégée par matière, jamais sur des lignes d'étudiants mélangées entre entraînement et test. Les labels sont dérivés du taux de réussite observé : « Difficile » jusqu'à 40 %, « Facile » à partir de 75 %, « Moyenne » entre les deux. Sur le CSV actuel, cela donne 3 matières difficiles, 3 moyennes et 4 faciles. Le split stratifié réserve 3 matières (une par classe) au test et entraîne sur les 7 autres. Ce jeu est très petit : les mesures de test sont indicatives et ne démontrent pas une généralisation fiable. Les indicateurs de taux de réussite ne sont pas fournis au modèle comme caractéristiques, car ils servent à produire les labels. `confiance_pct` est le score `predict_proba` du modèle, non calibré ; ce n'est ni la précision mesurée du modèle ni une garantie de fiabilité.
+
+Le seuil de réussite par défaut est 10/20 ; les seuils de difficulté sont configurables par `DIFFICULTY_HARD_MAX_SUCCESS_RATE` (40) et `DIFFICULTY_EASY_MIN_SUCCESS_RATE` (75). Le chemin du CSV peut être remplacé avec `DIFFICULTY_DATASET_PATH`. L'entraînement refuse de sauvegarder un modèle si chaque classe ne contient pas au moins trois matières. Lors du dernier entraînement, les scores sur les 3 matières de test étaient : accuracy 0,667, precision macro 0,500, recall macro 0,667 et F1 macro 0,556. En l'absence de modèle ou de notes CSV adaptées, l'API peut estimer par règles à partir du taux de réussite d'une formation reliée à une seule matière, ou du coefficient et du volume horaire. Cette estimation n'est pas du ML. `422` signifie qu'aucun indicateur exploitable n'est disponible.
+
+Pour l'estimation de secours uniquement, les seuils sont coefficient facile jusqu'à 1,5/difficile à partir de 3, et volume horaire facile jusqu'à 24 h/difficile à partir de 45 h ; les signaux opposés s'équilibrent en « Moyenne ». Ces seuils heuristiques sont configurables avec `DIFFICULTY_EASY_COEFFICIENT_MAX`, `DIFFICULTY_HARD_COEFFICIENT_MIN`, `DIFFICULTY_EASY_HOURS_MAX` et `DIFFICULTY_HARD_HOURS_MIN`. Confirmer les seuils avec les responsables pédagogiques avant usage en production.
+
+Installation et entraînement (depuis `backend`) :
+
+```powershell
+python -m pip install -r requirements.txt
+python train_model.py
+python app.py
+```
+
+Le modèle entraîné est enregistré dans `backend/models/difficulty_model.pkl` et rechargé à la demande. Pour une requête Postman, sélectionner `POST`, l'URL `http://localhost:5000/api/prediction/difficulte`, le header `Authorization: Bearer <JWT>` et le body JSON `{"id":"Mathematiques"}`. La forme suivante est illustrative uniquement (ces nombres ne sont pas présents dans l'ontologie actuelle) :
+
+```json
+{
+  "matiere": "Mathématiques",
+  "difficulte": "Difficile",
+  "methode": "random_forest",
+  "confiance_pct": 94.0,
+  "confiance_avertissement": "Score predict_proba non calibré et calculé pour une matière déjà vue à l'entraînement (10 matières au total).",
+  "source_donnees": "data.csv",
+  "indicateurs": {
+    "moyenne": 8.15,
+    "note_minimale": 1.42,
+    "note_maximale": 15.29,
+    "taux_reussite": 31.25,
+    "taux_echec": 68.75,
+    "ecart_type": 3.1393,
+    "nombre_evaluations": 80,
+    "nombre_resultats": 80,
+    "evaluations_ambigues": 0,
+    "seuil_reussite": 10.0,
+    "coefficient": 4.0,
+    "nombre_heures": 60.0,
+    "nombre_competences": 0,
+    "taux_reussite_formation": null
+  }
+}
+```
+
+Le frontend peut appeler cette route via son service HTTP partagé, envoyer le jeton JWT déjà utilisé par les autres API et afficher `difficulte`, `methode`, `confiance_pct` et `indicateurs`. Le score en pourcentage n'est présent que pour Random Forest ; il est accompagné d'un avertissement sur sa calibration et la taille limitée des données. Les codes d'erreur sont 400 (identifiant invalide), 404 (matière inconnue), 422 (aucun indicateur exploitable) et 500 (erreur interne).
+
 ## Frontend Angular : composants
 - **shared/** (composants réutilisés par tous les modules) : `module-page` (en-tête + onglets), `entity-crud` (CRUD d'une sous-entité),
   `item-table`, `item-detail`, `item-form` (champs typés : date, nombre, oui/non, liste d'instances), `class-manager`, `class-tree`, `class-form`.

@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { ModulePageComponent } from '../../shared/module-page.component';
 import { ModuleConfig, meta, tab } from '../../core/module.types';
+import { DifficultyPredictionComponent } from './difficulty-prediction.component';
 
 /** Module « Matieres » : onglets = sous-entités de la classe racine Matiere. */
 export const MATIERES: ModuleConfig = {
@@ -20,7 +21,17 @@ export const MATIERES: ModuleConfig = {
 
 @Component({
   selector: 'app-matieres',
-  imports: [ModulePageComponent],
-  template: `<app-module-page [config]="config" />`,
+  imports: [ModulePageComponent, DifficultyPredictionComponent],
+  template: `
+    <app-difficulty-prediction [request]="predictionRequest" />
+    <app-module-page [config]="config" (estimateDifficulty)="requestPrediction($event)" />`,
 })
-export class MatieresComponent { config = MATIERES; }
+export class MatieresComponent {
+  config = MATIERES;
+  predictionRequest: { id: string; nonce: number } | null = null;
+  private requestNonce = 0;
+
+  requestPrediction(id: string) {
+    this.predictionRequest = { id, nonce: ++this.requestNonce };
+  }
+}
