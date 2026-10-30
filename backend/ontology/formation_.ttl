@@ -3196,7 +3196,6 @@ xsd:date a rdfs:Datatype .
 [] a owl:AllDisjointClasses ;
     owl:members ( :Bourse :Certification :Club :Competence :Departement :Diplome :Domaine :Espace :Evaluation :Evenement :Formation :Inscription :Langue :Matiere :Niveau :Organisme :OutilNumerique :ParcoursApprentissage :PeriodeAcademique :Personne :RessourcePedagogique :Seance :Stage ) .
 
-<<<<<<< HEAD
 #################################################################
 # NEFZI — Enrichissement Vie & Santé
 #################################################################
@@ -3297,5 +3296,3 @@ xsd:date a rdfs:Datatype .
 :Amira :consulte :ConsultationGeneraleUT .
 :Yasmine :habite :ResidenceUniversitaireTunis .
 :Yasmine :consulte :ConsultationPsychologiqueAnonyme .
-=======
->>>>>>> 3d5aa3acacaab95058bb469d316a5a2236e830ce

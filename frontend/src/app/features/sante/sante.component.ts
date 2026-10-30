@@ -1,13 +1,10 @@
 import { Component } from '@angular/core';
 import { ModulePageComponent } from '../../shared/module-page.component';
 import { ModuleConfig, meta, tab } from '../../core/module.types';
-<<<<<<< HEAD
 import { NefziNlSearchComponent } from '../../shared/nefzi-nl-search.component';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-=======
 
->>>>>>> 3d5aa3acacaab95058bb469d316a5a2236e830ce
 /** Module « Sante » : onglets = sous-entités de la classe racine ServiceMedical. */
 export const SANTE: ModuleConfig = {
   ...meta('sante'),
@@ -25,7 +22,6 @@ export const SANTE: ModuleConfig = {
 
 @Component({
   selector: 'app-sante',
-<<<<<<< HEAD
   imports: [CommonModule, FormsModule, ModulePageComponent, NefziNlSearchComponent],
   standalone: true,
   template: `
@@ -37,9 +33,3 @@ export const SANTE: ModuleConfig = {
   `,
 })
 export class SanteComponent { config = SANTE; }
-=======
-  imports: [ModulePageComponent],
-  template: `<app-module-page [config]="config" />`,
-})
-export class SanteComponent { config = SANTE; }
->>>>>>> 3d5aa3acacaab95058bb469d316a5a2236e830ce

@@ -1,42 +1,7 @@
-<<<<<<< HEAD
-=======
-
->>>>>>> 3d5aa3acacaab95058bb469d316a5a2236e830ce
 import { Injectable, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { API } from './auth';
 
-<<<<<<< HEAD
-export interface OClass { name: string; parent: string | null; count: number; label: string; comment: string; }
-export interface Individual { id: string; label?: string; type?: string; cols?: Record<string, string>; }
-export interface Prop { name: string; kind: 'object' | 'data'; domain: string | null; range: string | null; label: string; usage?: number; }
-export interface Detail {
-  id: string; label: string; types: string[];
-  module?: string | null;
-  properties: { property: string; value: string; node?: boolean }[];
-  incoming: { source: string; property: string }[];
-}
-
-export interface DashCell { t: string; id?: string; m?: string | null; }
-export interface DashSection { key: string; title: string; icon: string; empty: string; columns: string[]; rows: DashCell[][]; }
-export interface MyDashboard {
-  role: string; profile: string; type: string; title: string; subtitle: string;
-  person: { id: string; name: string; fields: { label: string; values: DashCell[] }[] };
-  stats: { label: string; value: number; target: string }[];
-  sections: DashSection[];
-}
-
-export interface QueryDef { id: string; category: string; title: string; question: string; query: string; }
-export interface NlpTrace {
-  tools: Record<string, string | null>;
-  tokens: { text: string; lemma: string; pos: string; stem: string }[];
-  entities: { text: string; kind: string; name: string; fuzzy: boolean }[];
-  intent: string[]; constraints: string[]; notes: string[];
-}
-export interface AiAnswer {
-  question: string; engine: 'nlp'; sparql: string | null; vars: string[]; rows: any[]; answer: string;
-  warning?: string | null; trace: NlpTrace | null;
-=======
 export interface OClass {
   name: string;
   parent: string | null;
@@ -158,70 +123,17 @@ export interface AiAnswer {
   trace: NlpTrace | null;
 }
 
-// NOUVEAU : Assistant NLP Personnes et Organismes
+// Assistant NLP Personnes et Organismes (Dhia)
 export interface NlpResponse {
   question: string;
   classe: string;
   intention: string;
   sparql: string;
   resultats: Record<string, string>[];
->>>>>>> 3d5aa3acacaab95058bb469d316a5a2236e830ce
 }
 
 @Injectable({ providedIn: 'root' })
 export class ApiService {
-<<<<<<< HEAD
-  private http = inject(HttpClient);
-  // --- dashboard personnalisé (selon le rôle du compte) ---
-  myDashboard = () => this.http.get<MyDashboard>(`${API}/me/dashboard`);
-  // --- transversal ---
-  modules = () => this.http.get<any[]>(`${API}/modules`);
-  stats = () => this.http.get<Record<string, number>>(`${API}/stats`);
-  search = (q: string) => this.http.get<any[]>(`${API}/search`, { params: { q } });
-  allIndividuals = () => this.http.get<Individual[]>(`${API}/individuals`);
-  individual = (id: string) => this.http.get<Detail>(`${API}/individuals/${id}`);          // fiche globale (tous modules)
-  individualsOf = (cls: string) => this.http.get<Individual[]>(`${API}/classes/${cls}/individuals`);
-  allClasses = () => this.http.get<string[]>(`${API}/classes`);
-  sparqlUpdate = (update: string) => this.http.post<{ ok: boolean; triples_before: number; triples_after: number; delta: number }>(`${API}/sparql/update`, { update });
-  sparql = (query: string) => this.http.post<{ vars: string[]; rows: any[] }>(`${API}/sparql`, { query });
-  queries = () => this.http.get<QueryDef[]>(`${API}/queries`);                      // bibliothèque de requêtes SPARQL
-  // --- API IA ---
-  aiStatus = () => this.http.get<{ engine: string; tools: Record<string, string | null>; llm: boolean }>(`${API}/ai/status`);
-  aiAsk = (question: string) => this.http.post<AiAnswer>(`${API}/ai/ask`, { question });
-  aiExplain = (id: string) => this.http.post<any>(`${API}/ai/explain`, { id });
-  aiRecommend = (id: string) => this.http.get<any>(`${API}/ai/recommend/${id}`);
-  exportTtl = () => this.http.get(`${API}/export.ttl`, { responseType: 'blob' });
-  // --- CRUD par module : /api/<module>/classes … /api/<module>/items … ---
-  classes = (m: string) => this.http.get<OClass[]>(`${API}/${m}/classes`);
-  createClass = (m: string, b: any) => this.http.post(`${API}/${m}/classes`, b);
-  updateClass = (m: string, n: string, b: any) => this.http.put(`${API}/${m}/classes/${n}`, b);
-  deleteClass = (m: string, n: string) => this.http.delete(`${API}/${m}/classes/${n}`);
-  classProps = (m: string, n: string) => this.http.get<string[]>(`${API}/${m}/classes/${n}/properties`);
-  items = (m: string, cls: string, columns: string[] = []) =>
-    this.http.get<Individual[]>(`${API}/${m}/classes/${cls}/items`, { params: { columns: columns.join(',') } });
-  item = (m: string, id: string) => this.http.get<Detail>(`${API}/${m}/items/${id}`);
-  createItem = (m: string, b: any) => this.http.post(`${API}/${m}/items`, b);
-  updateItem = (m: string, id: string, b: any) => this.http.put(`${API}/${m}/items/${id}`, b);
-  deleteItem = (m: string, id: string) => this.http.delete(`${API}/${m}/items/${id}`);
-  // --- CRUD des propriétés (module Schéma) ---
-  props = () => this.http.get<Prop[]>(`${API}/properties`);
-  createProp = (b: any) => this.http.post(`${API}/properties`, b);
-  updateProp = (n: string, b: any) => this.http.put(`${API}/properties/${n}`, b);
-  deleteProp = (n: string) => this.http.delete(`${API}/properties/${n}`);
-
-  // --- Business : Vie & Santé (statistiques + recherche) ---
-  businessSanteStats()             { return this.http.get<any>(`${API}/business/sante/stats`); }
-  businessSanteGratuits()          { return this.http.get<{ items: any[] }>(`${API}/business/sante/gratuits`); }
-  businessSanteParUser(u: string)  { return this.http.get<{ items: any[] }>(`${API}/business/sante/par-user/${u}`); }
-  businessSanteRecherche(q: string){ return this.http.get<{ items: any[] }>(`${API}/business/sante/recherche`, { params: { q } }); }
-  businessVieStats()               { return this.http.get<any>(`${API}/business/vie/stats`); }
-  businessVieParUser(u: string)    { return this.http.get<{ items: any[] }>(`${API}/business/vie/par-user/${u}`); }
-
-  // --- NLP ---
-  nlQuery(question: string)        { return this.http.post<any>(`${API}/nlp/query`, { question }); }
-  nlExamples()                     { return this.http.get<{ examples: string[] }>(`${API}/nlp/examples`); }
-  }
-=======
 
   private http = inject(HttpClient);
 
@@ -242,6 +154,7 @@ export class ApiService {
   allIndividuals = () =>
     this.http.get<Individual[]>(`${API}/individuals`);
 
+  // fiche globale (tous modules)
   individual = (id: string) =>
     this.http.get<Detail>(`${API}/individuals/${id}`);
 
@@ -293,7 +206,7 @@ export class ApiService {
       `${API}/ai/recommend/${id}`
     );
 
-  // --- NOUVEAU : Assistant IA Dhia NLP + SPARQL ---
+  // --- Assistant IA Dhia NLP + SPARQL ---
   nlp = (question: string) =>
     this.http.post<NlpResponse>(
       `${API}/nlp`,
@@ -306,7 +219,7 @@ export class ApiService {
       responseType: 'blob'
     });
 
-  // --- CRUD par module ---
+  // --- CRUD par module : /api/<module>/classes … /api/<module>/items … ---
   classes = (m: string) =>
     this.http.get<OClass[]>(`${API}/${m}/classes`);
 
@@ -342,7 +255,7 @@ export class ApiService {
   deleteItem = (m: string, id: string) =>
     this.http.delete(`${API}/${m}/items/${id}`);
 
-  // --- CRUD des propriétés ---
+  // --- CRUD des propriétés (module Schéma) ---
   props = () =>
     this.http.get<Prop[]>(`${API}/properties`);
 
@@ -354,5 +267,16 @@ export class ApiService {
 
   deleteProp = (n: string) =>
     this.http.delete(`${API}/properties/${n}`);
+
+  // --- Business : Vie & Santé (statistiques + recherche) — Nefzi ---
+  businessSanteStats()              { return this.http.get<any>(`${API}/business/sante/stats`); }
+  businessSanteGratuits()           { return this.http.get<{ items: any[] }>(`${API}/business/sante/gratuits`); }
+  businessSanteParUser(u: string)   { return this.http.get<{ items: any[] }>(`${API}/business/sante/par-user/${u}`); }
+  businessSanteRecherche(q: string) { return this.http.get<{ items: any[] }>(`${API}/business/sante/recherche`, { params: { q } }); }
+  businessVieStats()                { return this.http.get<any>(`${API}/business/vie/stats`); }
+  businessVieParUser(u: string)     { return this.http.get<{ items: any[] }>(`${API}/business/vie/par-user/${u}`); }
+
+  // --- NLP Nefzi ---
+  nlQuery(question: string)         { return this.http.post<any>(`${API}/nlp/query`, { question }); }
+  nlExamples()                      { return this.http.get<{ examples: string[] }>(`${API}/nlp/examples`); }
 }
->>>>>>> 3d5aa3acacaab95058bb469d316a5a2236e830ce
