@@ -9,26 +9,33 @@ def load(path=None):
     classes, props, inds = {}, {}, {}
     for b in re.split(r"\n\n+", t):
         b = re.sub(r"^(###.*\n)+", "", b.strip())
-        m = re.match(r":(\w+) rdf:type owl:Class", b)
-        if m:
+        header = re.match(r":(\w+)\s+(?:a|rdf:type)\s+([^;.]+)", b)
+        if not header:
+            continue
+        name, types = header.groups()
+        if re.search(r"\bowl:Class\b", types):
             parents = re.findall(r"rdfs:subClassOf\s+((?::\w+(?:\s*,\s*(?=:))?\s*)+)", b)
             ps = re.findall(r":(\w+)", parents[0]) if parents else []
             lab = re.search(r'rdfs:label "([^"]*)"', b)
-            classes[m.group(1)] = dict(label=lab.group(1) if lab else "", parents=ps)
+            classes[name] = dict(label=lab.group(1) if lab else "", parents=ps)
             continue
-        m = re.match(r":(\w+) rdf:type owl:(Object|Datatype)Property", b)
-        if m:
+        prop = re.search(r"\bowl:(Object|Datatype)Property\b", types)
+        if prop:
             d, r = re.search(r"rdfs:domain :(\w+)", b), re.search(r"rdfs:range (?:xsd:|:)(\w+)", b)
             lab = re.search(r'rdfs:label "([^"]*)"', b)
-            props[m.group(1)] = dict(kind="object" if m.group(2) == "Object" else "data", label=lab.group(1) if lab else "",
+            props[name] = dict(kind="object" if prop.group(1) == "Object" else "data", label=lab.group(1) if lab else "",
                                      domain=d.group(1) if d else None, range=r.group(1) if r else None)
             continue
-        m = re.match(r":(\w+) rdf:type owl:NamedIndividual\s*,\s*:(\w+)", b)
-        if m:
+        if "owl:NamedIndividual" in types:
             lab = re.search(r'rdfs:label "([^"]*)"', b)
-            inds[m.group(1)] = dict(label=lab.group(1) if lab else m.group(1), types=[m.group(2)])
+            types = re.findall(r":(\w+)", types)
+            inds[name] = dict(label=lab.group(1) if lab else name, types=types)
     inverse = {}
-    for a, b in re.findall(r":(\w+) rdf:type owl:ObjectProperty ;\s*owl:inverseOf :(\w+)", t):
-        inverse[a], inverse[b] = b, a
+    for block in re.split(r"\n\n+", t):
+        header = re.match(r":(\w+)\s+(?:a|rdf:type)\s+([^;.]+)", block.strip())
+        inverse_prop = re.search(r"owl:inverseOf\s+:([\w]+)", block)
+        if header and "owl:ObjectProperty" in header.group(2) and inverse_prop:
+            inverse[header.group(1)] = inverse_prop.group(1)
+            inverse[inverse_prop.group(1)] = header.group(1)
     defined = {"Boursier": ("Apprenant", "beneficieDeBourse", "Bourse")} if "Boursier" in classes else {}
     return Schema(classes, props, inds, defined, inverse)

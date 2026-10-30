@@ -57,5 +57,20 @@
     "hash": "scrypt:32768:8:1$GeaVahgtPU5on1xz$0108eb6fa0a26f558787738e33309c0b79ce59a20fede7877773172da9d540628469896fea8940edc89872a0c99e316c4600a33f025c61a29a245f6c9fbad20b",
     "role": "apprenant",
     "person": "FediMbarek"
+  },
+  "oussea@pct.tn": {
+    "hash": "scrypt:32768:8:1$YVEm2B0tKwCfisGg$5b2b9df37343530fd2148043fb589e5d83e25537494f29c4e9b25d375452597ac5acb972fe1020c18e447e77052bff4f97b7ceb3ab73e42fe4019e5cfc741a88",
+    "role": "apprenant",
+    "person": "Firas"
+  },
+  "oussema@pct.tn": {
+    "hash": "scrypt:32768:8:1$NLOxwMaSUXMDpoEN$a063adaf03ce16b539bd9ad9429dd4d74de4a87ac6a5a90ae5de8691ce50a8f81dcff5e854bb2bac014ddf930d7851186d5b2dd5fe2db85a96eb0fcdfdefd056",
+    "role": "responsable_club",
+    "person": "AliBenSalah"
+  },
+  "oussemaap@pct.tn": {
+    "hash": "scrypt:32768:8:1$tLWHQaMYLkbb7kxL$6d573fbedec921d20816e998c06a05f6856d9d6d6d700e03e980a47f07864c715544869c7f0c49b72c86475b6f85abdabceca6b8bcebb314ce1f077ade64e957",
+    "role": "apprenant",
+    "person": "Ines"
   }
 }

@@ -20,23 +20,25 @@ def short(v):
     return s.split("#")[-1] if s.startswith(BASE) else s
 
 def sparql(q, **bind):
-    res = onto.query(PREFIXES + q, initBindings={k: URIRef(v) for k, v in bind.items()})
+    with LOCK:
+        res = onto.query(PREFIXES + q, initBindings={k: URIRef(v) for k, v in bind.items()})
     return [{str(k): short(v) for k, v in row.asdict().items()} for row in res]
 
 def run_readonly(text, limit=500):
     """Exécute une requête SPARQL en lecture seule (SELECT / ASK). Retourne (vars, rows).
     Lève PermissionError si la requête n'est pas SELECT/ASK, ValueError si elle est invalide."""
     from rdflib.plugins.sparql import prepareQuery
-    try:
-        kind = prepareQuery(PREFIXES + text).algebra.name
-    except Exception as e:
-        raise ValueError(f"Requête invalide : {e}")
-    if kind not in ("SelectQuery", "AskQuery"):
-        raise PermissionError("Seules les requêtes SELECT/ASK sont autorisées")
-    try:
-        res = onto.query(PREFIXES + text)
-    except Exception as e:
-        raise ValueError(f"Requête invalide : {e}")
+    with LOCK:
+        try:
+            kind = prepareQuery(PREFIXES + text).algebra.name
+        except Exception as e:
+            raise ValueError(f"Requête invalide : {e}")
+        if kind not in ("SelectQuery", "AskQuery"):
+            raise PermissionError("Seules les requêtes SELECT/ASK sont autorisées")
+        try:
+            res = onto.query(PREFIXES + text)
+        except Exception as e:
+            raise ValueError(f"Requête invalide : {e}")
     if res.type == "ASK":
         return ["ASK"], [{"ASK": str(res.askAnswer)}]
     return ([str(v) for v in res.vars],

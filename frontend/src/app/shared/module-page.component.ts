@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, computed, inject, signal } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, computed, inject, signal } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ApiService, OClass } from '../core/api.service';
 import { ModuleConfig } from '../core/module.types';
@@ -25,7 +25,8 @@ const CLASSES = '__classes';
       <app-class-manager [module]="config.id" [classes]="classes()" (changed)="loadClasses()" />
     } @else {
       @for (t of [currentTab()]; track t.cls) {
-        <app-entity-crud [module]="config.id" [tab]="t" [openId]="openId()" (changed)="loadClasses()" />
+        <app-entity-crud [module]="config.id" [tab]="t" [openId]="openId()" (changed)="loadClasses()"
+                         (estimateDifficulty)="estimateDifficulty.emit($event)" />
       }
     }`,
 })
@@ -34,6 +35,7 @@ export class ModulePageComponent implements OnInit {
   private route = inject(ActivatedRoute);
   CLASSES = CLASSES;
   @Input({ required: true }) config!: ModuleConfig;
+  @Output() estimateDifficulty = new EventEmitter<string>();
   classes = signal<OClass[]>([]); active = signal(''); ready = signal(false); openId = signal<string | null>(null);
   currentTab = computed(() => this.config.tabs.find(t => t.cls === this.active()) ?? this.config.tabs[0]);
 
