@@ -28,6 +28,11 @@
     rdfs:label "ahmed2" ;
     :nom "ahmed2" .
 
+:AliBenSalah a :ResponsableClub,
+        owl:NamedIndividual ;
+    rdfs:label "ali ben salah" ;
+    :nom "ali ben salah" .
+
 :Anis a :Vacataire,
         owl:NamedIndividual ;
     rdfs:label "Anis"@fr ;
@@ -873,6 +878,14 @@
     rdfs:domain :Seance ;
     rdfs:range xsd:time .
 
+:hg a :Evenement,
+        owl:NamedIndividual ;
+    rdfs:label "gh" ;
+    :dateEvenement "2026-10-31"^^xsd:date ;
+    :description "hjh gkg ghk ghk" ;
+    :lieu "hjh" ;
+    :nom "jh" .
+
 :horairesOuverture a owl:DatatypeProperty ;
     rdfs:label "horaires d'ouverture"@fr ;
     rdfs:domain :ServiceMedical ;
@@ -902,6 +915,14 @@
     rdfs:label "est inscrit à"@fr ;
     rdfs:domain :Apprenant ;
     rdfs:range :Formation .
+
+:jjg a :MatiereTechnique,
+        owl:NamedIndividual ;
+    rdfs:label "dfg" ;
+    :codeMatiere "dsgsd" ;
+    :coefficient 1.0 ;
+    :nom "sdgsd" ;
+    :nombreHeures 1 .
 
 :jourSeance a owl:DatatypeProperty ;
     rdfs:label "jour de séance"@fr ;
@@ -938,6 +959,15 @@
     rdfs:label "moyenne générale"@fr ;
     rdfs:domain :Apprenant ;
     rdfs:range xsd:decimal .
+
+:ndg a :MatiereTechnique,
+        owl:NamedIndividual ;
+    rdfs:label "dfn" ;
+    :codeMatiere "sfg" ;
+    :coefficient 1.0 ;
+    :matiereDeveloppe :SQL ;
+    :nom "dgn" ;
+    :nombreHeures 2 .
 
 :necessite a owl:ObjectProperty ;
     rdfs:label "nécessite comme prérequis"@fr ;
@@ -2146,10 +2176,6 @@
     rdfs:label "Projet"@fr ;
     rdfs:subClassOf :Evaluation .
 
-:ResponsableClub a owl:Class ;
-    rdfs:label "Responsable de club"@fr ;
-    rdfs:subClassOf :Personne .
-
 :Rim a :ResponsableClub,
         owl:NamedIndividual ;
     rdfs:label "Rim"@fr ;
@@ -2454,6 +2480,10 @@ xsd:time a rdfs:Datatype .
     rdfs:label "Rapport de stage"@fr ;
     rdfs:subClassOf :Evaluation .
 
+:ResponsableClub a owl:Class ;
+    rdfs:label "Responsable de club"@fr ;
+    rdfs:subClassOf :Personne .
+
 :Semestre2_2026 a :Semestre,
         owl:NamedIndividual ;
     rdfs:label "Semestre 2"@fr ;
@@ -2598,10 +2628,6 @@ xsd:time a rdfs:Datatype .
     rdfs:label "Laboratoire d'Intelligence Artificielle"@fr ;
     :nom "Laboratoire d'Intelligence Artificielle" ;
     :ville "Tunis" .
-
-:MatiereTechnique a owl:Class ;
-    rdfs:label "Matière technique"@fr ;
-    rdfs:subClassOf :Matiere .
 
 :ModuleSQL a :Module,
         owl:NamedIndividual ;
@@ -2822,6 +2848,10 @@ xsd:time a rdfs:Datatype .
     rdfs:comment "Langue parlée ou enseignée."@fr ;
     rdfs:subClassOf :Formation .
 
+:MatiereTechnique a owl:Class ;
+    rdfs:label "Matière technique"@fr ;
+    rdfs:subClassOf :Matiere .
+
 :Medecin a owl:Class ;
     rdfs:label "Médecin"@fr ;
     rdfs:subClassOf :PersonnelMedical .
@@ -2879,12 +2909,6 @@ xsd:time a rdfs:Datatype .
     :utiliseRessource :ExercicePython,
         :VideoPython .
 
-:SQL a :CompetenceTechnique,
-        owl:NamedIndividual ;
-    rdfs:label "SQL"@fr ;
-    :description "Interrogation et gestion de bases de données relationnelles."@fr ;
-    :nom "SQL" .
-
 :Anglais a :LangueEtrangere,
         owl:NamedIndividual ;
     rdfs:label "Anglais"@fr ;
@@ -2894,11 +2918,6 @@ xsd:time a rdfs:Datatype .
     rdfs:label "Bourse"@fr ;
     rdfs:comment "Aide financière attribuée à un apprenant."@fr .
 
-:Evenement a owl:Class ;
-    rdfs:label "Événement"@fr ;
-    rdfs:comment "Événement organisé par un club (spectacle, tournoi, concert...)."@fr ;
-    rdfs:subClassOf :Club .
-
 :Inscription a owl:Class ;
     rdfs:label "Inscription"@fr ;
     rdfs:comment "Démarche d'inscription d'un apprenant."@fr .
@@ -2907,6 +2926,12 @@ xsd:time a rdfs:Datatype .
     rdfs:label "Outil numérique"@fr ;
     rdfs:comment "Plateforme, logiciel ou application utilisé dans l'apprentissage."@fr ;
     rdfs:subClassOf :Matiere .
+
+:SQL a :CompetenceTechnique,
+        owl:NamedIndividual ;
+    rdfs:label "SQL"@fr ;
+    :description "Interrogation et gestion de bases de données relationnelles."@fr ;
+    :nom "SQL" .
 
 xsd:date a rdfs:Datatype .
 
@@ -2925,6 +2950,11 @@ xsd:date a rdfs:Datatype .
         owl:NamedIndividual ;
     rdfs:label "Science des données"@fr ;
     :nom "Science des données" .
+
+:Evenement a owl:Class ;
+    rdfs:label "Événement"@fr ;
+    rdfs:comment "Événement organisé par un club (spectacle, tournoi, concert...)."@fr ;
+    rdfs:subClassOf :Club .
 
 :JavaScript a :CompetenceTechnique,
         owl:NamedIndividual ;
@@ -3050,22 +3080,46 @@ xsd:date a rdfs:Datatype .
     rdfs:subClassOf :Diplome .
 
 [] a owl:AllDisjointClasses ;
-    owl:members ( :BourseMerite :BourseMobilite :BourseSociale ) .
+    owl:members ( :TheatreComedie :TheatreDrame :TheatreImprovisation ) .
 
 [] a owl:AllDisjointClasses ;
-    owl:members ( :Cafeteria :PanierSolidaire :RestaurantUniversitaire ) .
+    owl:members ( :Apprenant :Enseignant :Tuteur ) .
 
 [] a owl:AllDisjointClasses ;
-    owl:members ( :CampagneDepistage :EducationSante :Vaccination ) .
+    owl:members ( :AtelierGestionStress :EntretienPsychologique :GroupeDeParole ) .
+
+[] a owl:AllDisjointClasses ;
+    owl:members ( :AttestationParticipation :CertificationAcademique :CertificationProfessionnelle ) .
+
+[] a owl:AllDisjointClasses ;
+    owl:members ( :ClubHumanitaire :ClubMusique :ClubSport :ClubTechnologie :ClubTheatre ) .
+
+[] a owl:AllDisjointClasses ;
+    owl:members ( :Basketball :Football :Natation ) .
 
 [] a owl:AllDisjointClasses ;
     owl:members ( :Livre :Podcast :Webinaire ) .
+
+[] a owl:AllDisjointClasses ;
+    owl:members ( :DomaineArtsCulture :DomaineSport :DomaineTechnologie ) .
+
+[] a owl:AllDisjointClasses ;
+    owl:members ( :LangueDesSignes :LangueEtrangere :LangueNationale ) .
+
+[] a owl:AllDisjointClasses ;
+    owl:members ( :AbonnementTransport :CovoiturageEtudiant :NavetteUniversitaire ) .
+
+[] a owl:AllDisjointClasses ;
+    owl:members ( :Bourse :Certification :Club :Competence :Departement :Diplome :Domaine :Espace :Evaluation :Evenement :Formation :Inscription :Langue :Matiere :Niveau :Organisme :OutilNumerique :ParcoursApprentissage :PeriodeAcademique :Personne :RessourcePedagogique :Seance :Stage ) .
 
 [] a owl:AllDisjointClasses ;
     owl:members ( :CertificatAbsence :CertificatAptitudeSport :CertificatAptitudeStage ) .
 
 [] a owl:AllDisjointClasses ;
     owl:members ( :AccompagnementEmploi :ForumEmploi :OrientationAcademique ) .
+
+[] a owl:AllDisjointClasses ;
+    owl:members ( :NiveauAcademique :NiveauCompetence :NiveauLangue ) .
 
 [] a owl:AllDisjointClasses ;
     owl:members ( :Certification :Club :Competence :Evaluation :Evenement :Formation :Niveau :Organisme :ParcoursApprentissage :Personne :RessourcePedagogique :Stage ) .
@@ -3086,6 +3140,9 @@ xsd:date a rdfs:Datatype .
     owl:members ( :ClubMusique :ClubSport :ClubTheatre ) .
 
 [] a owl:AllDisjointClasses ;
+    owl:members ( :AnneeUniversitaire :Semestre :SessionExamens ) .
+
+[] a owl:AllDisjointClasses ;
     owl:members ( :Concert :Spectacle :Tournoi ) .
 
 [] a owl:AllDisjointClasses ;
@@ -3101,22 +3158,13 @@ xsd:date a rdfs:Datatype .
     owl:members ( :Cours :Module :Programme ) .
 
 [] a owl:AllDisjointClasses ;
+    owl:members ( :BourseMerite :BourseMobilite :BourseSociale ) .
+
+[] a owl:AllDisjointClasses ;
     owl:members ( :DepartementGestion :DepartementInformatique :DepartementLangues ) .
 
 [] a owl:AllDisjointClasses ;
     owl:members ( :DiplomeIngenieur :Licence :Master ) .
-
-[] a owl:AllDisjointClasses ;
-    owl:members ( :Document :Exercice :Video ) .
-
-[] a owl:AllDisjointClasses ;
-    owl:members ( :DomaineArtsCulture :DomaineSport :DomaineTechnologie ) .
-
-[] a owl:AllDisjointClasses ;
-    owl:members ( :NiveauAcademique :NiveauCompetence :NiveauLangue ) .
-
-[] a owl:AllDisjointClasses ;
-    owl:members ( :AnneeUniversitaire :Semestre :SessionExamens ) .
 
 [] a owl:AllDisjointClasses ;
     owl:members ( :Entreprise :Laboratoire :Universite ) .
@@ -3129,6 +3177,9 @@ xsd:date a rdfs:Datatype .
 
 [] a owl:AllDisjointClasses ;
     owl:members ( :Infirmier :Medecin :Psychologue ) .
+
+[] a owl:AllDisjointClasses ;
+    owl:members ( :Cafeteria :PanierSolidaire :RestaurantUniversitaire ) .
 
 [] a owl:AllDisjointClasses ;
     owl:members ( :Chorale :GroupeMusiqueModerne :Orchestre ) .
@@ -3161,6 +3212,12 @@ xsd:date a rdfs:Datatype .
     owl:members ( :ServiceHebergement :ServiceOrientationEmploi :ServiceRestauration :ServiceTransport ) .
 
 [] a owl:AllDisjointClasses ;
+    owl:members ( :CampagneDepistage :EducationSante :Vaccination ) .
+
+[] a owl:AllDisjointClasses ;
+    owl:members ( :Document :Exercice :Video ) .
+
+[] a owl:AllDisjointClasses ;
     owl:members ( :StageConvention :StageEntreprise :StageRecherche ) .
 
 [] a owl:AllDisjointClasses ;
@@ -3169,133 +3226,4 @@ xsd:date a rdfs:Datatype .
 [] a owl:AllDisjointClasses ;
     owl:members ( :StageInitiation :StageObservation :StagePFE ) .
 
-[] a owl:AllDisjointClasses ;
-    owl:members ( :TheatreComedie :TheatreDrame :TheatreImprovisation ) .
 
-[] a owl:AllDisjointClasses ;
-    owl:members ( :Apprenant :Enseignant :Tuteur ) .
-
-[] a owl:AllDisjointClasses ;
-    owl:members ( :AtelierGestionStress :EntretienPsychologique :GroupeDeParole ) .
-
-[] a owl:AllDisjointClasses ;
-    owl:members ( :AttestationParticipation :CertificationAcademique :CertificationProfessionnelle ) .
-
-[] a owl:AllDisjointClasses ;
-    owl:members ( :ClubHumanitaire :ClubMusique :ClubSport :ClubTechnologie :ClubTheatre ) .
-
-[] a owl:AllDisjointClasses ;
-    owl:members ( :Basketball :Football :Natation ) .
-
-[] a owl:AllDisjointClasses ;
-    owl:members ( :LangueDesSignes :LangueEtrangere :LangueNationale ) .
-
-[] a owl:AllDisjointClasses ;
-    owl:members ( :AbonnementTransport :CovoiturageEtudiant :NavetteUniversitaire ) .
-
-[] a owl:AllDisjointClasses ;
-    owl:members ( :Bourse :Certification :Club :Competence :Departement :Diplome :Domaine :Espace :Evaluation :Evenement :Formation :Inscription :Langue :Matiere :Niveau :Organisme :OutilNumerique :ParcoursApprentissage :PeriodeAcademique :Personne :RessourcePedagogique :Seance :Stage ) .
-
-<<<<<<< HEAD
-#################################################################
-# NEFZI — Enrichissement Vie & Santé
-#################################################################
-
-# ============ PROPRIÉTÉS ============
-:sInscritA a owl:ObjectProperty ;
-    rdfs:label "est inscrit à"@fr ;
-    rdfs:domain :Apprenant ; rdfs:range :ServiceVieEtudiante .
-
-:consulte a owl:ObjectProperty ;
-    rdfs:label "consulte le service"@fr ;
-    rdfs:domain :Apprenant ; rdfs:range :ServiceMedical .
-
-:habite a owl:ObjectProperty ;
-    rdfs:label "habite dans"@fr ;
-    rdfs:domain :Apprenant ; rdfs:range :ServiceHebergement .
-
-:utiliseTransport a owl:ObjectProperty ;
-    rdfs:label "utilise le transport"@fr ;
-    rdfs:domain :Apprenant ; rdfs:range :ServiceTransport .
-
-# ============ INSTANCES VIE ============
-:ResidenceUniversitaireTunis a :ResidenceUniversitaire, owl:NamedIndividual ;
-    rdfs:label "Résidence universitaire de Tunis"@fr ;
-    :nom "Résidence universitaire de Tunis" ;
-    :lieu "Cité universitaire, Tunis" ; :estActif true ;
-    :serviceRattacheA :UniversiteDeTunis ; :capaciteEspace 400 .
-
-:RestaurantUniversitaireUT a :RestaurantUniversitaire, owl:NamedIndividual ;
-    rdfs:label "Restaurant universitaire"@fr ;
-    :nom "Restaurant universitaire" ; :lieu "Campus de Tunis" ;
-    :estActif true ; :serviceRattacheA :UniversiteDeTunis .
-
-:CafeteriaCentraleUT a :Cafeteria, owl:NamedIndividual ;
-    rdfs:label "Cafétéria centrale"@fr ;
-    :nom "Cafétéria centrale" ; :lieu "Bâtiment A" ;
-    :estActif true ; :serviceRattacheA :UniversiteDeTunis .
-
-:NavetteUniversitaireUT a :NavetteUniversitaire, owl:NamedIndividual ;
-    rdfs:label "Navette universitaire"@fr ;
-    :nom "Navette universitaire" ; :lieu "Tunis centre ↔ Campus" ;
-    :estActif true ; :serviceRattacheA :UniversiteDeTunis .
-
-:CovoiturageEtudiantUT a :CovoiturageEtudiant, owl:NamedIndividual ;
-    rdfs:label "Covoiturage étudiant"@fr ;
-    :nom "Plateforme de covoiturage" ; :lieu "Campus de Tunis" ; :estActif true .
-
-:OrientationProfessionnelleUT a :OrientationAcademique, owl:NamedIndividual ;
-    rdfs:label "Orientation professionnelle"@fr ;
-    :nom "Service d'orientation professionnelle" ;
-    :lieu "Bâtiment administratif" ; :estActif true ;
-    :serviceRattacheA :UniversiteDeTunis .
-
-:HebergementUrgenceUT a :HebergementUrgence, owl:NamedIndividual ;
-    rdfs:label "Hébergement d'urgence"@fr ;
-    :nom "Hébergement d'urgence pour étudiants" ;
-    :lieu "Cité universitaire, Tunis" ; :estActif true ;
-    :serviceRattacheA :UniversiteDeTunis .
-
-# ============ INSTANCES SANTÉ ============
-:ConsultationPsychologiqueAnonyme a :EntretienPsychologique, owl:NamedIndividual ;
-    rdfs:label "Consultation psychologique anonyme"@fr ;
-    :nom "Consultation psychologique anonyme" ;
-    :consultePar :PsychologueMariem ; :estGratuit true ; :surRendezVous true ;
-    :horairesOuverture "Lundi et mercredi, 14h - 17h" ;
-    :serviceLocaliseDans :CabinetPsychologie ; :serviceRattacheA :UniversiteDeTunis .
-
-:NumerosUrgenceMedicale a :TransportMedical, owl:NamedIndividual ;
-    rdfs:label "Numéro d'urgence médicale"@fr ;
-    :nom "Numéro d'urgence médicale" ; :telephoneService "190" ;
-    :estGratuit true ; :surRendezVous false ; :serviceRattacheA :UniversiteDeTunis .
-
-:ConsultationDentaireGratuiteUT a :ConsultationDentaire, owl:NamedIndividual ;
-    rdfs:label "Consultation dentaire gratuite"@fr ;
-    :nom "Consultation dentaire gratuite" ; :assureParPersonnel :DrAmel ;
-    :estGratuit true ; :surRendezVous true ;
-    :horairesOuverture "Mardi, 9h - 12h" ; :serviceRattacheA :UniversiteDeTunis .
-
-:CampagneDepistageDiabete a :CampagneDepistage, owl:NamedIndividual ;
-    rdfs:label "Campagne de dépistage du diabète"@fr ;
-    :nom "Dépistage du diabète" ; :assureParPersonnel :InfirmierRami ;
-    :estGratuit true ; :serviceRattacheA :UniversiteDeTunis .
-
-:AtelierGestionStressEtudiants a :AtelierGestionStress, owl:NamedIndividual ;
-    rdfs:label "Atelier de gestion du stress"@fr ;
-    :nom "Atelier gestion du stress pour étudiants" ;
-    :consultePar :PsychologueMariem ; :estGratuit true ; :surRendezVous false ;
-    :horairesOuverture "Vendredi, 16h - 17h30" ;
-    :serviceRattacheA :UniversiteDeTunis .
-
-# ============ LIENS USER ↔ SERVICES ============
-:Karim :sInscritA :RestaurantUniversitaireUT .
-:Karim :utiliseTransport :NavetteUniversitaireUT .
-:Karim :consulte :ConsultationDentaireUT .
-:Nour :sInscritA :RestaurantUniversitaireUT .
-:Nour :consulte :ConsultationGeneraleUT .
-:Amira :consulte :ConsultationPsychologiqueAnonyme .
-:Amira :consulte :ConsultationGeneraleUT .
-:Yasmine :habite :ResidenceUniversitaireTunis .
-:Yasmine :consulte :ConsultationPsychologiqueAnonyme .
-=======
->>>>>>> 3d5aa3acacaab95058bb469d316a5a2236e830ce

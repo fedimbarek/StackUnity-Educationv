@@ -531,8 +531,6 @@ class NL2SPARQL:
         limit = order[1] if order else 200
         q = f"SELECT DISTINCT {' '.join(cols)} WHERE {{\n  {body}\n}} {order_clause} LIMIT {limit}"
         return dict(sparql=q, kind="select", main=main, trace=trace)
-<<<<<<< HEAD
-=======
 
 # ============================================================================
 # Assistant NLP : Personnes & Organismes (ajout, sans modifier le traducteur existant)
@@ -607,4 +605,3 @@ LIMIT 100"""
         "sparql": requete,
     }
 
->>>>>>> 3d5aa3acacaab95058bb469d316a5a2236e830ce
