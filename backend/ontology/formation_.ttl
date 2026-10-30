@@ -3226,3 +3226,130 @@ xsd:date a rdfs:Datatype .
 [] a owl:AllDisjointClasses ;
     owl:members ( :StageInitiation :StageObservation :StagePFE ) .
 
+[] a owl:AllDisjointClasses ;
+    owl:members ( :TheatreComedie :TheatreDrame :TheatreImprovisation ) .
+
+[] a owl:AllDisjointClasses ;
+    owl:members ( :Apprenant :Enseignant :Tuteur ) .
+
+[] a owl:AllDisjointClasses ;
+    owl:members ( :AtelierGestionStress :EntretienPsychologique :GroupeDeParole ) .
+
+[] a owl:AllDisjointClasses ;
+    owl:members ( :AttestationParticipation :CertificationAcademique :CertificationProfessionnelle ) .
+
+[] a owl:AllDisjointClasses ;
+    owl:members ( :ClubHumanitaire :ClubMusique :ClubSport :ClubTechnologie :ClubTheatre ) .
+
+[] a owl:AllDisjointClasses ;
+    owl:members ( :Basketball :Football :Natation ) .
+
+[] a owl:AllDisjointClasses ;
+    owl:members ( :LangueDesSignes :LangueEtrangere :LangueNationale ) .
+
+[] a owl:AllDisjointClasses ;
+    owl:members ( :AbonnementTransport :CovoiturageEtudiant :NavetteUniversitaire ) .
+
+[] a owl:AllDisjointClasses ;
+    owl:members ( :Bourse :Certification :Club :Competence :Departement :Diplome :Domaine :Espace :Evaluation :Evenement :Formation :Inscription :Langue :Matiere :Niveau :Organisme :OutilNumerique :ParcoursApprentissage :PeriodeAcademique :Personne :RessourcePedagogique :Seance :Stage ) .
+
+#################################################################
+# NEFZI — Enrichissement Vie & Santé
+#################################################################
+
+# ============ PROPRIÉTÉS ============
+:sInscritA a owl:ObjectProperty ;
+    rdfs:label "est inscrit à"@fr ;
+    rdfs:domain :Apprenant ; rdfs:range :ServiceVieEtudiante .
+
+:consulte a owl:ObjectProperty ;
+    rdfs:label "consulte le service"@fr ;
+    rdfs:domain :Apprenant ; rdfs:range :ServiceMedical .
+
+:habite a owl:ObjectProperty ;
+    rdfs:label "habite dans"@fr ;
+    rdfs:domain :Apprenant ; rdfs:range :ServiceHebergement .
+
+:utiliseTransport a owl:ObjectProperty ;
+    rdfs:label "utilise le transport"@fr ;
+    rdfs:domain :Apprenant ; rdfs:range :ServiceTransport .
+
+# ============ INSTANCES VIE ============
+:ResidenceUniversitaireTunis a :ResidenceUniversitaire, owl:NamedIndividual ;
+    rdfs:label "Résidence universitaire de Tunis"@fr ;
+    :nom "Résidence universitaire de Tunis" ;
+    :lieu "Cité universitaire, Tunis" ; :estActif true ;
+    :serviceRattacheA :UniversiteDeTunis ; :capaciteEspace 400 .
+
+:RestaurantUniversitaireUT a :RestaurantUniversitaire, owl:NamedIndividual ;
+    rdfs:label "Restaurant universitaire"@fr ;
+    :nom "Restaurant universitaire" ; :lieu "Campus de Tunis" ;
+    :estActif true ; :serviceRattacheA :UniversiteDeTunis .
+
+:CafeteriaCentraleUT a :Cafeteria, owl:NamedIndividual ;
+    rdfs:label "Cafétéria centrale"@fr ;
+    :nom "Cafétéria centrale" ; :lieu "Bâtiment A" ;
+    :estActif true ; :serviceRattacheA :UniversiteDeTunis .
+
+:NavetteUniversitaireUT a :NavetteUniversitaire, owl:NamedIndividual ;
+    rdfs:label "Navette universitaire"@fr ;
+    :nom "Navette universitaire" ; :lieu "Tunis centre ↔ Campus" ;
+    :estActif true ; :serviceRattacheA :UniversiteDeTunis .
+
+:CovoiturageEtudiantUT a :CovoiturageEtudiant, owl:NamedIndividual ;
+    rdfs:label "Covoiturage étudiant"@fr ;
+    :nom "Plateforme de covoiturage" ; :lieu "Campus de Tunis" ; :estActif true .
+
+:OrientationProfessionnelleUT a :OrientationAcademique, owl:NamedIndividual ;
+    rdfs:label "Orientation professionnelle"@fr ;
+    :nom "Service d'orientation professionnelle" ;
+    :lieu "Bâtiment administratif" ; :estActif true ;
+    :serviceRattacheA :UniversiteDeTunis .
+
+:HebergementUrgenceUT a :HebergementUrgence, owl:NamedIndividual ;
+    rdfs:label "Hébergement d'urgence"@fr ;
+    :nom "Hébergement d'urgence pour étudiants" ;
+    :lieu "Cité universitaire, Tunis" ; :estActif true ;
+    :serviceRattacheA :UniversiteDeTunis .
+
+# ============ INSTANCES SANTÉ ============
+:ConsultationPsychologiqueAnonyme a :EntretienPsychologique, owl:NamedIndividual ;
+    rdfs:label "Consultation psychologique anonyme"@fr ;
+    :nom "Consultation psychologique anonyme" ;
+    :consultePar :PsychologueMariem ; :estGratuit true ; :surRendezVous true ;
+    :horairesOuverture "Lundi et mercredi, 14h - 17h" ;
+    :serviceLocaliseDans :CabinetPsychologie ; :serviceRattacheA :UniversiteDeTunis .
+
+:NumerosUrgenceMedicale a :TransportMedical, owl:NamedIndividual ;
+    rdfs:label "Numéro d'urgence médicale"@fr ;
+    :nom "Numéro d'urgence médicale" ; :telephoneService "190" ;
+    :estGratuit true ; :surRendezVous false ; :serviceRattacheA :UniversiteDeTunis .
+
+:ConsultationDentaireGratuiteUT a :ConsultationDentaire, owl:NamedIndividual ;
+    rdfs:label "Consultation dentaire gratuite"@fr ;
+    :nom "Consultation dentaire gratuite" ; :assureParPersonnel :DrAmel ;
+    :estGratuit true ; :surRendezVous true ;
+    :horairesOuverture "Mardi, 9h - 12h" ; :serviceRattacheA :UniversiteDeTunis .
+
+:CampagneDepistageDiabete a :CampagneDepistage, owl:NamedIndividual ;
+    rdfs:label "Campagne de dépistage du diabète"@fr ;
+    :nom "Dépistage du diabète" ; :assureParPersonnel :InfirmierRami ;
+    :estGratuit true ; :serviceRattacheA :UniversiteDeTunis .
+
+:AtelierGestionStressEtudiants a :AtelierGestionStress, owl:NamedIndividual ;
+    rdfs:label "Atelier de gestion du stress"@fr ;
+    :nom "Atelier gestion du stress pour étudiants" ;
+    :consultePar :PsychologueMariem ; :estGratuit true ; :surRendezVous false ;
+    :horairesOuverture "Vendredi, 16h - 17h30" ;
+    :serviceRattacheA :UniversiteDeTunis .
+
+# ============ LIENS USER ↔ SERVICES ============
+:Karim :sInscritA :RestaurantUniversitaireUT .
+:Karim :utiliseTransport :NavetteUniversitaireUT .
+:Karim :consulte :ConsultationDentaireUT .
+:Nour :sInscritA :RestaurantUniversitaireUT .
+:Nour :consulte :ConsultationGeneraleUT .
+:Amira :consulte :ConsultationPsychologiqueAnonyme .
+:Amira :consulte :ConsultationGeneraleUT .
+:Yasmine :habite :ResidenceUniversitaireTunis .
+:Yasmine :consulte :ConsultationPsychologiqueAnonyme .

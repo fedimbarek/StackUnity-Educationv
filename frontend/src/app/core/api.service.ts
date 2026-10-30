@@ -1,4 +1,3 @@
-
 import { Injectable, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { API } from './auth';
@@ -124,7 +123,7 @@ export interface AiAnswer {
   trace: NlpTrace | null;
 }
 
-// NOUVEAU : Assistant NLP Personnes et Organismes
+// Assistant NLP Personnes et Organismes (Dhia)
 export interface NlpResponse {
   question: string;
   classe: string;
@@ -133,6 +132,7 @@ export interface NlpResponse {
   resultats: Record<string, string>[];
 }
 
+// Prédiction de difficulté d'une matière (Oussama)
 export interface DifficultyPredictionRequest {
   id: string;
 }
@@ -187,6 +187,7 @@ export class ApiService {
   allIndividuals = () =>
     this.http.get<Individual[]>(`${API}/individuals`);
 
+  // fiche globale (tous modules)
   individual = (id: string) =>
     this.http.get<Detail>(`${API}/individuals/${id}`);
 
@@ -238,7 +239,7 @@ export class ApiService {
       `${API}/ai/recommend/${id}`
     );
 
-  // --- NOUVEAU : Assistant IA Dhia NLP + SPARQL ---
+  // --- Assistant IA Dhia NLP + SPARQL ---
   nlp = (question: string) =>
     this.http.post<NlpResponse>(
       `${API}/nlp`,
@@ -258,7 +259,7 @@ export class ApiService {
       responseType: 'blob'
     });
 
-  // --- CRUD par module ---
+  // --- CRUD par module : /api/<module>/classes … /api/<module>/items … ---
   classes = (m: string) =>
     this.http.get<OClass[]>(`${API}/${m}/classes`);
 
@@ -294,7 +295,7 @@ export class ApiService {
   deleteItem = (m: string, id: string) =>
     this.http.delete(`${API}/${m}/items/${id}`);
 
-  // --- CRUD des propriétés ---
+  // --- CRUD des propriétés (module Schéma) ---
   props = () =>
     this.http.get<Prop[]>(`${API}/properties`);
 
@@ -306,4 +307,16 @@ export class ApiService {
 
   deleteProp = (n: string) =>
     this.http.delete(`${API}/properties/${n}`);
+
+  // --- Business : Vie & Santé (statistiques + recherche) — Nefzi ---
+  businessSanteStats()              { return this.http.get<any>(`${API}/business/sante/stats`); }
+  businessSanteGratuits()           { return this.http.get<{ items: any[] }>(`${API}/business/sante/gratuits`); }
+  businessSanteParUser(u: string)   { return this.http.get<{ items: any[] }>(`${API}/business/sante/par-user/${u}`); }
+  businessSanteRecherche(q: string) { return this.http.get<{ items: any[] }>(`${API}/business/sante/recherche`, { params: { q } }); }
+  businessVieStats()                { return this.http.get<any>(`${API}/business/vie/stats`); }
+  businessVieParUser(u: string)     { return this.http.get<{ items: any[] }>(`${API}/business/vie/par-user/${u}`); }
+
+  // --- NLP Nefzi ---
+  nlQuery(question: string)         { return this.http.post<any>(`${API}/nlp/query`, { question }); }
+  nlExamples()                      { return this.http.get<{ examples: string[] }>(`${API}/nlp/examples`); }
 }

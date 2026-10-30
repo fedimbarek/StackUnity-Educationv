@@ -1,4 +1,3 @@
-
 import { Routes } from '@angular/router';
 import { authGuard, accessGuard } from './core/auth';
 
@@ -20,7 +19,10 @@ import { BoursesComponent } from './features/bourses/bourses.component';
 import { SanteComponent } from './features/sante/sante.component';
 import { VieComponent } from './features/vie/vie.component';
 
-// Assistant IA NLP - Personnes & Organismes
+// Recherche IA (Nefzi)
+import { NefziNlQueryComponent } from './pages/nefzi-nl-query.component';
+
+// Assistant IA NLP - Personnes & Organismes (Dhia)
 import { AssistantComponent } from './features/assistant/assistant.component';
 
 export const routes: Routes = [
@@ -34,7 +36,7 @@ export const routes: Routes = [
     canActivate: [authGuard]
   },
 
-  // Modules métier
+  // Modules métier (un composant par module : onglets / colonnes / formulaires)
   { path: 'personnes', component: PersonnesComponent, canActivate: [authGuard, accessGuard] },
   { path: 'formations', component: FormationsComponent, canActivate: [authGuard, accessGuard] },
   { path: 'matieres', component: MatieresComponent, canActivate: [authGuard, accessGuard] },
@@ -56,6 +58,9 @@ export const routes: Routes = [
   // Scénario Amira
   { path: 'scenario', component: ScenarioComponent, canActivate: [authGuard, accessGuard] },
 
+  // Recherche IA (Nefzi)
+  { path: 'nl-query', component: NefziNlQueryComponent, canActivate: [authGuard] },
+
   // Assistant IA Dhia - NLP + SPARQL
   {
     path: 'assistant',
@@ -63,7 +68,7 @@ export const routes: Routes = [
     canActivate: [authGuard]
   },
 
-  // Route inconnue
+  // Route inconnue (doit rester la DERNIÈRE route)
   { path: '**', redirectTo: '' }
 
 ];

@@ -1,9 +1,10 @@
-
 """StackUnity - Serveur Flask : API JSON <-> requêtes SPARQL sur l'ontologie formation_.ttl."""
 import os
 from flask import Flask, request, jsonify
 import auth, schema, misc, queries, ai, dashboard, prediction
 from modules import MODULES, make_blueprint
+import nefzi_business_api
+import nefzi_nlp_api
 from nlp import generer_sparql
 from store import sparql
 from auth import auth_required
@@ -15,10 +16,16 @@ app.register_blueprint(misc.bp)
 app.register_blueprint(schema.bp)
 app.register_blueprint(queries.bp)     # bibliothèque de requêtes SPARQL
 app.register_blueprint(ai.bp)          # API IA (question -> SPARQL, explication, recommandation)
-app.register_blueprint(prediction.bp)  # API de prédiction de difficulté des matières
+app.register_blueprint(prediction.bp)  # API de prédiction de difficulté des matières (Oussama)
+app.register_blueprint(nefzi_business_api.bp)   # API business Vie & Santé (Nefzi)
+app.register_blueprint(nefzi_nlp_api.bp)        # NLP Nefzi (/api/nlp/query, /api/nlp/examples)
 
 for m in MODULES:                       # un blueprint REST par module métier
     app.register_blueprint(make_blueprint(m))
+
+@app.route("/")
+def index():
+    return {"status": "ok", "service": "StackUnity API"}
 
 @app.after_request
 def cors(resp):                         # CORS pour Angular (localhost:4200)

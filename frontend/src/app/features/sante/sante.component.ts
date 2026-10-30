@@ -1,6 +1,9 @@
 import { Component } from '@angular/core';
 import { ModulePageComponent } from '../../shared/module-page.component';
 import { ModuleConfig, meta, tab } from '../../core/module.types';
+import { NefziNlSearchComponent } from '../../shared/nefzi-nl-search.component';
+import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 
 /** Module « Sante » : onglets = sous-entités de la classe racine ServiceMedical. */
 export const SANTE: ModuleConfig = {
@@ -19,7 +22,14 @@ export const SANTE: ModuleConfig = {
 
 @Component({
   selector: 'app-sante',
-  imports: [ModulePageComponent],
-  template: `<app-module-page [config]="config" />`,
+  imports: [CommonModule, FormsModule, ModulePageComponent, NefziNlSearchComponent],
+  standalone: true,
+  template: `
+    <app-nefzi-nl-search
+      context="sante"
+      placeholder="Ex: Quels sont les services de santé gratuits ?">
+    </app-nefzi-nl-search>
+    <app-module-page [config]="config" />
+  `,
 })
 export class SanteComponent { config = SANTE; }

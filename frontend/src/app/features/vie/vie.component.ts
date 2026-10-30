@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import { ModulePageComponent } from '../../shared/module-page.component';
 import { ModuleConfig, meta, tab } from '../../core/module.types';
+import { NefziNlSearchComponent } from '../../shared/nefzi-nl-search.component';
+import { CommonModule } from '@angular/common';
 
 /** Module « Vie » : onglets = sous-entités de la classe racine ServiceVieEtudiante. */
 export const VIE: ModuleConfig = {
@@ -17,7 +19,14 @@ export const VIE: ModuleConfig = {
 
 @Component({
   selector: 'app-vie',
-  imports: [ModulePageComponent],
-  template: `<app-module-page [config]="config" />`,
+  standalone: true,
+  imports: [CommonModule, ModulePageComponent, NefziNlSearchComponent],
+  template: `
+    <app-nefzi-nl-search
+      context="vie"
+      placeholder="Ex: Quels sont les services d'hébergement ?">
+    </app-nefzi-nl-search>
+    <app-module-page [config]="config" />
+  `,
 })
 export class VieComponent { config = VIE; }
